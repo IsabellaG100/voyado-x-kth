@@ -51,14 +51,9 @@ export function ShellLayout() {
             type="button"
             aria-label="Home"
           >
-            <svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M18.5 4C18.5 4 20 8.5 20 13C20 17.5 17 22 12 24C7 22 4 17.5 4 13C4 8.5 5.5 4 5.5 4"
-                stroke="#21211f"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                fill="none"
-              />
+            <svg width="28" height="26" viewBox="0 0 186.9 171.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M112.5,101.7c-11.1-6.4-20.5-15.7-27-26.8-6.7-11.4-10.2-24.4-10.2-37.7C75.3,16.7,58.7,0,38.1,0,20.4,.1,5.6,12.5,1.8,29h0c-6.3,23.7,4.8,59.6,19.6,83.8,1.6,2.8,3.4,5.5,5.2,8.2,13.2,20,30.6,39.7,53.9,47.7,1.9,.7,3.8,1.3,5.7,1.7h.1c2.5,.5,5,.8,7.5,.8,12.8,0,25.3-6.7,32.2-18.6,10.4-17.9,4.3-40.6-13.5-50.9Z" fill="currentColor" />
+              <circle cx="149.7" cy="37.3" r="37.2" fill="currentColor" />
             </svg>
           </button>
         }

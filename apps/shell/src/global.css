@@ -8,7 +8,7 @@
 
 html {
   height: 100%;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 body {
@@ -27,9 +27,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--ess-font-family-display);
-  font-weight: var(--ess-font-weight-bold);
+  font-weight: var(--ess-font-weight-semibold);
   line-height: var(--ess-font-line-height-heading);
   color: var(--ess-color-neutral-fg-strong);
+  letter-spacing: -0.01em;
 }
 
 a {

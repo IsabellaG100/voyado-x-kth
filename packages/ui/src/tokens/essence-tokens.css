@@ -87,12 +87,13 @@
   --ess-color-chip-bg: #348067;
   --ess-color-chip-text: #ffffff;
 
-  /* Typography - DM Sans (professional geometric sans, close to Voyado custom font) */
-  --ess-font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --ess-font-family-display: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Typography */
+  --ess-font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ess-font-family-display: 'Plus Jakarta Sans', 'Source Sans 3', -apple-system, sans-serif;
   --ess-font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
   --ess-font-weight-normal: 400;
   --ess-font-weight-medium: 500;
+  --ess-font-weight-semibold: 600;
   --ess-font-weight-bold: 700;
   --ess-font-line-height-tight: 1.1;
   --ess-font-line-height-medium: 1.3;

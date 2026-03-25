@@ -92,11 +92,11 @@
     color var(--ess-duration-fast) var(--ess-ease-out);
 }
 
-.navItem:hover .navIcon {
+.navItem:hover:not(.navItemActive) .navIcon {
   background-color: var(--ess-color-sidebar-item-hover);
 }
 
-.navItem:hover {
+.navItem:hover:not(.navItemActive) {
   color: var(--ess-color-neutral-fg);
 }
 
