@@ -1,0 +1,157 @@
+:root {
+  /* Colors - Primary (Voyado teal) */
+  --ess-color-primary-bg: #2d6e6d;
+  --ess-color-primary-bg-hover: #388988;
+  --ess-color-primary-bg-active: #204f4e;
+  --ess-color-primary-text: #ffffff;
+  --ess-color-primary-border: #2d6e6d;
+
+  /* Colors - Neutral */
+  --ess-color-neutral-bg: #f8f8f7;
+  --ess-color-neutral-bg-secondary: #f0f0ef;
+  --ess-color-neutral-border: #e2e2df;
+  --ess-color-neutral-fg: #21211f;
+  --ess-color-neutral-fg-strong: #000000;
+  --ess-color-neutral-fg-weak: #797971;
+  --ess-color-neutral-weak-bg: #ffffff;
+  --ess-color-neutral-weak-border: #e2e2df;
+
+  /* Colors - Danger / Trend Down */
+  --ess-color-danger-bg: #bf1100;
+  --ess-color-danger-bg-hover: #e41300;
+  --ess-color-danger-bg-weak: #ffeeec;
+  --ess-color-danger-text: #ffffff;
+  --ess-color-danger-icon-weak: #bf1100;
+  --ess-color-trend-down: #e41300;
+
+  /* Colors - Success / Trend Up */
+  --ess-color-success-bg: #43a584;
+  --ess-color-success-bg-hover: #5dbd9d;
+  --ess-color-success-bg-weak: #edf8f4;
+  --ess-color-success-text: #ffffff;
+  --ess-color-success-icon-weak: #348067;
+  --ess-color-trend-up: #2e8b57;
+
+  /* Colors - Warning */
+  --ess-color-warning-bg: #f9e688;
+  --ess-color-warning-bg-hover: #fbf0b9;
+  --ess-color-warning-bg-weak: #fefae6;
+  --ess-color-warning-text: #21211f;
+  --ess-color-warning-icon-weak: #d8b60c;
+
+  /* Colors - Interactive Controls */
+  --ess-color-control-bg: #ffffff;
+  --ess-color-control-border: #d7d7d4;
+  --ess-color-control-border-hover: #a6a6a0;
+  --ess-color-control-border-active: #61615b;
+  --ess-color-control-border-error: #e41300;
+  --ess-color-control-border-disabled: #e2e2df;
+  --ess-color-control-text: #21211f;
+  --ess-color-control-text-disabled: #a6a6a0;
+  --ess-color-control-bg-disabled: #f8f8f7;
+
+  /* Colors - Boolean Controls */
+  --ess-color-bool-checked-bg: #43a584;
+  --ess-color-bool-checked-border: #348067;
+  --ess-color-bool-unchecked-border: #d7d7d4;
+
+  /* Colors - Inverted */
+  --ess-color-inverted-bg: #21211f;
+  --ess-color-inverted-text: #ffffff;
+
+  /* Colors - Info */
+  --ess-color-info-bg: #e7f4ff;
+  --ess-color-info-fg: #03081c;
+  --ess-color-info-strong: #4790ff;
+
+  /* Colors - Decorative (for charts, badges, chips) */
+  --ess-color-aqua: #388988;
+  --ess-color-blue: #4790ff;
+  --ess-color-green: #43a584;
+  --ess-color-yellow: #f9e688;
+  --ess-color-red: #bf1100;
+  --ess-color-purple: #7b61ff;
+  --ess-color-burgundy: #791A3F;
+  --ess-color-coral: #e8725a;
+
+  /* Colors - Sidebar (matches Engage) */
+  --ess-color-sidebar-bg: #ffffff;
+  --ess-color-sidebar-border: #e2e2df;
+  --ess-color-sidebar-item-hover: #f5f5f4;
+  --ess-color-sidebar-item-active-bg: #791A3F;
+  --ess-color-sidebar-item-active-text: #ffffff;
+  --ess-color-sidebar-top-bg: #2d6e6d;
+  --ess-color-sidebar-top-text: #ffffff;
+
+  /* Colors - Chip (filter chips like Engage) */
+  --ess-color-chip-bg: #348067;
+  --ess-color-chip-text: #ffffff;
+
+  /* Typography - DM Sans (professional geometric sans, close to Voyado custom font) */
+  --ess-font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ess-font-family-display: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ess-font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --ess-font-weight-normal: 400;
+  --ess-font-weight-medium: 500;
+  --ess-font-weight-bold: 700;
+  --ess-font-line-height-tight: 1.1;
+  --ess-font-line-height-medium: 1.3;
+  --ess-font-line-height-body: 1.5;
+  --ess-font-line-height-heading: 1.2;
+
+  /* Font Sizes */
+  --ess-font-size-tiny: 11px;
+  --ess-font-size-small: 12px;
+  --ess-font-size-medium: 14px;
+  --ess-font-size-base: 15px;
+  --ess-font-size-large: 16px;
+  --ess-font-size-h5: 14px;
+  --ess-font-size-h4: 16px;
+  --ess-font-size-h3: 18px;
+  --ess-font-size-h2: 20px;
+  --ess-font-size-h1: 24px;
+  --ess-font-size-number-large: 28px;
+  --ess-font-size-number-hero: 36px;
+
+  /* Spacing (4px grid) */
+  --ess-spacing-50: 2px;
+  --ess-spacing-100: 4px;
+  --ess-spacing-200: 8px;
+  --ess-spacing-300: 12px;
+  --ess-spacing-400: 16px;
+  --ess-spacing-450: 20px;
+  --ess-spacing-500: 24px;
+  --ess-spacing-600: 32px;
+  --ess-spacing-700: 40px;
+  --ess-spacing-800: 48px;
+  --ess-spacing-900: 56px;
+  --ess-spacing-1000: 64px;
+
+  /* Border */
+  --ess-border-width-small: 1px;
+  --ess-border-width-medium: 2px;
+  --ess-border-width-thick: 3px;
+  --ess-border-radius-small: 4px;
+  --ess-border-radius-medium: 6px;
+  --ess-border-radius-large: 12px;
+  --ess-border-radius-round: 100em;
+
+  /* Shadows - very subtle, matching Engage's nearly flat aesthetic */
+  --ess-shadow-small: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --ess-shadow-medium: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --ess-shadow-large: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --ess-shadow-dialog: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  /* Transitions */
+  --ess-duration-fast: 100ms;
+  --ess-duration-normal: 150ms;
+  --ess-duration-slow: 300ms;
+  --ess-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ess-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Sidebar dimensions */
+  --ess-sidebar-width: 72px;
+  --ess-sidebar-icon-size: 22px;
+  --ess-sidebar-active-ellipse-w: 48px;
+  --ess-sidebar-active-ellipse-h: 32px;
+}

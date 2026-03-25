@@ -1,0 +1,13 @@
+.card {
+  background-color: var(--ess-color-neutral-weak-bg);
+  border: var(--ess-border-width-small) solid var(--ess-color-neutral-border);
+  border-radius: var(--ess-border-radius-medium);
+  padding: var(--ess-spacing-500);
+  transition: border-color var(--ess-duration-normal) var(--ess-ease-out),
+    box-shadow var(--ess-duration-normal) var(--ess-ease-out);
+}
+
+.hoverable:hover {
+  border-color: var(--ess-color-control-border-hover);
+  box-shadow: var(--ess-shadow-small);
+}

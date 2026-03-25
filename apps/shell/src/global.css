@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  font-size: 15px;
+}
+
+body {
+  height: 100%;
+  font-family: var(--ess-font-family);
+  color: var(--ess-color-neutral-fg);
+  background: var(--ess-color-neutral-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: var(--ess-font-line-height-body);
+}
+
+#root {
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--ess-font-family-display);
+  font-weight: var(--ess-font-weight-bold);
+  line-height: var(--ess-font-line-height-heading);
+  color: var(--ess-color-neutral-fg-strong);
+}
+
+a {
+  color: var(--ess-color-primary-bg);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+::selection {
+  background-color: var(--ess-color-primary-bg);
+  color: var(--ess-color-primary-text);
+}

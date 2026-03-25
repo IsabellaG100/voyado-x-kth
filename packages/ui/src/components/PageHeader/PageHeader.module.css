@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ess-spacing-400);
+  padding: var(--ess-spacing-500) 0 var(--ess-spacing-400);
+  border-bottom: var(--ess-border-width-small) solid var(--ess-color-neutral-border);
+  font-family: var(--ess-font-family);
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--ess-font-size-h2);
+  font-weight: var(--ess-font-weight-bold);
+  line-height: var(--ess-font-line-height-heading);
+  color: var(--ess-color-neutral-fg-strong);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: var(--ess-font-size-medium);
+  font-weight: var(--ess-font-weight-normal);
+  line-height: var(--ess-font-line-height-body);
+  color: var(--ess-color-neutral-fg-weak);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ess-spacing-200);
+  flex-shrink: 0;
+}

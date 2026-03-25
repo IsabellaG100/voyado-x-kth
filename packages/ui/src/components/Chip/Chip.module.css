@@ -1,0 +1,54 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ess-spacing-100);
+  padding: var(--ess-spacing-100) var(--ess-spacing-300);
+  border-radius: var(--ess-border-radius-round);
+  font-family: var(--ess-font-family);
+  font-size: var(--ess-font-size-small);
+  font-weight: var(--ess-font-weight-normal);
+  line-height: var(--ess-font-line-height-medium);
+  white-space: nowrap;
+  border: var(--ess-border-width-small) solid transparent;
+}
+
+.label {
+  user-select: none;
+}
+
+.neutral {
+  background-color: var(--ess-color-neutral-bg-secondary);
+  border-color: var(--ess-color-neutral-border);
+  color: var(--ess-color-neutral-fg);
+}
+
+.colored {
+  background-color: var(--ess-color-chip-bg);
+  border-color: var(--ess-color-chip-bg);
+  color: var(--ess-color-chip-text);
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  border-radius: var(--ess-border-radius-round);
+  width: 18px;
+  height: 18px;
+  transition: background-color var(--ess-duration-fast) var(--ess-ease-out);
+}
+
+.remove:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.remove:focus-visible {
+  outline: var(--ess-border-width-medium) solid var(--ess-color-primary-bg);
+  outline-offset: 1px;
+}

@@ -1,0 +1,25 @@
+import { PageHeader, Badge } from '@voyado-kth/ui';
+import { Gift } from 'lucide-react';
+import styles from './ComingSoon.module.css';
+
+export function ComingSoon() {
+  return (
+    <div className={styles.page}>
+      <PageHeader
+        title="Rewards Store"
+        subtitle="Points redemption and reward catalog management"
+      >
+        <Badge variant="info">Team 5</Badge>
+      </PageHeader>
+      <div className={styles.emptyState}>
+        <div className={styles.iconCircle}>
+          <Gift size={32} strokeWidth={1.5} />
+        </div>
+        <h2 className={styles.emptyTitle}>Under Construction</h2>
+        <p className={styles.emptyDescription}>
+          This module is being built during the workshop. Check back soon!
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,101 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ess-spacing-200);
+  border: var(--ess-border-width-small) solid transparent;
+  border-radius: var(--ess-border-radius-small);
+  font-family: var(--ess-font-family);
+  font-weight: var(--ess-font-weight-medium);
+  cursor: pointer;
+  transition:
+    background-color var(--ess-duration-fast) var(--ess-ease-out),
+    border-color var(--ess-duration-fast) var(--ess-ease-out),
+    color var(--ess-duration-fast) var(--ess-ease-out),
+    box-shadow var(--ess-duration-fast) var(--ess-ease-out);
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1.2;
+}
+
+.button:focus-visible {
+  outline: var(--ess-border-width-medium) solid var(--ess-color-primary-bg);
+  outline-offset: 2px;
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Sizes */
+.small {
+  padding: var(--ess-spacing-100) var(--ess-spacing-200);
+  font-size: var(--ess-font-size-small);
+  height: 26px;
+}
+
+.medium {
+  padding: var(--ess-spacing-200) var(--ess-spacing-400);
+  font-size: var(--ess-font-size-medium);
+  height: 34px;
+}
+
+/* Variants */
+.primary {
+  background-color: var(--ess-color-primary-bg);
+  border-color: var(--ess-color-primary-border);
+  color: var(--ess-color-primary-text);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--ess-color-primary-bg-hover);
+}
+
+.primary:active:not(:disabled) {
+  background-color: var(--ess-color-primary-bg-active);
+}
+
+.danger {
+  background-color: var(--ess-color-danger-bg);
+  border-color: var(--ess-color-danger-bg);
+  color: var(--ess-color-danger-text);
+}
+
+.danger:hover:not(:disabled) {
+  background-color: var(--ess-color-danger-bg-hover);
+  border-color: var(--ess-color-danger-bg-hover);
+}
+
+.neutral {
+  background-color: var(--ess-color-control-bg);
+  border-color: var(--ess-color-control-border);
+  color: var(--ess-color-neutral-fg);
+}
+
+.neutral:hover:not(:disabled) {
+  border-color: var(--ess-color-control-border-hover);
+  background-color: var(--ess-color-neutral-bg);
+}
+
+.ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--ess-color-neutral-fg);
+}
+
+.ghost:hover:not(:disabled) {
+  background-color: var(--ess-color-neutral-bg-secondary);
+}
+
+.inverted {
+  background-color: var(--ess-color-inverted-bg);
+  border-color: var(--ess-color-inverted-bg);
+  color: var(--ess-color-inverted-text);
+}
+
+.inverted:hover:not(:disabled) {
+  opacity: 0.9;
+}

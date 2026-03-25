@@ -1,0 +1,17 @@
+{
+  "name": "voyado-x-kth",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Voyado x KTH Medieteknik Workshop Monorepo",
+  "scripts": {
+    "dev": "pnpm --filter shell dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "clean": "pnpm -r exec rm -rf dist node_modules"
+  },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=9"
+  }
+}

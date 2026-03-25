@@ -1,0 +1,169 @@
+/* ──────────────────────────────────────────────────────
+   Sidebar — pixel-match of Voyado Engage sidebar
+   ────────────────────────────────────────────────────── */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: var(--ess-sidebar-width);
+  min-width: var(--ess-sidebar-width);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(--ess-color-sidebar-bg);
+  border-right: var(--ess-border-width-small) solid var(--ess-color-sidebar-border);
+  font-family: var(--ess-font-family);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* ── Top bar (burgundy environment strip) ─────────── */
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 28px;
+  min-height: 28px;
+  background-color: var(--ess-color-sidebar-top-bg);
+  color: var(--ess-color-sidebar-top-text);
+}
+
+.topBarLabel {
+  font-size: 10px;
+  font-weight: var(--ess-font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+.topBarIcon {
+  position: absolute;
+  right: 6px;
+  width: 14px;
+  height: 14px;
+  opacity: 0.85;
+}
+
+/* ── Logo area ────────────────────────────────────── */
+
+.logoArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--ess-spacing-300) var(--ess-spacing-200);
+  border-bottom: var(--ess-border-width-small) solid var(--ess-color-sidebar-border);
+}
+
+/* ── Navigation list ──────────────────────────────── */
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: var(--ess-spacing-200) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ess-spacing-50);
+}
+
+/* ── Individual nav item ──────────────────────────── */
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ess-spacing-100);
+  width: 100%;
+  padding: var(--ess-spacing-200) var(--ess-spacing-100);
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--ess-border-radius-small);
+  color: var(--ess-color-neutral-fg-weak);
+  transition:
+    background-color var(--ess-duration-fast) var(--ess-ease-out),
+    color var(--ess-duration-fast) var(--ess-ease-out);
+}
+
+.navItem:hover .navIcon {
+  background-color: var(--ess-color-sidebar-item-hover);
+}
+
+.navItem:hover {
+  color: var(--ess-color-neutral-fg);
+}
+
+.navItem:focus-visible {
+  outline: var(--ess-border-width-medium) solid var(--ess-color-primary-bg);
+  outline-offset: -2px;
+}
+
+/* ── Nav icon container ───────────────────────────── */
+
+.navIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ess-sidebar-active-ellipse-w);
+  height: var(--ess-sidebar-active-ellipse-h);
+  flex-shrink: 0;
+  border-radius: var(--ess-border-radius-round);
+  transition:
+    background-color var(--ess-duration-fast) var(--ess-ease-out),
+    color var(--ess-duration-fast) var(--ess-ease-out);
+}
+
+.navIcon svg {
+  width: var(--ess-sidebar-icon-size);
+  height: var(--ess-sidebar-icon-size);
+}
+
+/* ── Active state: teal circle, white icon ────────── */
+
+.navItemActive {
+  color: var(--ess-color-neutral-fg);
+}
+
+.navItemActive .navIcon {
+  background-color: var(--ess-color-sidebar-item-active-bg);
+  color: var(--ess-color-sidebar-item-active-text);
+}
+
+.navItemActive .navLabel {
+  color: var(--ess-color-neutral-fg);
+}
+
+/* ── Nav label ────────────────────────────────────── */
+
+.navLabel {
+  font-size: 10px;
+  font-weight: var(--ess-font-weight-normal);
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ── Spacer (pushes bottom items down) ────────────── */
+
+.spacer {
+  flex: 1;
+}
+
+/* ── Divider ──────────────────────────────────────── */
+
+.divider {
+  width: calc(100% - var(--ess-spacing-400) * 2);
+  height: var(--ess-border-width-small);
+  background-color: var(--ess-color-sidebar-border);
+  margin: 0 auto;
+}

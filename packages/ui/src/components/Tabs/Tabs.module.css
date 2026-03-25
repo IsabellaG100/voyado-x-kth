@@ -1,0 +1,56 @@
+.tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-bottom: var(--ess-border-width-small) solid var(--ess-color-neutral-weak-border);
+  font-family: var(--ess-font-family);
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--ess-spacing-300) var(--ess-spacing-400);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--ess-font-size-medium);
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-weak);
+  line-height: var(--ess-font-line-height-base);
+  white-space: nowrap;
+  transition:
+    color var(--ess-duration-fast) var(--ess-ease-out),
+    background-color var(--ess-duration-fast) var(--ess-ease-out);
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: var(--ess-border-width-thick);
+  background-color: transparent;
+  transition: background-color var(--ess-duration-fast) var(--ess-ease-out);
+}
+
+.tab:hover {
+  color: var(--ess-color-neutral-fg);
+  background-color: var(--ess-color-neutral-bg);
+}
+
+.tab:focus-visible {
+  outline: var(--ess-border-width-medium) solid var(--ess-color-primary-bg);
+  outline-offset: -2px;
+}
+
+.active {
+  color: var(--ess-color-burgundy);
+  font-weight: var(--ess-font-weight-medium);
+}
+
+.active::after {
+  background-color: var(--ess-color-burgundy);
+}

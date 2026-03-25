@@ -1,0 +1,76 @@
+.page {
+  padding: var(--ess-spacing-600) var(--ess-spacing-700);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--ess-spacing-400);
+  margin-top: var(--ess-spacing-500);
+}
+
+.moduleCard {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.cardButton {
+  display: flex;
+  align-items: center;
+  gap: var(--ess-spacing-400);
+  width: 100%;
+  padding: var(--ess-spacing-450);
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ess-font-family);
+  color: var(--ess-color-neutral-fg);
+}
+
+.cardButton:focus-visible {
+  outline: 2px solid var(--ess-color-primary-bg);
+  outline-offset: -2px;
+  border-radius: var(--ess-border-radius-medium);
+}
+
+.moduleIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ess-border-radius-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.moduleInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.teamLabel {
+  font-size: var(--ess-font-size-tiny);
+  color: var(--ess-color-neutral-fg-weak);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--ess-font-weight-medium);
+}
+
+.moduleName {
+  font-size: var(--ess-font-size-base);
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-strong);
+  margin-top: 2px;
+}
+
+.arrow {
+  color: var(--ess-color-neutral-fg-weak);
+  flex-shrink: 0;
+  transition: transform var(--ess-duration-fast) var(--ess-ease-out);
+}
+
+.cardButton:hover .arrow {
+  transform: translateX(3px);
+  color: var(--ess-color-neutral-fg);
+}

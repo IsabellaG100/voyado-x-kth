@@ -1,0 +1,35 @@
+.shell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  margin-left: var(--ess-sidebar-width);
+  overflow-y: auto;
+  background: var(--ess-color-neutral-bg);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--ess-color-neutral-fg);
+  transition: opacity var(--ess-duration-fast) var(--ess-ease-out);
+}
+
+.logo:hover {
+  opacity: 0.7;
+}
+
+.logo:focus-visible {
+  outline: 2px solid var(--ess-color-primary-bg);
+  outline-offset: 2px;
+  border-radius: var(--ess-border-radius-small);
+}
