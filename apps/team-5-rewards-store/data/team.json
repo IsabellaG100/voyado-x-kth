@@ -1,0 +1,40 @@
+{
+  "teamName": "Rewards Rangers",
+  "members": [
+    {
+      "id": "member-1",
+      "name": "Hilda Norberg",
+      "role": "Product Owner",
+      "initials": "HN",
+      "color": "#4790ff"
+    },
+    {
+      "id": "member-2",
+      "name": "Sven Karlsson",
+      "role": "Tech Lead",
+      "initials": "SK",
+      "color": "#43a584"
+    },
+    {
+      "id": "member-3",
+      "name": "Tilde Öberg",
+      "role": "Frontend Dev",
+      "initials": "TÖ",
+      "color": "#791A3F"
+    },
+    {
+      "id": "member-4",
+      "name": "Björn Sundqvist",
+      "role": "QA Engineer",
+      "initials": "BS",
+      "color": "#e8725a"
+    },
+    {
+      "id": "member-5",
+      "name": "Märta Hellström",
+      "role": "UI Designer",
+      "initials": "MH",
+      "color": "#2d6e6d"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "teamName": "Campaign Force",
+  "members": [
+    {
+      "id": "member-1",
+      "name": "Ingrid Söderström",
+      "role": "Product Owner",
+      "initials": "IS",
+      "color": "#388988"
+    },
+    {
+      "id": "member-2",
+      "name": "Lars Engström",
+      "role": "Frontend Dev",
+      "initials": "LE",
+      "color": "#7b61ff"
+    },
+    {
+      "id": "member-3",
+      "name": "Ebba Hallberg",
+      "role": "Backend Dev",
+      "initials": "EH",
+      "color": "#2d6e6d"
+    },
+    {
+      "id": "member-4",
+      "name": "Anders Månsson",
+      "role": "UX Designer",
+      "initials": "AM",
+      "color": "#e8725a"
+    },
+    {
+      "id": "member-5",
+      "name": "Klara Ström",
+      "role": "Full-stack Dev",
+      "initials": "KS",
+      "color": "#d8b60c"
+    }
+  ]
+}

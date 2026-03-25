@@ -1,0 +1,40 @@
+{
+  "teamName": "Analytics Wizards",
+  "members": [
+    {
+      "id": "member-1",
+      "name": "Filippa Lund",
+      "role": "Product Owner",
+      "initials": "FL",
+      "color": "#d8b60c"
+    },
+    {
+      "id": "member-2",
+      "name": "Henrik Eklund",
+      "role": "Data Analyst",
+      "initials": "HE",
+      "color": "#388988"
+    },
+    {
+      "id": "member-3",
+      "name": "Elvira Persson",
+      "role": "Full-stack Dev",
+      "initials": "EP",
+      "color": "#4790ff"
+    },
+    {
+      "id": "member-4",
+      "name": "Albin Granström",
+      "role": "Frontend Dev",
+      "initials": "AG",
+      "color": "#791A3F"
+    },
+    {
+      "id": "member-5",
+      "name": "Tuva Nordlund",
+      "role": "DevOps",
+      "initials": "TN",
+      "color": "#43a584"
+    }
+  ]
+}

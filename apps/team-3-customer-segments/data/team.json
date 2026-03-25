@@ -1,0 +1,40 @@
+{
+  "teamName": "Segment Builders",
+  "members": [
+    {
+      "id": "member-1",
+      "name": "Elsa Wikström",
+      "role": "Product Owner",
+      "initials": "EW",
+      "color": "#43a584"
+    },
+    {
+      "id": "member-2",
+      "name": "Gustav Åberg",
+      "role": "Tech Lead",
+      "initials": "GÅ",
+      "color": "#e8725a"
+    },
+    {
+      "id": "member-3",
+      "name": "Alma Forsgren",
+      "role": "Data Analyst",
+      "initials": "AF",
+      "color": "#791A3F"
+    },
+    {
+      "id": "member-4",
+      "name": "Viktor Dahlberg",
+      "role": "Backend Dev",
+      "initials": "VD",
+      "color": "#4790ff"
+    },
+    {
+      "id": "member-5",
+      "name": "Sigrid Lövgren",
+      "role": "Frontend Dev",
+      "initials": "SL",
+      "color": "#d8b60c"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "teamName": "Catalog Squad",
+  "members": [
+    {
+      "id": "member-1",
+      "name": "Linnéa Ekström",
+      "role": "Product Owner",
+      "initials": "LE",
+      "color": "#e8725a"
+    },
+    {
+      "id": "member-2",
+      "name": "Oskar Nyström",
+      "role": "Full-stack Dev",
+      "initials": "ON",
+      "color": "#2d6e6d"
+    },
+    {
+      "id": "member-3",
+      "name": "Wilma Hedlund",
+      "role": "Frontend Dev",
+      "initials": "WH",
+      "color": "#d8b60c"
+    },
+    {
+      "id": "member-4",
+      "name": "Axel Sjöberg",
+      "role": "UI Designer",
+      "initials": "AS",
+      "color": "#7b61ff"
+    },
+    {
+      "id": "member-5",
+      "name": "Maja Holmgren",
+      "role": "DevOps",
+      "initials": "MH",
+      "color": "#388988"
+    }
+  ]
+}
