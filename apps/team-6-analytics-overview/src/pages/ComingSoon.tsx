@@ -1,5 +1,6 @@
-import { PageHeader, Badge } from '@voyado-kth/ui';
+import { PageHeader, Badge, AvatarStack } from '@voyado-kth/ui';
 import { BarChart3 } from 'lucide-react';
+import teamData from '../../data/team.json';
 import styles from './ComingSoon.module.css';
 
 export function ComingSoon() {
@@ -9,7 +10,13 @@ export function ComingSoon() {
         title="Analytics Overview"
         subtitle="KPI charts, engagement metrics, and reporting"
       >
-        <Badge variant="info">Team 6</Badge>
+        <div className={styles.teamInfo}>
+          <div className={styles.teamMeta}>
+            <Badge variant="info">Team 6</Badge>
+            <span className={styles.teamName}>{teamData.teamName}</span>
+          </div>
+          <AvatarStack members={teamData.members} />
+        </div>
       </PageHeader>
       <div className={styles.emptyState}>
         <div className={styles.iconCircle}>

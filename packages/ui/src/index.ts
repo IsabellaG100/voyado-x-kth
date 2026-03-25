@@ -53,6 +53,9 @@ export type { LoaderProps, LoaderSize } from './components/Loader/Loader';
 export { StateBadge } from './components/StateBadge/StateBadge';
 export type { StateBadgeProps, StateBadgeStatus } from './components/StateBadge/StateBadge';
 
+export { AvatarStack } from './components/AvatarStack/AvatarStack';
+export type { AvatarStackProps, AvatarMember } from './components/AvatarStack/AvatarStack';
+
 // Layouts
 export { Flex } from './layouts/Flex/Flex';
 export type { FlexProps } from './layouts/Flex/Flex';

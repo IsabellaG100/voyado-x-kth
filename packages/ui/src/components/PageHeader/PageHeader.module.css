@@ -3,7 +3,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--ess-spacing-400);
-  padding: var(--ess-spacing-500) 0 var(--ess-spacing-400);
+  padding: var(--ess-spacing-500) var(--ess-spacing-700) var(--ess-spacing-400);
   border-bottom: var(--ess-border-width-small) solid var(--ess-color-neutral-border);
   font-family: var(--ess-font-family);
 }

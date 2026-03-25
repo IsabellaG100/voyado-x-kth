@@ -1,5 +1,6 @@
-import { PageHeader, Badge } from '@voyado-kth/ui';
+import { PageHeader, Badge, AvatarStack } from '@voyado-kth/ui';
 import { Heart } from 'lucide-react';
+import teamData from '../../data/team.json';
 import styles from './ComingSoon.module.css';
 
 export function ComingSoon() {
@@ -9,7 +10,13 @@ export function ComingSoon() {
         title="Loyalty Dashboard"
         subtitle="Member overview, points balance, tier distribution, and enrollment trends"
       >
-        <Badge variant="info">Team 1</Badge>
+        <div className={styles.teamInfo}>
+          <div className={styles.teamMeta}>
+            <Badge variant="info">Team 1</Badge>
+            <span className={styles.teamName}>{teamData.teamName}</span>
+          </div>
+          <AvatarStack members={teamData.members} />
+        </div>
       </PageHeader>
       <div className={styles.emptyState}>
         <div className={styles.iconCircle}>

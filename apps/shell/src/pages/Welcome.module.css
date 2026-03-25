@@ -1,12 +1,11 @@
 .page {
-  padding: var(--ess-spacing-600) var(--ess-spacing-700);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--ess-spacing-400);
-  margin-top: var(--ess-spacing-500);
+  padding: var(--ess-spacing-500) var(--ess-spacing-700);
 }
 
 .moduleCard {

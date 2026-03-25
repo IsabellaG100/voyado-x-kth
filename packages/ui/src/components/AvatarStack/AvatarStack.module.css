@@ -1,0 +1,122 @@
+.stack {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: var(--ess-spacing-100) 0;
+}
+
+.avatarWrapper {
+  position: relative;
+  margin-left: -10px;
+  transition: margin-left 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: calc(var(--index) * 30ms);
+  z-index: calc(10 - var(--index));
+}
+
+.avatarWrapper:first-child {
+  margin-left: 0;
+}
+
+.stack:hover .avatarWrapper {
+  margin-left: 4px;
+}
+
+.stack:hover .avatarWrapper:first-child {
+  margin-left: 0;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--ess-color-neutral-weak-bg);
+  cursor: default;
+  transition: transform 200ms var(--ess-ease-out);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.avatar:hover {
+  transform: scale(1.08);
+  z-index: 20;
+}
+
+.initials {
+  font-family: var(--ess-font-family-display);
+  font-size: 13px;
+  font-weight: var(--ess-font-weight-semibold);
+  color: #ffffff;
+  line-height: 1;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+.overflow {
+  background-color: var(--ess-color-neutral-bg-secondary);
+  border-color: var(--ess-color-neutral-weak-bg);
+}
+
+.overflow .initials {
+  color: var(--ess-color-neutral-fg-weak);
+  font-size: 12px;
+}
+
+.tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 6px 10px;
+  background-color: var(--ess-color-inverted-bg);
+  border-radius: var(--ess-border-radius-small);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: var(--ess-shadow-medium);
+  pointer-events: none;
+  animation: tooltipIn 150ms var(--ess-ease-out);
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  margin-left: -4px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--ess-color-inverted-bg);
+  transform: rotate(45deg);
+}
+
+.tooltipName {
+  font-family: var(--ess-font-family);
+  font-size: 13px;
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-inverted-text);
+  line-height: 1.3;
+}
+
+.tooltipRole {
+  font-family: var(--ess-font-family);
+  font-size: 11px;
+  font-weight: var(--ess-font-weight-normal);
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.3;
+}
+
+@keyframes tooltipIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
