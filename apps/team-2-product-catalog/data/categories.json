@@ -1,0 +1,7 @@
+[
+  { "id": "clothing", "name": "Clothing", "productCount": 5 },
+  { "id": "accessories", "name": "Accessories", "productCount": 4 },
+  { "id": "shoes", "name": "Shoes", "productCount": 3 },
+  { "id": "beauty", "name": "Beauty", "productCount": 3 },
+  { "id": "home", "name": "Home", "productCount": 3 }
+]

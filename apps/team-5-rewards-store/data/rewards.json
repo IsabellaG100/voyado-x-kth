@@ -1,0 +1,122 @@
+[
+  {
+    "id": "r1",
+    "name": "20% Off Next Purchase",
+    "description": "Get 20% off your next purchase, online or in-store. Valid for 30 days after redemption.",
+    "pointsCost": 500,
+    "category": "discount",
+    "imageUrl": "https://placehold.co/400x400/388988/white?text=20%25+Off",
+    "available": true,
+    "stock": null
+  },
+  {
+    "id": "r2",
+    "name": "Free Shipping Voucher",
+    "description": "Free standard shipping on your next online order. No minimum spend required.",
+    "pointsCost": 200,
+    "category": "discount",
+    "imageUrl": "https://placehold.co/400x400/4790ff/white?text=Free+Shipping",
+    "available": true,
+    "stock": null
+  },
+  {
+    "id": "r3",
+    "name": "Organic Candle Set",
+    "description": "Set of three hand-poured soy candles in Nordic-inspired scents: pine, birch, and lingonberry.",
+    "pointsCost": 1500,
+    "category": "product",
+    "imageUrl": "https://placehold.co/400x400/d4a574/white?text=Candle+Set",
+    "available": true,
+    "stock": 85
+  },
+  {
+    "id": "r4",
+    "name": "Spa Day Experience",
+    "description": "Full-day spa experience at select partner locations across Sweden. Includes treatment and lunch.",
+    "pointsCost": 5000,
+    "category": "experience",
+    "imageUrl": "https://placehold.co/400x400/791A3F/white?text=Spa+Day",
+    "available": true,
+    "stock": 20
+  },
+  {
+    "id": "r5",
+    "name": "Limited Edition Tote Bag",
+    "description": "Exclusive Voyado x Swedish Design tote bag in organic cotton. Limited run of 200 pieces.",
+    "pointsCost": 2000,
+    "category": "product",
+    "imageUrl": "https://placehold.co/400x400/2c3e50/white?text=Tote+Bag",
+    "available": true,
+    "stock": 42
+  },
+  {
+    "id": "r6",
+    "name": "50 SEK Gift Card",
+    "description": "Digital gift card worth 50 SEK, redeemable at any participating store or online.",
+    "pointsCost": 800,
+    "category": "discount",
+    "imageUrl": "https://placehold.co/400x400/43a584/white?text=50+SEK",
+    "available": true,
+    "stock": null
+  },
+  {
+    "id": "r7",
+    "name": "Coffee Tasting Workshop",
+    "description": "Guided speciality coffee tasting at Da Matteo in Gothenburg. Includes pastries and a bag of beans.",
+    "pointsCost": 3000,
+    "category": "experience",
+    "imageUrl": "https://placehold.co/400x400/5a3e2b/white?text=Coffee+Tasting",
+    "available": true,
+    "stock": 15
+  },
+  {
+    "id": "r8",
+    "name": "Merino Wool Beanie",
+    "description": "Soft merino wool beanie in charcoal grey. One size fits all.",
+    "pointsCost": 1200,
+    "category": "product",
+    "imageUrl": "https://placehold.co/400x400/708090/white?text=Wool+Beanie",
+    "available": true,
+    "stock": 120
+  },
+  {
+    "id": "r9",
+    "name": "100 SEK Gift Card",
+    "description": "Digital gift card worth 100 SEK, redeemable at any participating store or online.",
+    "pointsCost": 1500,
+    "category": "discount",
+    "imageUrl": "https://placehold.co/400x400/43a584/white?text=100+SEK",
+    "available": true,
+    "stock": null
+  },
+  {
+    "id": "r10",
+    "name": "Cooking Class for Two",
+    "description": "Three-course Swedish cooking class for two at a top Stockholm restaurant. Includes wine pairing.",
+    "pointsCost": 6000,
+    "category": "experience",
+    "imageUrl": "https://placehold.co/400x400/c0392b/white?text=Cooking+Class",
+    "available": true,
+    "stock": 8
+  },
+  {
+    "id": "r11",
+    "name": "Stainless Steel Water Bottle",
+    "description": "Double-walled insulated water bottle (500 ml) with the Voyado Engage logo. Keeps drinks cold for 24 hours.",
+    "pointsCost": 900,
+    "category": "product",
+    "imageUrl": "https://placehold.co/400x400/b0c4de/333?text=Water+Bottle",
+    "available": false,
+    "stock": 0
+  },
+  {
+    "id": "r12",
+    "name": "Early Access Pass",
+    "description": "Get 48-hour early access to all upcoming sales and new collection launches for the next 6 months.",
+    "pointsCost": 3500,
+    "category": "experience",
+    "imageUrl": "https://placehold.co/400x400/ffd700/333?text=Early+Access",
+    "available": true,
+    "stock": null
+  }
+]

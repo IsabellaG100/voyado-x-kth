@@ -1,0 +1,7 @@
+[
+  { "name": "Spring Sale", "channel": "email", "openRate": 42.3, "clickRate": 12.1, "conversionRate": 3.8 },
+  { "name": "Loyalty Tier Upgrade", "channel": "email", "openRate": 55.8, "clickRate": 18.4, "conversionRate": 7.2 },
+  { "name": "Weekend Flash Deal", "channel": "sms", "openRate": 78.5, "clickRate": 22.6, "conversionRate": 9.1 },
+  { "name": "VIP Exclusive Preview", "channel": "push", "openRate": 38.6, "clickRate": 9.7, "conversionRate": 4.5 },
+  { "name": "Monthly Newsletter", "channel": "email", "openRate": 31.2, "clickRate": 6.8, "conversionRate": 1.9 }
+]

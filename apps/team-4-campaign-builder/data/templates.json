@@ -1,0 +1,44 @@
+[
+  {
+    "id": "t1",
+    "name": "Minimal Announcement",
+    "channel": "email",
+    "thumbnailUrl": "https://placehold.co/300x400/388988/white?text=Minimal",
+    "layout": "single-column"
+  },
+  {
+    "id": "t2",
+    "name": "Product Showcase",
+    "channel": "email",
+    "thumbnailUrl": "https://placehold.co/300x400/4790ff/white?text=Showcase",
+    "layout": "two-column"
+  },
+  {
+    "id": "t3",
+    "name": "Flash Sale",
+    "channel": "email",
+    "thumbnailUrl": "https://placehold.co/300x400/d4563a/white?text=Flash+Sale",
+    "layout": "hero-image"
+  },
+  {
+    "id": "t4",
+    "name": "SMS Alert",
+    "channel": "sms",
+    "thumbnailUrl": "https://placehold.co/300x400/43a584/white?text=SMS+Alert",
+    "layout": "text-only"
+  },
+  {
+    "id": "t5",
+    "name": "Push Notification",
+    "channel": "push",
+    "thumbnailUrl": "https://placehold.co/300x400/791A3F/white?text=Push+Note",
+    "layout": "compact"
+  },
+  {
+    "id": "t6",
+    "name": "Newsletter",
+    "channel": "email",
+    "thumbnailUrl": "https://placehold.co/300x400/2c3e50/white?text=Newsletter",
+    "layout": "multi-section"
+  }
+]

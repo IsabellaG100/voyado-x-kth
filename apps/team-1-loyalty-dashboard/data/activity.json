@@ -1,0 +1,17 @@
+[
+  { "id": "a1", "memberId": "m1", "memberName": "Erik Lindström", "type": "points_earned", "points": 350, "description": "Purchase at Store Stockholm", "timestamp": "2026-03-20T14:30:00Z" },
+  { "id": "a2", "memberId": "m8", "memberName": "Freja Karlsson", "type": "points_redeemed", "points": -2000, "description": "Redeemed: Limited Edition Tote Bag", "timestamp": "2026-03-19T16:45:00Z" },
+  { "id": "a3", "memberId": "m16", "memberName": "Alma Lindqvist", "type": "tier_upgrade", "points": 0, "description": "Upgraded from Gold to Platinum", "timestamp": "2026-03-19T09:12:00Z" },
+  { "id": "a4", "memberId": "m15", "memberName": "Noah Ström", "type": "enrollment", "points": 100, "description": "Welcome bonus — new member enrollment", "timestamp": "2026-03-18T11:00:00Z" },
+  { "id": "a5", "memberId": "m2", "memberName": "Anna Bergström", "type": "points_earned", "points": 520, "description": "Purchase at Store Gothenburg", "timestamp": "2026-03-18T10:22:00Z" },
+  { "id": "a6", "memberId": "m14", "memberName": "Wilma Nordström", "type": "points_earned", "points": 275, "description": "Online purchase — Spring Collection", "timestamp": "2026-03-17T18:05:00Z" },
+  { "id": "a7", "memberId": "m10", "memberName": "Astrid Olsson", "type": "points_redeemed", "points": -500, "description": "Redeemed: 20% Off Next Purchase", "timestamp": "2026-03-17T13:40:00Z" },
+  { "id": "a8", "memberId": "m5", "memberName": "Oscar Andersson", "type": "points_earned", "points": 680, "description": "Purchase at Store Uppsala", "timestamp": "2026-03-15T15:55:00Z" },
+  { "id": "a9", "memberId": "m20", "memberName": "Vera Sandberg", "type": "points_earned", "points": 190, "description": "Online purchase — Accessories", "timestamp": "2026-03-14T12:30:00Z" },
+  { "id": "a10", "memberId": "m12", "memberName": "Saga Håkansson", "type": "tier_upgrade", "points": 0, "description": "Upgraded from Bronze to Silver", "timestamp": "2026-03-12T08:45:00Z" },
+  { "id": "a11", "memberId": "m3", "memberName": "Lars Johansson", "type": "points_earned", "points": 410, "description": "Purchase at Store Malmö", "timestamp": "2026-03-10T14:18:00Z" },
+  { "id": "a12", "memberId": "m6", "memberName": "Elsa Nilsson", "type": "points_redeemed", "points": -200, "description": "Redeemed: Free Shipping Voucher", "timestamp": "2026-03-08T19:22:00Z" },
+  { "id": "a13", "memberId": "m9", "memberName": "Hugo Persson", "type": "points_earned", "points": 310, "description": "Purchase at Store Lund", "timestamp": "2026-03-06T11:10:00Z" },
+  { "id": "a14", "memberId": "m18", "memberName": "Ebba Wallin", "type": "points_earned", "points": 445, "description": "Online purchase — Home collection", "timestamp": "2026-03-05T09:35:00Z" },
+  { "id": "a15", "memberId": "m17", "memberName": "Oliver Söderberg", "type": "enrollment", "points": 100, "description": "Welcome bonus — new member enrollment", "timestamp": "2026-03-02T10:00:00Z" }
+]

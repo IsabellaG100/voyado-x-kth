@@ -1,0 +1,6 @@
+[
+  { "name": "Bronze", "minPoints": 0, "color": "#cd7f32", "memberCount": 12500 },
+  { "name": "Silver", "minPoints": 1000, "color": "#c0c0c0", "memberCount": 8200 },
+  { "name": "Gold", "minPoints": 5000, "color": "#ffd700", "memberCount": 3100 },
+  { "name": "Platinum", "minPoints": 15000, "color": "#791A3F", "memberCount": 850 }
+]

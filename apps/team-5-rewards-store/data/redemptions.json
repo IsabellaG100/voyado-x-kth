@@ -1,0 +1,42 @@
+[
+  {
+    "id": "red1",
+    "rewardId": "r1",
+    "rewardName": "20% Off Next Purchase",
+    "pointsSpent": 500,
+    "redeemedDate": "2026-02-14",
+    "customerId": "m1"
+  },
+  {
+    "id": "red2",
+    "rewardId": "r2",
+    "rewardName": "Free Shipping Voucher",
+    "pointsSpent": 200,
+    "redeemedDate": "2026-01-22",
+    "customerId": "m1"
+  },
+  {
+    "id": "red3",
+    "rewardId": "r8",
+    "rewardName": "Merino Wool Beanie",
+    "pointsSpent": 1200,
+    "redeemedDate": "2025-12-18",
+    "customerId": "m1"
+  },
+  {
+    "id": "red4",
+    "rewardId": "r6",
+    "rewardName": "50 SEK Gift Card",
+    "pointsSpent": 800,
+    "redeemedDate": "2025-11-05",
+    "customerId": "m1"
+  },
+  {
+    "id": "red5",
+    "rewardId": "r3",
+    "rewardName": "Organic Candle Set",
+    "pointsSpent": 1500,
+    "redeemedDate": "2025-09-30",
+    "customerId": "m1"
+  }
+]

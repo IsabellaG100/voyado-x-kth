@@ -1,0 +1,5 @@
+[
+  { "channel": "Web", "value": 1470000, "percentage": 60, "color": "#388988" },
+  { "channel": "App", "value": 612500, "percentage": 25, "color": "#4790ff" },
+  { "channel": "In-store", "value": 367500, "percentage": 15, "color": "#43a584" }
+]

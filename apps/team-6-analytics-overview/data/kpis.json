@@ -1,0 +1,6 @@
+[
+  { "label": "Revenue", "value": 2450000, "previousValue": 2180000, "unit": "SEK", "trend": "up", "trendPercentage": 12.4 },
+  { "label": "Active Customers", "value": 24650, "previousValue": 23100, "trend": "up", "trendPercentage": 6.7 },
+  { "label": "Avg Order Value", "value": 890, "previousValue": 920, "unit": "SEK", "trend": "down", "trendPercentage": -3.3 },
+  { "label": "Retention Rate", "value": 78.5, "previousValue": 76.2, "unit": "%", "trend": "up", "trendPercentage": 3.0 }
+]

@@ -1,0 +1,14 @@
+{
+  "id": "m1",
+  "firstName": "Anna",
+  "lastName": "Bergström",
+  "email": "anna.bergstrom@example.com",
+  "tier": "Gold",
+  "pointsBalance": 4800,
+  "totalSpend": 32000,
+  "lastPurchaseDate": "2026-03-18",
+  "enrollmentDate": "2024-01-10",
+  "city": "Stockholm",
+  "country": "Sweden",
+  "isActive": true
+}

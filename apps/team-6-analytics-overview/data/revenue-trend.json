@@ -1,0 +1,14 @@
+[
+  { "date": "2025-04", "value": 1850000, "label": "Apr 2025" },
+  { "date": "2025-05", "value": 1780000, "label": "May 2025" },
+  { "date": "2025-06", "value": 1920000, "label": "Jun 2025" },
+  { "date": "2025-07", "value": 1650000, "label": "Jul 2025" },
+  { "date": "2025-08", "value": 1740000, "label": "Aug 2025" },
+  { "date": "2025-09", "value": 2010000, "label": "Sep 2025" },
+  { "date": "2025-10", "value": 2150000, "label": "Oct 2025" },
+  { "date": "2025-11", "value": 2480000, "label": "Nov 2025" },
+  { "date": "2025-12", "value": 2720000, "label": "Dec 2025" },
+  { "date": "2026-01", "value": 2180000, "label": "Jan 2026" },
+  { "date": "2026-02", "value": 2290000, "label": "Feb 2026" },
+  { "date": "2026-03", "value": 2450000, "label": "Mar 2026" }
+]
