@@ -17,6 +17,8 @@ export function useGitHubWorkshop(
   // Resolve token: explicit option > env var
   const token = options.token ?? getEnvToken();
 
+  console.log('[useGitHubWorkshop] Using token:', token ? '***' : 'none');
+
   const clientRef = useRef<GitHubClient>(new GitHubClient(token));
   const isMounted = useRef(true);
 
@@ -75,10 +77,12 @@ export function useGitHubWorkshop(
       });
     } catch (err) {
       if (!isMounted.current) return;
+      const message = err instanceof Error ? err.message : 'Failed to fetch data';
+      console.warn('[useGitHubWorkshop]', message);
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: err instanceof Error ? err.message : 'Failed to fetch data',
+        error: message,
       }));
     }
   }, []);
@@ -102,9 +106,7 @@ export function useGitHubWorkshop(
 
 function getEnvToken(): string | undefined {
   try {
-    // Vite exposes env vars via import.meta.env
-    return (import.meta as unknown as { env?: Record<string, string> }).env
-      ?.VITE_GITHUB_TOKEN;
+    return import.meta.env?.VITE_GITHUB_TOKEN as string | undefined;
   } catch {
     return undefined;
   }

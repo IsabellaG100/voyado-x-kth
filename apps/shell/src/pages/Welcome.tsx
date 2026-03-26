@@ -95,7 +95,10 @@ function timeAgo(date: Date): string {
 
 export function Welcome() {
   const navigate = useNavigate();
-  const github = useGitHubWorkshop({ pollInterval: 60_000 });
+  const github = useGitHubWorkshop({
+    pollInterval: 60_000,
+    token: import.meta.env.VITE_GITHUB_TOKEN,
+  });
 
   const workshopData: WorkshopData = github.workshopData ?? (fallbackData as unknown as WorkshopData);
   const isLive = github.workshopData !== null;

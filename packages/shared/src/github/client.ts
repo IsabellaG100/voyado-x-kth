@@ -30,6 +30,16 @@ export class GitHubClient {
   private async get<T>(url: string): Promise<T> {
     const res = await fetch(url, { headers: this.headers() });
     if (!res.ok) {
+      if (res.status === 404 && !this.token) {
+        throw new Error(
+          `GitHub API 404: This is likely a private repo. Set VITE_GITHUB_TOKEN in .env.local with a classic PAT that has "repo" scope.`,
+        );
+      }
+      if (res.status === 404) {
+        throw new Error(
+          `GitHub API 404: Token may lack access. Ensure your PAT has "repo" scope, and if using SSO, authorize it for the "${OWNER}" org. (${url})`,
+        );
+      }
       throw new Error(`GitHub API ${res.status}: ${res.statusText} (${url})`);
     }
     return res.json() as Promise<T>;

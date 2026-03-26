@@ -5,7 +5,7 @@ import workshopData from '../../../../workshop.json';
 import styles from './ComingSoon.module.css';
 
 export function ComingSoon() {
-  const github = useGitHubWorkshop({ pollInterval: 60_000 });
+  const github = useGitHubWorkshop({ pollInterval: 60_000, token: import.meta.env.VITE_GITHUB_TOKEN });
   const workshopSource = github.workshopData ?? workshopData;
   const team = workshopSource.teams.find(t => t.id === 'team-2')!;
 
