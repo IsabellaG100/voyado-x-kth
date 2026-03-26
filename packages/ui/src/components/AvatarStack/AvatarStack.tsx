@@ -7,6 +7,7 @@ export interface AvatarMember {
   role: string;
   initials: string;
   color: string;
+  avatarUrl?: string;
 }
 
 export interface AvatarStackProps {
@@ -31,10 +32,18 @@ export function AvatarStack({ members, maxVisible = 5 }: AvatarStackProps) {
         >
           <div
             className={styles.avatar}
-            style={{ backgroundColor: member.color }}
+            style={{ backgroundColor: member.avatarUrl ? 'transparent' : member.color }}
             aria-label={`${member.name}, ${member.role}`}
           >
-            <span className={styles.initials}>{member.initials}</span>
+            {member.avatarUrl ? (
+              <img
+                src={member.avatarUrl}
+                alt={member.name}
+                className={styles.avatarImg}
+              />
+            ) : (
+              <span className={styles.initials}>{member.initials}</span>
+            )}
           </div>
           {hoveredId === member.id && (
             <div className={styles.tooltip}>

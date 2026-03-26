@@ -1,11 +1,14 @@
 import { PageHeader, Badge, AvatarStack } from '@voyado-kth/ui';
+import { useGitHubWorkshop } from '@voyado-kth/shared';
 import { ShoppingBag } from 'lucide-react';
 import workshopData from '../../../../workshop.json';
 import styles from './ComingSoon.module.css';
 
-const team = workshopData.teams.find(t => t.id === 'team-2')!;
-
 export function ComingSoon() {
+  const github = useGitHubWorkshop({ pollInterval: 60_000 });
+  const workshopSource = github.workshopData ?? workshopData;
+  const team = workshopSource.teams.find(t => t.id === 'team-2')!;
+
   return (
     <div className={styles.page}>
       <PageHeader
@@ -19,13 +22,17 @@ export function ComingSoon() {
           </div>
           {team.members.length > 0 && (
             <AvatarStack
-              members={team.members.map(m => ({
-                id: m.email || m.name,
-                name: m.name,
-                role: m.role,
-                initials: m.initials,
-                color: m.avatarColor,
-              }))}
+              members={team.members.map(m => {
+                const ghData = m.github ? github.members[m.github] : undefined;
+                return {
+                  id: m.email || m.name,
+                  name: m.name,
+                  role: m.role,
+                  initials: m.initials,
+                  color: m.avatarColor,
+                  avatarUrl: ghData?.avatarUrl ?? undefined,
+                };
+              })}
             />
           )}
         </div>

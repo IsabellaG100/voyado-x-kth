@@ -3,6 +3,65 @@
   min-height: 100%;
 }
 
+/* ─── Loading state ────────────────────────────────────────────────────────── */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ess-spacing-400);
+  padding: var(--ess-spacing-1000) var(--ess-spacing-700);
+  color: var(--ess-color-neutral-fg-weak);
+  font-size: var(--ess-font-size-medium);
+}
+
+/* ─── Header status indicators ─────────────────────────────────────────────── */
+.headerStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--ess-spacing-300);
+}
+
+.statusLive {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-success-bg);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ess-color-success-bg);
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.statusWarning {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-danger-bg);
+}
+
+.statusFallback {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-weak);
+}
+
 /* ─── KPI summary row ───────────────────────────────────────────────────────── */
 .kpiRow {
   display: grid;
@@ -358,6 +417,19 @@
 
 .prLink:hover {
   text-decoration: underline;
+}
+
+.commitCount {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-weak);
+}
+
+.branchExists {
+  color: var(--ess-color-success-bg);
 }
 
 .navHint {

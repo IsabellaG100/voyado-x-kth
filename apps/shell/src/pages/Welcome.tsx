@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { PageHeader, Card, Badge, KpiCard, AvatarStack } from '@voyado-kth/ui';
+import { PageHeader, Card, Badge, KpiCard, AvatarStack, Loader } from '@voyado-kth/ui';
 import type { AvatarMember } from '@voyado-kth/ui';
+import { useGitHubWorkshop } from '@voyado-kth/shared';
+import type { WorkshopData, Team } from '@voyado-kth/shared';
 import {
   Heart,
   ShoppingBag,
@@ -15,8 +17,11 @@ import {
   Circle,
   Clock,
   Check,
+  AlertTriangle,
+  RefreshCw,
+  GitCommitHorizontal,
 } from 'lucide-react';
-import workshopData from '../../../../workshop.json';
+import fallbackData from '../../../../workshop.json';
 import styles from './Welcome.module.css';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -41,36 +46,26 @@ const teamIcons: Record<string, typeof Heart> = {
 
 // ─── Helper functions ─────────────────────────────────────────────────────────
 
-type Team = (typeof workshopData.teams)[number];
-
 function getCompletedSteps(team: Team): number {
   return Object.values(team.progress.steps).filter(s => s === 'done').length;
 }
 
-function getTotalMembers(): number {
-  return workshopData.teams.reduce((sum, t) => sum + t.members.length, 0);
-}
-
-function getOverallProgress(): number {
-  const total = workshopData.teams.length * workshopData.workflowSteps.length;
-  const done = workshopData.teams.reduce((sum, t) => sum + getCompletedSteps(t), 0);
+function getOverallProgress(data: WorkshopData): number {
+  const total = data.teams.length * data.workflowSteps.length;
+  const done = data.teams.reduce((sum, t) => sum + getCompletedSteps(t), 0);
   return total > 0 ? Math.round((done / total) * 100) : 0;
 }
 
-function getOpenPRs(): number {
-  return workshopData.teams.filter(t => t.progress.prUrl).length;
+function getStepLabel(data: WorkshopData, stepId: string): string {
+  return data.workflowSteps.find(s => s.id === stepId)?.label ?? stepId;
 }
 
-function getStepLabel(stepId: string): string {
-  return workshopData.workflowSteps.find(s => s.id === stepId)?.label ?? stepId;
+function getTeamsAtStep(data: WorkshopData, stepId: string): number {
+  return data.teams.filter(t => t.progress.currentStep === stepId).length;
 }
 
-function getTeamsAtStep(stepId: string): number {
-  return workshopData.teams.filter(t => t.progress.currentStep === stepId).length;
-}
-
-function isStepCompletedByAny(stepId: string): boolean {
-  return workshopData.teams.some(t => t.progress.steps[stepId] === 'done');
+function isStepCompletedByAny(data: WorkshopData, stepId: string): boolean {
+  return data.teams.some(t => t.progress.steps[stepId] === 'done');
 }
 
 function formatEventDate(dateStr: string): string {
@@ -88,41 +83,81 @@ function getTeamStatusBadge(
   return { variant: 'neutral', label: 'Not started' };
 }
 
-// ─── Pre-computed values ──────────────────────────────────────────────────────
-
-const totalMembers = getTotalMembers();
-const overallProgress = getOverallProgress();
-const openPRs = getOpenPRs();
-const totalSteps = workshopData.workflowSteps.length;
+function timeAgo(date: Date): string {
+  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (seconds < 10) return 'just now';
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.floor(seconds / 60);
+  return `${minutes}m ago`;
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function Welcome() {
   const navigate = useNavigate();
+  const github = useGitHubWorkshop({ pollInterval: 60_000 });
+
+  const workshopData: WorkshopData = github.workshopData ?? (fallbackData as unknown as WorkshopData);
+  const isLive = github.workshopData !== null;
+
+  const totalMembers = workshopData.teams.reduce((sum, t) => sum + t.members.length, 0);
+  const overallProgress = getOverallProgress(workshopData);
+  const totalSteps = workshopData.workflowSteps.length;
+  const totalCommits = Object.values(github.members).reduce((sum, m) => sum + m.commitCount, 0);
+
+  if (github.loading && !github.workshopData) {
+    return (
+      <div className={styles.page}>
+        <PageHeader title="Workshop Dashboard" subtitle="Loading..." />
+        <div className={styles.loadingState}>
+          <Loader size="large" />
+          <p>Fetching live data from GitHub...</p>
+        </div>
+      </div>
+    );
+  }
 
   const eventSubtitle = `${formatEventDate(workshopData.event.date)} · ${workshopData.event.startTime}–${workshopData.event.endTime} · ${workshopData.event.venue}`;
 
   return (
     <div className={styles.page}>
-      {/* ── Section 1: Header ─────────────────────────────────────────────── */}
-      <PageHeader title="Workshop Dashboard" subtitle={eventSubtitle} />
+      <PageHeader title="Workshop Dashboard" subtitle={eventSubtitle}>
+        <div className={styles.headerStatus}>
+          {github.error && (
+            <span className={styles.statusWarning}>
+              <AlertTriangle size={13} strokeWidth={2} />
+              Offline
+            </span>
+          )}
+          {isLive && github.lastUpdated && (
+            <span className={styles.statusLive}>
+              <span className={styles.liveDot} />
+              Live · {timeAgo(github.lastUpdated)}
+            </span>
+          )}
+          {!isLive && !github.loading && (
+            <span className={styles.statusFallback}>
+              <RefreshCw size={13} strokeWidth={2} />
+              Using cached data
+            </span>
+          )}
+        </div>
+      </PageHeader>
 
-      {/* ── Section 2: KPI Summary Row ───────────────────────────────────── */}
       <div className={styles.kpiRow}>
         <KpiCard label="Teams" value={workshopData.teams.length} />
         <KpiCard label="Members" value={totalMembers > 0 ? totalMembers : '–'} />
         <KpiCard label="Progress" value={overallProgress} unit="%" />
-        <KpiCard label="PRs Open" value={openPRs} />
+        <KpiCard label="Commits" value={totalCommits > 0 ? totalCommits : '–'} />
       </div>
 
-      {/* ── Section 3: Workflow Pipeline ─────────────────────────────────── */}
       <section className={styles.pipeline}>
         <p className={styles.pipelineTitle}>Workflow Pipeline</p>
         <div className={styles.pipelineTrack}>
           {workshopData.workflowSteps.map(step => {
-            const count = getTeamsAtStep(step.id);
+            const count = getTeamsAtStep(workshopData, step.id);
             const isActive = count > 0;
-            const isCompleted = isStepCompletedByAny(step.id);
+            const isCompleted = isStepCompletedByAny(workshopData, step.id);
 
             const stepClasses = [
               styles.pipelineStep,
@@ -158,18 +193,36 @@ export function Welcome() {
         </div>
       </section>
 
-      {/* ── Section 4: Team Cards Grid ───────────────────────────────────── */}
       <p className={styles.teamGridTitle}>Teams</p>
       <div className={styles.teamGrid}>
         {workshopData.teams.map(team => {
           const color = teamColors[team.id] ?? '#666';
           const completedSteps = getCompletedSteps(team);
           const progressPct = (completedSteps / totalSteps) * 100;
-          const members = team.members as unknown as AvatarMember[];
           const { variant: statusVariant, label: statusLabel } =
             getTeamStatusBadge(completedSteps, totalSteps);
-          const hasFooter = Boolean(team.progress.branchName || team.progress.prUrl);
           const TeamIcon = teamIcons[team.id] ?? Heart;
+
+          const avatarMembers: AvatarMember[] = team.members.map(m => {
+            const ghData = m.github ? github.members[m.github] : undefined;
+            return {
+              id: m.email || m.name,
+              name: m.name,
+              role: m.role,
+              initials: m.initials,
+              color: m.avatarColor,
+              avatarUrl: ghData?.avatarUrl ?? undefined,
+            };
+          });
+
+          const teamCommits = team.members.reduce((sum, m) => {
+            const ghData = m.github ? github.members[m.github] : undefined;
+            return sum + (ghData?.commitCount ?? 0);
+          }, 0);
+
+          const branchExists = team.progress.branchName
+            ? github.branches.some(b => b.name === team.progress.branchName)
+            : false;
 
           return (
             <Card key={team.id} className={styles.teamCard} hoverable>
@@ -187,7 +240,6 @@ export function Welcome() {
                 }}
                 aria-label={`Navigate to ${team.module.title}`}
               >
-                {/* Card header: identity + members + status */}
                 <div className={styles.teamCardHeader}>
                   <div className={styles.teamCardLeft}>
                     <div className={styles.teamCardNameRow}>
@@ -207,8 +259,8 @@ export function Welcome() {
                   </div>
 
                   <div className={styles.teamCardRight}>
-                    {members.length > 0 ? (
-                      <AvatarStack members={members} maxVisible={4} />
+                    {avatarMembers.length > 0 ? (
+                      <AvatarStack members={avatarMembers} maxVisible={4} />
                     ) : (
                       <span className={styles.emptyMembers}>No members yet</span>
                     )}
@@ -221,12 +273,11 @@ export function Welcome() {
                       ) : (
                         <Circle size={10} strokeWidth={2} />
                       )}
-                      {getStepLabel(team.progress.currentStep)}
+                      {getStepLabel(workshopData, team.progress.currentStep)}
                     </span>
                   </div>
                 </div>
 
-                {/* Progress bar */}
                 <div className={styles.progressBar}>
                   <div className={styles.progressTrack}>
                     <div
@@ -242,51 +293,42 @@ export function Welcome() {
                   </span>
                 </div>
 
-                {/* Footer: branch name + PR link */}
-                {hasFooter && (
-                  <div className={styles.teamCardFooter}>
-                    {team.progress.branchName && (
-                      <span className={styles.branchName}>
-                        <GitBranch size={12} strokeWidth={1.5} />
-                        {team.progress.branchName}
-                      </span>
-                    )}
-                    {team.progress.prUrl && (
-                      <a
-                        href={team.progress.prUrl}
-                        className={styles.prLink}
-                        onClick={e => e.stopPropagation()}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Pull request #${team.progress.prNumber}`}
-                      >
-                        <GitPullRequest size={12} strokeWidth={1.5} />
-                        PR #{team.progress.prNumber}
-                      </a>
-                    )}
-                    {/* Navigation hint */}
-                    <span className={styles.navHint}>
-                      <ArrowRight size={12} strokeWidth={1.5} />
-                      View module
+                <div className={styles.teamCardFooter}>
+                  {team.progress.branchName && (
+                    <span className={[styles.branchName, branchExists ? styles.branchExists : ''].filter(Boolean).join(' ')}>
+                      <GitBranch size={12} strokeWidth={1.5} />
+                      {team.progress.branchName}
                     </span>
-                  </div>
-                )}
-
-                {/* No-footer navigation hint */}
-                {!hasFooter && (
-                  <div className={styles.teamCardFooter}>
-                    <span className={styles.navHint}>
-                      <ArrowRight size={12} strokeWidth={1.5} />
-                      View module
+                  )}
+                  {team.progress.prUrl && (
+                    <a
+                      href={team.progress.prUrl}
+                      className={styles.prLink}
+                      onClick={e => e.stopPropagation()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Pull request #${team.progress.prNumber}`}
+                    >
+                      <GitPullRequest size={12} strokeWidth={1.5} />
+                      PR #{team.progress.prNumber}
+                    </a>
+                  )}
+                  {teamCommits > 0 && (
+                    <span className={styles.commitCount}>
+                      <GitCommitHorizontal size={12} strokeWidth={1.5} />
+                      {teamCommits} commit{teamCommits !== 1 ? 's' : ''}
                     </span>
-                  </div>
-                )}
+                  )}
+                  <span className={styles.navHint}>
+                    <ArrowRight size={12} strokeWidth={1.5} />
+                    View module
+                  </span>
+                </div>
               </div>
             </Card>
           );
         })}
       </div>
-
     </div>
   );
 }
