@@ -1,0 +1,249 @@
+{
+  "event": {
+    "title": "Voyado x KTH Medieteknik",
+    "date": "2026-03-25",
+    "startTime": "18:00",
+    "endTime": "21:00",
+    "venue": "Voyado Office",
+    "mentors": [
+      {
+        "name": "TBD",
+        "role": "Workshop Lead",
+        "email": "",
+        "github": ""
+      }
+    ]
+  },
+  "workflowSteps": [
+    {
+      "id": "onboarding",
+      "label": "Onboarding",
+      "description": "Team members register, get assigned to a team, and workshop.json is populated with their info",
+      "order": 0
+    },
+    {
+      "id": "requirements",
+      "label": "Read Requirements",
+      "description": "Review the business requirements document in docs/requirements.md",
+      "order": 1
+    },
+    {
+      "id": "breakdown",
+      "label": "Break Down Tasks",
+      "description": "Analyze requirements, create a PRD or list of functional requirements",
+      "order": 2
+    },
+    {
+      "id": "implementation",
+      "label": "Implement",
+      "description": "Build a static version of the feature using AI-assisted development",
+      "order": 3
+    },
+    {
+      "id": "pull-request",
+      "label": "Create PR",
+      "description": "Push feature branch and open a pull request to main",
+      "order": 4
+    },
+    {
+      "id": "review",
+      "label": "Code Review",
+      "description": "Mentor reviews the PR, team addresses feedback",
+      "order": 5
+    },
+    {
+      "id": "merge",
+      "label": "Merge",
+      "description": "PR approved and merged to main, CI/CD pipeline triggers",
+      "order": 6
+    },
+    {
+      "id": "deployed",
+      "label": "Deployed",
+      "description": "Code is built and live on Azure Static Web Apps",
+      "order": 7
+    }
+  ],
+  "teams": [
+    {
+      "id": "team-1",
+      "name": "Team 1",
+      "nickname": "",
+      "module": {
+        "route": "/loyalty",
+        "package": "@voyado-kth/team-1-loyalty-dashboard",
+        "title": "Loyalty Dashboard",
+        "description": "Member overview, points balance, tier distribution, and enrollment trends"
+      },
+      "members": [],
+      "progress": {
+        "currentStep": "onboarding",
+        "steps": {
+          "onboarding": "pending",
+          "requirements": "pending",
+          "breakdown": "pending",
+          "implementation": "pending",
+          "pull-request": "pending",
+          "review": "pending",
+          "merge": "pending",
+          "deployed": "pending"
+        },
+        "branchName": null,
+        "prUrl": null,
+        "prNumber": null,
+        "deployedUrl": null,
+        "lastActivity": null
+      }
+    },
+    {
+      "id": "team-2",
+      "name": "Team 2",
+      "nickname": "",
+      "module": {
+        "route": "/products",
+        "package": "@voyado-kth/team-2-product-catalog",
+        "title": "Product Catalog",
+        "description": "Product browsing, filtering, and wishlist management"
+      },
+      "members": [],
+      "progress": {
+        "currentStep": "onboarding",
+        "steps": {
+          "onboarding": "pending",
+          "requirements": "pending",
+          "breakdown": "pending",
+          "implementation": "pending",
+          "pull-request": "pending",
+          "review": "pending",
+          "merge": "pending",
+          "deployed": "pending"
+        },
+        "branchName": null,
+        "prUrl": null,
+        "prNumber": null,
+        "deployedUrl": null,
+        "lastActivity": null
+      }
+    },
+    {
+      "id": "team-3",
+      "name": "Team 3",
+      "nickname": "",
+      "module": {
+        "route": "/segments",
+        "package": "@voyado-kth/team-3-customer-segments",
+        "title": "Customer Segments",
+        "description": "Segment builder and audience targeting rules"
+      },
+      "members": [],
+      "progress": {
+        "currentStep": "onboarding",
+        "steps": {
+          "onboarding": "pending",
+          "requirements": "pending",
+          "breakdown": "pending",
+          "implementation": "pending",
+          "pull-request": "pending",
+          "review": "pending",
+          "merge": "pending",
+          "deployed": "pending"
+        },
+        "branchName": null,
+        "prUrl": null,
+        "prNumber": null,
+        "deployedUrl": null,
+        "lastActivity": null
+      }
+    },
+    {
+      "id": "team-4",
+      "name": "Team 4",
+      "nickname": "",
+      "module": {
+        "route": "/campaigns",
+        "package": "@voyado-kth/team-4-campaign-builder",
+        "title": "Campaign Builder",
+        "description": "Marketing campaign creation, templates, and scheduling"
+      },
+      "members": [],
+      "progress": {
+        "currentStep": "onboarding",
+        "steps": {
+          "onboarding": "pending",
+          "requirements": "pending",
+          "breakdown": "pending",
+          "implementation": "pending",
+          "pull-request": "pending",
+          "review": "pending",
+          "merge": "pending",
+          "deployed": "pending"
+        },
+        "branchName": null,
+        "prUrl": null,
+        "prNumber": null,
+        "deployedUrl": null,
+        "lastActivity": null
+      }
+    },
+    {
+      "id": "team-5",
+      "name": "Team 5",
+      "nickname": "",
+      "module": {
+        "route": "/rewards",
+        "package": "@voyado-kth/team-5-rewards-store",
+        "title": "Rewards Store",
+        "description": "Points redemption and reward catalog management"
+      },
+      "members": [],
+      "progress": {
+        "currentStep": "onboarding",
+        "steps": {
+          "onboarding": "pending",
+          "requirements": "pending",
+          "breakdown": "pending",
+          "implementation": "pending",
+          "pull-request": "pending",
+          "review": "pending",
+          "merge": "pending",
+          "deployed": "pending"
+        },
+        "branchName": null,
+        "prUrl": null,
+        "prNumber": null,
+        "deployedUrl": null,
+        "lastActivity": null
+      }
+    },
+    {
+      "id": "team-6",
+      "name": "Team 6",
+      "nickname": "",
+      "module": {
+        "route": "/analytics",
+        "package": "@voyado-kth/team-6-analytics-overview",
+        "title": "Analytics Overview",
+        "description": "KPI charts, engagement metrics, and reporting"
+      },
+      "members": [],
+      "progress": {
+        "currentStep": "onboarding",
+        "steps": {
+          "onboarding": "pending",
+          "requirements": "pending",
+          "breakdown": "pending",
+          "implementation": "pending",
+          "pull-request": "pending",
+          "review": "pending",
+          "merge": "pending",
+          "deployed": "pending"
+        },
+        "branchName": null,
+        "prUrl": null,
+        "prNumber": null,
+        "deployedUrl": null,
+        "lastActivity": null
+      }
+    }
+  ]
+}

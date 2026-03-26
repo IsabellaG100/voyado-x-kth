@@ -1,75 +1,406 @@
+/* ─── Page shell ────────────────────────────────────────────────────────────── */
 .page {
+  min-height: 100%;
 }
 
-.grid {
+/* ─── KPI summary row ───────────────────────────────────────────────────────── */
+.kpiRow {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--ess-spacing-400);
   padding: var(--ess-spacing-500) var(--ess-spacing-700);
 }
 
-.moduleCard {
+/* ─── Workflow pipeline ─────────────────────────────────────────────────────── */
+.pipeline {
+  padding: var(--ess-spacing-500) var(--ess-spacing-700);
+}
+
+.pipelineTitle {
+  font-family: var(--ess-font-family);
+  font-size: var(--ess-font-size-small);
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-weak);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--ess-spacing-400);
+}
+
+/* The track is the container — a continuous line runs through it via ::before */
+.pipelineTrack {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  padding: var(--ess-spacing-400) var(--ess-spacing-300);
+  overflow-x: auto;
+}
+
+/* Continuous connecting rail behind all nodes */
+.pipelineTrack::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--ess-spacing-400) + 19px); /* vertically center on 40px nodes */
+  left: var(--ess-spacing-300);
+  right: var(--ess-spacing-300);
+  height: 2px;
+  background: var(--ess-color-neutral-border);
+  z-index: 0;
+}
+
+.pipelineStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ess-spacing-200);
+  flex: 1;
+  min-width: 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.pipelineNode {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ess-font-family-display);
+  font-size: var(--ess-font-size-medium);
+  font-weight: var(--ess-font-weight-bold);
+  border: 2.5px solid var(--ess-color-neutral-border);
+  background: var(--ess-color-neutral-weak-bg);
+  color: var(--ess-color-neutral-fg-weak);
+  position: relative;
+  z-index: 1;
+  transition: border-color 300ms ease, background 300ms ease, color 300ms ease,
+    box-shadow 300ms ease, transform 300ms ease;
+  flex-shrink: 0;
+}
+
+/* Step has teams currently on it */
+.pipelineNodeActive {
+  border-color: var(--ess-color-primary-bg);
+  background: var(--ess-color-primary-bg);
+  color: #ffffff;
+  box-shadow: 0 0 0 5px rgba(45, 110, 109, 0.12);
+  transform: scale(1.05);
+}
+
+/* Step has been completed by at least one team — gentle pulse */
+.pipelineNodeCompleted {
+  border-color: var(--ess-color-success-bg);
+  background: var(--ess-color-success-bg);
+  color: #ffffff;
+  animation: stepPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes stepPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(67, 165, 132, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(67, 165, 132, 0);
+  }
+}
+
+.pipelineLabel {
+  font-size: 11px;
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-weak);
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.3;
+  padding: 0 2px;
+}
+
+.pipelineNodeActive + .pipelineLabel,
+.pipelineNodeCompleted + .pipelineLabel {
+  /* This doesn't work as sibling since label is after node in parent — handle in step */
+}
+
+.pipelineStepActive .pipelineLabel {
+  color: var(--ess-color-primary-bg);
+  font-weight: var(--ess-font-weight-semibold);
+}
+
+.pipelineStepCompleted .pipelineLabel {
+  color: var(--ess-color-success-bg);
+  font-weight: var(--ess-font-weight-semibold);
+}
+
+/* Count badge sitting on the node */
+.pipelineCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: var(--ess-font-weight-bold);
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--ess-color-neutral-fg-weak);
+  color: #fff;
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  z-index: 2;
+  font-family: var(--ess-font-family);
+}
+
+.pipelineStepActive .pipelineCount {
+  background: var(--ess-color-primary-bg);
+}
+
+.pipelineStepCompleted .pipelineCount {
+  background: var(--ess-color-success-bg);
+}
+
+/* ─── Team grid ─────────────────────────────────────────────────────────────── */
+.teamGridTitle {
+  font-family: var(--ess-font-family);
+  font-size: var(--ess-font-size-small);
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-weak);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 var(--ess-spacing-700);
+  margin: var(--ess-spacing-200) 0 0;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--ess-spacing-400);
+  padding: var(--ess-spacing-400) var(--ess-spacing-700) var(--ess-spacing-700);
+}
+
+/* ─── Team card ─────────────────────────────────────────────────────────────── */
+.teamCard {
   padding: 0 !important;
   overflow: hidden;
 }
 
-.cardButton {
+.teamCardInner {
   display: flex;
-  align-items: center;
-  gap: var(--ess-spacing-400);
-  width: 100%;
+  flex-direction: column;
+  gap: var(--ess-spacing-300);
   padding: var(--ess-spacing-450);
-  border: none;
-  background: none;
+  border-left: 4px solid transparent;
   cursor: pointer;
-  text-align: left;
-  font-family: var(--ess-font-family);
-  color: var(--ess-color-neutral-fg);
+  outline: none;
+  transition: background 150ms var(--ess-ease-out);
 }
 
-.cardButton:focus-visible {
+.teamCardInner:focus-visible {
   outline: 2px solid var(--ess-color-primary-bg);
   outline-offset: -2px;
-  border-radius: var(--ess-border-radius-medium);
 }
 
-.moduleIcon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--ess-border-radius-medium);
+/* Card header */
+.teamCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ess-spacing-300);
+}
+
+.teamCardLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ess-spacing-100);
+  min-width: 0;
+}
+
+.teamCardName {
+  font-size: var(--ess-font-size-tiny);
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-weak);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Icon + name in a row */
+.teamCardNameRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ess-spacing-200);
+}
+
+.teamCardIcon {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--ess-border-radius-small);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.moduleInfo {
-  flex: 1;
-  min-width: 0;
-}
-
-.teamLabel {
-  font-size: var(--ess-font-size-tiny);
-  color: var(--ess-color-neutral-fg-weak);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: var(--ess-font-weight-medium);
-}
-
-.moduleName {
-  font-size: var(--ess-font-size-base);
-  font-weight: var(--ess-font-weight-medium);
+.teamCardNickname {
+  font-family: var(--ess-font-family-display);
+  font-size: var(--ess-font-size-large);
+  font-weight: var(--ess-font-weight-semibold);
   color: var(--ess-color-neutral-fg-strong);
+  line-height: var(--ess-font-line-height-tight);
+}
+
+.teamCardModule {
+  font-size: var(--ess-font-size-medium);
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg);
+  line-height: var(--ess-font-line-height-medium);
+}
+
+.teamCardRoute {
+  display: inline-block;
+  font-family: var(--ess-font-family-mono);
+  font-size: 12px;
+  color: var(--ess-color-neutral-fg-weak);
+  background: var(--ess-color-neutral-bg);
+  border: 1px solid var(--ess-color-neutral-border);
+  padding: 1px 6px;
+  border-radius: var(--ess-border-radius-small);
   margin-top: 2px;
 }
 
-.arrow {
-  color: var(--ess-color-neutral-fg-weak);
+.teamCardRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ess-spacing-200);
   flex-shrink: 0;
-  transition: transform var(--ess-duration-fast) var(--ess-ease-out);
 }
 
-.cardButton:hover .arrow {
-  transform: translateX(3px);
-  color: var(--ess-color-neutral-fg);
+/* Current step pill */
+.stepBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-primary-bg);
+  background: rgba(45, 110, 109, 0.08);
+  padding: 2px 8px;
+  border-radius: var(--ess-border-radius-round);
+  white-space: nowrap;
 }
+
+/* No members placeholder */
+.emptyMembers {
+  font-size: var(--ess-font-size-small);
+  color: var(--ess-color-neutral-fg-weak);
+  font-style: italic;
+}
+
+/* ─── Progress bar ──────────────────────────────────────────────────────────── */
+.progressBar {
+  display: flex;
+  align-items: center;
+  gap: var(--ess-spacing-200);
+  width: 100%;
+}
+
+.progressTrack {
+  flex: 1;
+  height: 4px;
+  background: var(--ess-color-neutral-bg-secondary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 400ms var(--ess-ease-out);
+}
+
+.progressLabel {
+  font-size: 12px;
+  font-weight: var(--ess-font-weight-medium);
+  color: var(--ess-color-neutral-fg-weak);
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+  font-family: var(--ess-font-family-mono);
+}
+
+/* ─── Card footer: branch / PR / nav hint ───────────────────────────────────── */
+.teamCardFooter {
+  display: flex;
+  align-items: center;
+  gap: var(--ess-spacing-300);
+  padding-top: var(--ess-spacing-200);
+  border-top: 1px solid var(--ess-color-neutral-bg-secondary);
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.branchName {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--ess-font-family-mono);
+  font-size: 12px;
+  color: var(--ess-color-neutral-fg-weak);
+}
+
+.prLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ess-color-primary-bg);
+  font-size: 13px;
+  font-weight: var(--ess-font-weight-medium);
+  text-decoration: none;
+}
+
+.prLink:hover {
+  text-decoration: underline;
+}
+
+.navHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ess-color-neutral-fg-weak);
+  margin-left: auto;
+  transition: color 150ms var(--ess-ease-out), transform 150ms var(--ess-ease-out);
+}
+
+.teamCardInner:hover .navHint {
+  color: var(--ess-color-primary-bg);
+  transform: translateX(2px);
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .kpiRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pipelineLabel {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .kpiRow {
+    grid-template-columns: 1fr 1fr;
+    padding: var(--ess-spacing-400);
+  }
+
+  .pipeline,
+  .teamGrid,
+  .teamGridTitle {
+    padding-left: var(--ess-spacing-400);
+    padding-right: var(--ess-spacing-400);
+  }
+}
+

@@ -1,21 +1,33 @@
 import { PageHeader, Badge, AvatarStack } from '@voyado-kth/ui';
 import { Users } from 'lucide-react';
-import teamData from '../../data/team.json';
+import workshopData from '../../../../workshop.json';
 import styles from './ComingSoon.module.css';
+
+const team = workshopData.teams.find(t => t.id === 'team-3')!;
 
 export function ComingSoon() {
   return (
     <div className={styles.page}>
       <PageHeader
-        title="Customer Segments"
-        subtitle="Segment builder and audience targeting rules"
+        title={team.module.title}
+        subtitle={team.module.description}
       >
         <div className={styles.teamInfo}>
           <div className={styles.teamMeta}>
-            <Badge variant="info">Team 3</Badge>
-            <span className={styles.teamName}>{teamData.teamName}</span>
+            <Badge variant="info">{team.name}</Badge>
+            {team.nickname && <span className={styles.teamName}>{team.nickname}</span>}
           </div>
-          <AvatarStack members={teamData.members} />
+          {team.members.length > 0 && (
+            <AvatarStack
+              members={team.members.map(m => ({
+                id: m.email || m.name,
+                name: m.name,
+                role: m.role,
+                initials: m.initials,
+                color: m.avatarColor,
+              }))}
+            />
+          )}
         </div>
       </PageHeader>
       <div className={styles.emptyState}>
