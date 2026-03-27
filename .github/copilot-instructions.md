@@ -1,5 +1,14 @@
 # Copilot Instructions — Voyado x KTH Workshop
 
+## ⚠️ Onboarding Check (Do This First)
+
+Before doing anything else, check if `.onboarding.json` exists in the repository root directory. If it does **not** exist, the team has not been onboarded yet. In that case:
+
+1. Tell the student: "You haven't onboarded yet. Run `/voyado:start` to get set up."
+2. Do not proceed with any other task until onboarding is complete
+
+If `.onboarding.json` exists, the team is onboarded — proceed normally.
+
 ## Project Overview
 
 Monorepo for a Voyado x KTH Medieteknik workshop. A shell app (Vite + React) serves as the single entry point with an Engage-style sidebar layout. Six teams each own a module package that exports page components, which the shell lazy-loads at dedicated routes. All modules are static (no backend) — data comes from JSON files.
@@ -96,3 +105,17 @@ The GitHub Actions workflow (`.github/workflows/deploy.yml`):
 | `team-4-campaign-builder` | `/campaigns` | Marketing campaign creation, templates |
 | `team-5-rewards-store` | `/rewards` | Points redemption, reward catalog |
 | `team-6-analytics-overview` | `/analytics` | KPI charts, engagement metrics |
+
+## AI-Driven SDLC Workflow
+
+This workshop follows a structured AI-assisted development workflow. The full workflow instructions are in `.ai/voyado/copilot/workflow-instructions.md`. Follow that document for detailed step-by-step guidance.
+
+**Workflow summary:**
+1. **PRD** — Analyze `docs/requirements.md` → create `docs/prd.md` with FRs/NFRs
+2. **UX Design** (optional) — Create `docs/ux-spec.md` with Essence token mappings
+3. **Planning** — Break PRD into epics/stories → create `docs/backlog.json` + `docs/epics.md`
+4. **Implementation** — Pick stories from backlog, implement one at a time
+5. **Code Review** — Review stories in `review` status against conventions
+6. **Commit & Push** — Student manually commits, pushes, and creates PR
+
+Track progress in `workshop.json` (team progress object) and `docs/backlog.json` (story statuses).
