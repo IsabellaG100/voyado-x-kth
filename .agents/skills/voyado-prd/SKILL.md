@@ -1,7 +1,6 @@
 ---
-description: "Creates a Product Requirements Document (PRD) from the team's Business Requirements Document (BRD). Use when a student runs /voyado:prd or needs to analyze requirements and extract functional/non-functional requirements."
-argument-hint: ""
-allowed-tools: ["Read", "Write", "Edit", "Bash", "Glob", "Grep", "Agent"]
+name: voyado-prd
+description: "Creates a Product Requirements Document (PRD) from the team's Business Requirements Document (BRD). Use when a student needs to analyze requirements and extract functional/non-functional requirements."
 ---
 
 # Voyado PRD Generator
@@ -10,7 +9,7 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
 
 ## Pre-flight Checks
 
-1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Run `/voyado:start` to get set up."
+1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
 
 2. **Read `workshop.json`** to check the team's progress:
    - If `onboarding` is not `completed`, stop: "Complete onboarding first."
@@ -31,7 +30,7 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
 
 8. **Read the team's data files** in `apps/<team-module>/data/` to understand available data.
 
-9. **Spawn the `prd-writer` agent** with all gathered context to generate the PRD. The agent should produce a comprehensive PRD that includes:
+9. **Generate the PRD** — a comprehensive PRD that includes:
 
    ### PRD Structure
    ```markdown
@@ -76,6 +75,29 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
    Which FRs constitute the minimum viable product (based on BRD prioritization).
    ```
 
+## PRD Writing Guidelines
+
+- **Analyze the BRD** thoroughly — identify every feature, user need, and constraint.
+- **Extract Functional Requirements (FRs)** — one FR per feature. Each must have:
+  - A clear user story (As a [persona], I want [action], so that [benefit])
+  - Measurable acceptance criteria
+  - Data source mapping (which JSON files provide the data)
+  - UI component mapping (which @voyado-kth/ui components to use)
+  - Priority classification (MVP vs. nice-to-have, based on BRD guidance)
+- **Define Non-Functional Requirements (NFRs)** — always include:
+  - Responsive layout (desktop 1024px+)
+  - Essence design system compliance (CSS custom properties only)
+  - Type safety (@voyado-kth/shared types)
+  - Performance (lazy-loaded module, no heavy deps)
+  - Accessibility (semantic HTML, keyboard nav)
+  - Code organization (one component per file, CSS Modules, co-located styles)
+- **Map the data model** — connect JSON data shapes to TypeScript interfaces.
+- **List required UI components** from @voyado-kth/ui.
+- **Define MVP scope** — which FRs must be completed in the workshop timeframe.
+- **Identify out-of-scope items** — what NOT to build.
+
+## After Generation
+
 10. **Write the PRD** to `apps/<team-module>/docs/prd.md`.
 
 11. **Update `workshop.json`**:
@@ -86,11 +108,13 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
 12. **Present the result** to the student:
     - Summary of FRs and NFRs extracted
     - MVP scope recommendation
-    - Next step: "Run `/voyado:plan` to create your sprint backlog, or optionally `/voyado:ux` for UX design guidelines first."
+    - Next step: "Use the voyado-plan skill to create your sprint backlog, or optionally the voyado-ux skill for UX design guidelines first."
 
-## Important Notes
+## Constraints
 
-- The PRD should be thorough but practical for a 1.5-hour workshop
-- Prioritize features marked as MVP in the BRD
-- Always reference actual data files and UI components available in the repo
-- Keep NFRs aligned with the project conventions in CLAUDE.md
+- Be practical — this is a 1.5-hour workshop, not a production sprint
+- Reference REAL files, components, and types from the codebase
+- Keep FRs implementable in 10-15 minute increments
+- Align priorities with the BRD's own MVP guidance
+- Use the exact component names from @voyado-kth/ui
+- Use the exact type names from @voyado-kth/shared

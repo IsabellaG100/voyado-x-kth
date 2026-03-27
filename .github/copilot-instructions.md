@@ -108,14 +108,25 @@ The GitHub Actions workflow (`.github/workflows/deploy.yml`):
 
 ## AI-Driven SDLC Workflow
 
-This workshop follows a structured AI-assisted development workflow. The full workflow instructions are in `.ai/voyado/copilot/workflow-instructions.md`. Follow that document for detailed step-by-step guidance.
+This workshop follows a structured AI-assisted development workflow. Detailed instructions for each step are in `.github/instructions/voyado-*.instructions.md` files. The consolidated workflow reference is in `.agents/voyado/copilot/workflow-instructions.md`.
 
-**Workflow summary:**
-1. **PRD** — Analyze `docs/requirements.md` → create `docs/prd.md` with FRs/NFRs
-2. **UX Design** (optional) — Create `docs/ux-spec.md` with Essence token mappings
-3. **Planning** — Break PRD into epics/stories → create `docs/backlog.json` + `docs/epics.md`
-4. **Implementation** — Pick stories from backlog, implement one at a time
-5. **Code Review** — Review stories in `review` status against conventions
-6. **Commit & Push** — Student manually commits, pushes, and creates PR
+**Workflow:**
+```
+Onboarding → PRD → (optional: UX Design) → Planning → Implementation → Code Review → Commit/Push → PR
+```
+
+**Available commands** (students can say these or use natural language):
+
+| Action | What to say | Instruction file |
+|--------|------------|------------------|
+| Onboard & navigate | "voyado start" or "start workshop" | `voyado-start.instructions.md` |
+| Check progress | "voyado status" or "show progress" | `voyado-status.instructions.md` |
+| Create PRD | "voyado prd" or "create PRD" | `voyado-prd.instructions.md` |
+| UX design (optional) | "voyado ux" or "create UX design" | `voyado-ux.instructions.md` |
+| Sprint planning | "voyado plan" or "create plan" | `voyado-plan.instructions.md` |
+| Implement story | "voyado impl" or "implement next story" | `voyado-impl.instructions.md` |
+| Code review | "voyado review" or "review code" | `voyado-review.instructions.md` |
+
+**Story status flow:** `backlog` → `in_progress` → `review` → `done`
 
 Track progress in `workshop.json` (team progress object) and `docs/backlog.json` (story statuses).

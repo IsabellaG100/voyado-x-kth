@@ -1,19 +1,15 @@
----
-description: "Creates a sprint plan with epics and stories from the PRD. Use when a student runs /voyado:plan or needs to break down requirements into implementable tasks."
-argument-hint: ""
-allowed-tools: ["Read", "Write", "Edit", "Bash", "Glob", "Grep", "Agent"]
----
+# Voyado Workshop — Sprint Planner
 
-# Voyado Sprint Planner
+Apply these instructions when a student asks to create a plan, break down stories, create a backlog, or mentions "voyado plan".
 
 Break down the PRD into epics and implementable user stories with a structured backlog.
 
 ## Pre-flight Checks
 
-1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Run `/voyado:start` to get set up."
+1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Say 'voyado start' to get set up."
 
 2. **Read `workshop.json`** to check progress:
-   - If `requirements` is not `completed`, STOP: "You need a PRD first. Run `/voyado:prd`."
+   - If `requirements` is not `completed`, STOP: "You need a PRD first. Say 'create PRD'."
    - If `breakdown` is already `completed`, inform the student and ask if they want to re-plan.
    - UX spec is NOT required — it's optional.
 
@@ -31,29 +27,53 @@ Break down the PRD into epics and implementable user stories with a structured b
 
 8. **Read the project conventions** — CLAUDE.md and CONTRIBUTING.md for coding standards.
 
-9. **Spawn the `sprint-planner` agent** with all context. The agent produces:
+9. **Generate the sprint plan** following the structure and rules below.
 
-   ### Epics & Stories Structure
+### Epic & Story Structure
 
-   Group features from the PRD into epics. Each epic contains stories. Stories should be small enough to implement in 10-15 minutes each.
+Group features from the PRD into epics. Each epic contains stories. Stories should be small enough to implement in 10-15 minutes each.
 
-   **Epic naming:** `E{N}: [Epic Title]`
-   **Story naming:** `S{epic}.{story}: [Story Title]`
+**Epic naming:** `E{N}: [Epic Title]`
+**Story naming:** `S{epic}.{story}: [Story Title]`
 
-   Each story must include:
-   - Clear title
-   - Description of what to build
-   - Acceptance criteria (checkboxes)
-   - Files to create/modify
-   - Data sources to use
-   - UI components to use
-   - Estimated complexity (S/M/L)
+Each story must include:
+- Clear title
+- Description of what to build
+- Acceptance criteria (checkboxes)
+- Files to create/modify
+- Data sources to use
+- UI components to use
+- Estimated complexity (S/M/L)
 
-   ### Ordering Rules
-   - Infrastructure stories first (types, data loading, page setup)
-   - MVP features next (as defined in PRD)
-   - Nice-to-have features last
-   - Within an epic, order by dependency (foundational → visual → interactive)
+### Ordering Rules
+- Infrastructure stories first (types, data loading, page setup)
+- MVP features next (as defined in PRD)
+- Nice-to-have features last
+- Within an epic, order by dependency (foundational → visual → interactive)
+
+### First Epic: Project Setup (always E1)
+- S1.1: Create the main page component with basic layout
+- S1.2: Set up data loading and type imports
+- S1.3: Update `src/index.ts` exports to replace `ComingSoon`
+
+### Feature Epics (E2, E3, ...)
+- One epic per major feature from the PRD
+- Stories within should be independently testable
+- Each story should produce a visible UI change
+
+### Story Requirements
+Every story MUST include:
+- **id**: `S{epic}.{story}` format (e.g., `S1.1`, `S2.3`)
+- **title**: Clear, action-oriented (e.g., "Create KPI summary row")
+- **description**: Detailed implementation instructions
+- **acceptanceCriteria**: 2-5 checkable items
+- **files**: Exact file paths to create or modify (relative to team app)
+- **dataSources**: Which `data/*.json` files to use
+- **uiComponents**: Which @voyado-kth/ui components to use
+- **complexity**: S, M, or L
+- **status**: Always `"backlog"` initially
+
+## After Generation
 
 10. **Write the backlog** to `apps/<team-module>/docs/backlog.json`:
 
@@ -116,13 +136,16 @@ Break down the PRD into epics and implementable user stories with a structured b
 13. **Present the result**:
     - Total epics and stories created
     - MVP stories highlighted
-    - Estimated workflow: "You have X stories. Start implementing with `/voyado:impl`."
+    - Estimated workflow: "You have X stories. Say 'implement next story' to start."
     - Remind them stories will be picked up in order
 
-## Important Notes
+## Constraints
 
 - Stories should be SMALL — each implementable in 10-15 minutes
+- Total implementation time should fit ~60 minutes (the workshop coding window)
+- MVP stories should be achievable in ~30-40 minutes
 - First story should always be project setup/scaffolding
 - Always include file paths relative to the team's app directory
 - Reference actual @voyado-kth/ui components and @voyado-kth/shared types
 - All stories start with status `"backlog"`
+- Never suggest installing additional dependencies

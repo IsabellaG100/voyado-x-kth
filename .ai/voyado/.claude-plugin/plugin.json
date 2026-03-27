@@ -1,9 +1,0 @@
-{
-  "name": "voyado",
-  "version": "1.0.0",
-  "description": "Voyado x KTH workshop management plugin — guides student teams through an AI-driven SDLC workflow: BRD analysis, PRD creation, UX design, sprint planning, implementation, and code review.",
-  "author": {
-    "name": "Voyado x KTH Workshop",
-    "email": "workshop@voyado.com"
-  }
-}

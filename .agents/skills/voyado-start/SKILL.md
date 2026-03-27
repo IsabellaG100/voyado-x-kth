@@ -1,7 +1,6 @@
 ---
-description: "The starting point for the Voyado workshop. Use when a student runs /voyado:start, asks how to begin, what to do next, or needs guidance on the workflow. Handles onboarding (if not done) and shows progress with next action recommendations."
-argument-hint: ""
-allowed-tools: ["Read", "Write", "Edit", "Bash", "Glob", "Grep", "AskUserQuestion", "Agent"]
+name: voyado-start
+description: "The starting point for the Voyado workshop. Use when a student runs /voyado-start, asks how to begin, what to do next, or needs guidance on the workflow. Handles onboarding (if not done) and shows progress with next action recommendations."
 ---
 
 # Voyado Workshop — Start
@@ -12,8 +11,8 @@ You are the main entry point for the Voyado x KTH AI-driven SDLC workshop. This 
 
 Read `.onboarding.json` from the repo root.
 
-- **If it does NOT exist** -> Go to [First-Time Onboarding](#first-time-onboarding)
-- **If it exists** -> Go to [Workshop Navigator](#workshop-navigator)
+- **If it does NOT exist** → Go to [First-Time Onboarding](#first-time-onboarding)
+- **If it exists** → Go to [Workshop Navigator](#workshop-navigator)
 
 ---
 
@@ -42,7 +41,7 @@ Then say:
 
 ### 1.2 Team Selection
 
-First, **print the full team list** as formatted text so the student can see all options:
+Print the full team list so the student can see all options:
 
 ```
   1. Loyalty Dashboard — Member overview, points balance, tier distribution
@@ -55,55 +54,17 @@ First, **print the full team list** as formatted text so the student can see all
 
 Then ask: **"Which team are you on? (1-6)"**
 
-If `AskUserQuestion` is available, paginate since the tool supports max 4 options:
-
-**Page 1 (header "Team"):**
-
-| Option Label | Description |
-|---|---|
-| 1 — Loyalty Dashboard | Member overview, points balance, tier distribution |
-| 2 — Product Catalog | Product browsing, filtering, wishlist management |
-| 3 — Customer Segments | Segment builder, audience targeting rules |
-| More teams (4-6) | Show the remaining teams |
-
-- If the student picks **More teams (4-6)**, show Page 2.
-- If the student picks a team, proceed to step 1.3.
-
-**Page 2 (header "Team"):**
-
-| Option Label | Description |
-|---|---|
-| 4 — Campaign Builder | Marketing campaign creation, templates, scheduling |
-| 5 — Rewards Store | Points redemption, reward catalog management |
-| 6 — Analytics Overview | KPI charts, engagement metrics, reporting |
-| Back to teams 1-3 | Show the previous teams |
-
-- If the student picks **Back to teams 1-3**, show Page 1 again.
-- If the student picks a team, proceed to step 1.3.
-
-If `AskUserQuestion` is NOT available (e.g. Copilot, Codex), just wait for the student to reply with a number (1-6).
+Wait for the student to reply with a number (1-6).
 
 ### 1.3 Team Nickname
 
-Use `AskUserQuestion` to ask (header "Nickname"):
-
-**Question:** "Does your team have a nickname?"
-
-Options:
-- "Skip — no nickname" — We'll just use the team number
-- "We'll pick one later" — You can update this anytime
-
-The student can type a custom nickname via the "Other" option.
+Ask: **"Does your team have a nickname?"** (they can skip this)
 
 ### 1.4 Team Members
 
-Use `AskUserQuestion` to ask how many members (header "Team size"):
+Ask: **"How many members are on your team (including you)?"** (2-5)
 
-**Question:** "How many members are on your team (including you)?"
-
-Options: "2", "3", "4", "5"
-
-Then, for EACH member, ask them to provide their details as free text. Simply prompt:
+Then, for EACH member, ask them to provide their details as free text:
 
 > **Member {N} of {total}:** Enter their details in this format:
 > `Name, Role` (minimum) or `Name, GitHub username, Email, Role` (full)
@@ -112,14 +73,14 @@ Then, for EACH member, ask them to provide their details as free text. Simply pr
 > - `Bob Eriksson, boberik, bob@kth.se, Tech Lead`
 > Common roles: Developer, Designer, Tech Lead, Project Lead
 
-Wait for the student to reply. Parse the response:
+Parse the response:
 - **2 fields** (name, role): GitHub and email are optional — set them to empty strings
 - **3 fields** (name, github, role): Email is optional — set it to empty string
 - **4 fields** (name, github, email, role): All provided
 - If parsing fails, ask again with the example format.
 
 **Auto-generate** for each member:
-- `initials` — First letter of first name + first letter of last name, uppercase (e.g., "Alice Svensson" -> "AS")
+- `initials` — First letter of first name + first letter of last name, uppercase (e.g., "Alice Svensson" → "AS")
 - `avatarColor` — Assign from the team's color palette in order (see Color Palette below)
 
 ### 1.5 Confirmation
@@ -135,15 +96,7 @@ Members:
   2. ...
 ```
 
-Use `AskUserQuestion` to confirm (header "Confirm"):
-
-**Question:** "Does this look correct?"
-
-Options:
-- "Yes, save it!" — Everything looks good, let's go
-- "No, let me fix something" — I need to change some details
-
-If "No", ask what needs to be corrected and loop back.
+Ask: **"Does this look correct?"** If not, ask what needs to be corrected and loop back.
 
 ### 1.6 Save Onboarding Data
 
@@ -185,9 +138,9 @@ Your module: {Module Title}
 Your route: {Route}
 Your branch: team-{N}/feature (create this when you're ready)
 
-Next step: Run /voyado:prd to analyze your business requirements and generate a PRD.
+Next step: Use the voyado-prd skill to analyze your business requirements and generate a PRD.
 
-You can run /voyado:start anytime to check your progress and see what to do next.
+You can use the voyado-start skill anytime to check your progress and see what to do next.
 ```
 
 ### Team Color Palette
@@ -240,14 +193,14 @@ Run `git status --porcelain`. If there are uncommitted changes, STOP and tell th
 
 Based on the team's step statuses:
 
-| Current State | Next Action | Command |
-|--------------|-------------|---------|
-| `requirements` = pending | Create PRD from business requirements | `/voyado:prd` |
-| `breakdown` = pending | Plan epics and stories (optionally run `/voyado:ux` first) | `/voyado:plan` |
-| `implementation` = pending or in-progress | Implement next story | `/voyado:impl` |
+| Current State | Next Action | Skill |
+|--------------|-------------|-------|
+| `requirements` = pending | Create PRD from business requirements | `voyado-prd` |
+| `breakdown` = pending | Plan epics and stories (optionally run `voyado-ux` first) | `voyado-plan` |
+| `implementation` = pending or in-progress | Implement next story | `voyado-impl` |
 | `implementation` = completed | Create PR and push | Manual: `git push` then create PR |
 | `pull-request` = pending | Push branch and create PR | Manual git operations |
-| `review` = pending | Run code review | `/voyado:review` |
+| `review` = pending | Run code review | `voyado-review` |
 | `review` = completed | Merge PR | Manual or mentor action |
 | `merge` = completed | Wait for deployment | Automatic via CI/CD |
 | `deployed` = completed | Done! Prepare for presentation | Celebrate! |
@@ -267,10 +220,10 @@ If `apps/<team-module>/docs/backlog.json` exists, show a summary:
 **Status:** [visual progress indicator]
 
 ### What's Next
-[Clear instruction with the exact command to run]
+[Clear instruction with the skill to use next]
 
 ### Optional Steps
-[Any optional actions like /voyado:ux]
+[Any optional actions like voyado-ux]
 
 ### Story Progress (if applicable)
 [Backlog summary table]
@@ -278,7 +231,7 @@ If `apps/<team-module>/docs/backlog.json` exists, show a summary:
 
 ## Important Notes
 
-- The UX design step (`/voyado:ux`) is ALWAYS optional. Never block progress on it.
+- The UX design step (`voyado-ux`) is ALWAYS optional. Never block progress on it.
 - The `breakdown` step requires `requirements` to be completed (PRD must exist).
 - The `implementation` step requires `breakdown` to be completed (backlog must exist).
 - Always check for uncommitted changes FIRST before any recommendation (in navigator mode).

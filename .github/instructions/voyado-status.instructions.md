@@ -1,16 +1,12 @@
----
-description: "Shows detailed workshop progress for the current team. Use when a student asks about their status, progress, or runs /voyado:status."
-argument-hint: ""
-allowed-tools: ["Read", "Bash", "Glob", "Grep"]
----
+# Voyado Workshop — Status
 
-# Voyado Workshop Status
+Apply these instructions when a student asks about their progress, status, how far they are, or mentions "voyado status".
 
 Display a comprehensive status report for the current team's workshop progress.
 
 ## Steps
 
-1. **Read `.onboarding.json`** from the repo root to identify the team. If missing, stop: "You haven't onboarded yet. Run `/voyado:start` to get set up."
+1. **Read `.onboarding.json`** from the repo root to identify the team. If missing, stop: "You haven't onboarded yet. Say 'voyado start' to get set up."
 
 2. **Read `workshop.json`** to get the team's progress data.
 
