@@ -15,7 +15,7 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
 3. **Check git status** (`git status --porcelain`). If there are uncommitted changes, STOP:
    > You have uncommitted changes. Please commit and push before running this command.
 
-## Execution
+## Discovery
 
 4. **Identify the team's app directory** from `.onboarding.json` `teamId` (e.g., `team-1` → `apps/team-1-loyalty-dashboard/`). Find it by matching the team ID pattern in the `apps/` directory.
 
@@ -27,7 +27,27 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
 
 8. **Read the team's data files** in `apps/<team-module>/data/` to understand available data.
 
-9. **Generate the PRD** — a comprehensive PRD that includes:
+## Requirements Interview
+
+9. **Interview the user** before writing the PRD. After reading the BRD, data, types, and components, ask the user targeted questions to clarify requirements and priorities. This is a critical step — do NOT skip it.
+
+   **How to interview:**
+   - Present a brief summary of what you understood from the BRD.
+   - Then ask **3–5 focused questions** tailored to the team's module. Questions should cover:
+     - **Prioritization:** Which features matter most to them? What does their ideal MVP look like?
+     - **User experience:** How do they envision the main user flow? Any specific interactions or layouts they have in mind?
+     - **Data usage:** Are there specific data points or metrics they want to highlight?
+     - **Constraints or preferences:** Any features they explicitly want to skip or defer? Any design preferences?
+     - **Edge cases:** How should the UI handle empty states, large datasets, or missing data?
+   - Adapt questions to the specific module context (e.g., for a rewards store ask about filtering/sorting preferences; for analytics ask about which KPIs matter most).
+   - **Wait for the user's answers** before proceeding. Do NOT generate the PRD until the user has responded.
+   - If the user's answers reveal new requirements or changed priorities, incorporate them into the PRD.
+
+10. **After receiving answers**, proceed to generate the PRD incorporating the user's input alongside the BRD.
+
+## PRD Generation
+
+11. **Generate the PRD** — a comprehensive PRD that includes:
 
    ### PRD Structure
    ```markdown
@@ -95,14 +115,14 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
 
 ## After Generation
 
-10. **Write the PRD** to `apps/<team-module>/docs/prd.md`.
+12. **Write the PRD** to `apps/<team-module>/docs/prd.md`.
 
-11. **Update `workshop.json`**:
+13. **Update `workshop.json`**:
     - Set `progress.steps.requirements` to `"completed"` for this team
     - Set `progress.currentStep` to `"breakdown"`
     - Set `progress.lastActivity` to current ISO timestamp
 
-12. **Present the result** to the student:
+14. **Present the result** to the student:
     - Summary of FRs and NFRs extracted
     - MVP scope recommendation
     - Next step: "Say 'create plan' to create your sprint backlog, or optionally 'create UX design' for UX design guidelines first."
