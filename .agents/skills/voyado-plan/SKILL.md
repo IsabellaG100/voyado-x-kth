@@ -7,6 +7,10 @@ description: "Creates a sprint plan with epics and stories from the PRD. Use whe
 
 Break down the PRD into epics and implementable user stories with a structured backlog.
 
+## Workspace Scope
+
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+
 ## Pre-flight Checks
 
 1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
@@ -136,11 +140,26 @@ Every story MUST include:
     - Set `progress.currentStep` to `"implementation"`
     - Set `progress.lastActivity` to current ISO timestamp
 
+## Response Formatting
+
+Always produce clean, human-friendly, well-formatted output. Use headings, tables, bullet lists, and visual separators to make responses easy to scan. Avoid walls of text. Use a table to show the full story list with epic, ID, title, complexity, and priority.
+
 13. **Present the result**:
-    - Total epics and stories created
+    - Total epics and stories created (use a summary table)
     - MVP stories highlighted
     - Estimated workflow: "You have X stories. Use the voyado-impl skill to start implementing."
     - Remind them stories will be picked up in order
+
+14. **Suggest a commit** for the generated sprint plan:
+
+    > **Suggested commit:**
+    > ```
+    > git add apps/<team-module>/docs/backlog.json apps/<team-module>/docs/epics.md workshop.json
+    > git commit -m "docs: generate sprint plan for <module-name>"
+    > ```
+    > Want me to commit these changes for you?
+
+    If the user agrees, run the commit on their behalf.
 
 ## Constraints
 

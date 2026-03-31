@@ -7,6 +7,10 @@ description: "Creates a Product Requirements Document (PRD) from the team's Busi
 
 Analyze the team's Business Requirements Document (BRD) and produce a structured Product Requirements Document (PRD) with functional and non-functional requirements.
 
+## Workspace Scope
+
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+
 ## Pre-flight Checks
 
 1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
@@ -116,6 +120,10 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
 - **Define MVP scope** — which FRs must be completed in the workshop timeframe.
 - **Identify out-of-scope items** — what NOT to build.
 
+## Response Formatting
+
+Always produce clean, human-friendly, well-formatted output. Use headings, tables, bullet lists, and visual separators to make responses easy to scan. Avoid walls of text. When presenting the PRD summary, use a table for FRs and clearly highlight MVP vs. nice-to-have.
+
 ## After Generation
 
 12. **Write the PRD** to `apps/<team-module>/docs/prd.md`.
@@ -126,9 +134,20 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
     - Set `progress.lastActivity` to current ISO timestamp
 
 14. **Present the result** to the student:
-    - Summary of FRs and NFRs extracted
+    - Summary of FRs and NFRs extracted (use a table)
     - MVP scope recommendation
     - Next step: "Use the voyado-plan skill to create your sprint backlog, or optionally the voyado-ux skill for UX design guidelines first."
+
+15. **Suggest a commit** for the generated PRD:
+
+    > **Suggested commit:**
+    > ```
+    > git add apps/<team-module>/docs/prd.md workshop.json
+    > git commit -m "docs: generate PRD for <module-name>"
+    > ```
+    > Want me to commit these changes for you?
+
+    If the user agrees, run the commit on their behalf.
 
 ## Constraints
 

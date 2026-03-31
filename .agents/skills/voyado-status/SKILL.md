@@ -7,6 +7,14 @@ description: "Shows detailed workshop progress for the current team. Use when a 
 
 Display a comprehensive status report for the current team's workshop progress.
 
+## Workspace Scope
+
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+
+## Response Formatting
+
+Always produce clean, human-friendly, well-formatted output. Use headings, tables, bullet lists, and visual separators to make responses easy to scan. Avoid walls of text.
+
 ## Steps
 
 1. **Read `.onboarding.json`** from the repo root to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."

@@ -7,6 +7,10 @@ description: "Implements the next story from the backlog. Use when a student is 
 
 Pick up the next story from the backlog and implement it.
 
+## Workspace Scope
+
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+
 ## Pre-flight Checks
 
 1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
@@ -39,6 +43,14 @@ Pick up the next story from the backlog and implement it.
    - Set `progress.steps.implementation` to `"in-progress"` (if not already)
    - Set `progress.currentStep` to `"implementation"`
    - Set `progress.lastActivity` to current ISO timestamp
+
+## Design Quality
+
+Before implementing any UI, consult the `frontend-design` skill for design guidance. Apply its principles to produce distinctive, polished interfaces — not generic AI-looking output. Use the Essence design system tokens creatively while respecting the skill's guidelines on typography, color, spatial composition, and visual details.
+
+## Mock API Data
+
+When a story assumes an API endpoint that does not exist yet, create a mock JSON file in the team's `data/` folder to simulate the response. Name the file descriptively (e.g., `data/api-rewards-list.json`). Import it in the component the same way as other data files. Add a `// TODO: Replace with real API call` comment at the import.
 
 ## Implementation
 
@@ -121,21 +133,28 @@ export function ComponentName() {
     ```
     If it fails, fix the type errors before marking complete.
 
+## Response Formatting
+
+Always produce clean, human-friendly, well-formatted output. Use headings, tables, bullet lists, and visual separators to make responses easy to scan. Avoid walls of text. Show a clear summary of files created/modified in a table.
+
 12. **Present the result**:
     - What was implemented
-    - Files created/modified
+    - Files created/modified (as a table: file path, action: created/modified)
     - Any issues encountered
     - Next action options:
       - Use the `voyado-impl` skill — implement the next story
       - Use the `voyado-review` skill — review your implemented code
-      - Commit and push when ready
 
-    > **Reminder:** You can keep implementing more stories with voyado-impl, or use voyado-review to review your code. When you're ready, commit and push your changes:
+13. **Suggest a commit** for the implemented story:
+
+    > **Suggested commit:**
     > ```
-    > git add .
-    > git commit -m "feat: <describe what you built>"
-    > git push
+    > git add apps/<team-module>/src/ apps/<team-module>/data/ apps/<team-module>/docs/backlog.json workshop.json
+    > git commit -m "feat(<team-module>): implement <story-id> — <story-title>"
     > ```
+    > Want me to commit these changes for you?
+
+    If the user agrees, run the commit on their behalf.
 
 ## Constraints
 

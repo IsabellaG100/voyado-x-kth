@@ -7,6 +7,14 @@ description: "The starting point for the Voyado workshop. Use when a student run
 
 You are the main entry point for the Voyado x KTH AI-driven SDLC workshop. This skill handles both **first-time onboarding** and **ongoing navigation**.
 
+## Workspace Scope
+
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+
+## Response Formatting
+
+Always produce clean, human-friendly, well-formatted output. Use headings, tables, bullet lists, and visual separators to make responses easy to scan. Avoid walls of text.
+
 ## Step 1: Check Onboarding Status
 
 Read `.onboarding.json` from the repo root.
@@ -142,6 +150,17 @@ Next step: Use the voyado-prd skill to analyze your business requirements and ge
 
 You can use the voyado-start skill anytime to check your progress and see what to do next.
 ```
+
+4. **Suggest a commit** for the onboarding artifacts:
+
+   > **Suggested commit:**
+   > ```
+   > git add .onboarding.json workshop.json
+   > git commit -m "chore: complete team onboarding"
+   > ```
+   > Want me to commit these changes for you?
+
+   If the user agrees, run the commit on their behalf.
 
 ### Team Color Palette
 

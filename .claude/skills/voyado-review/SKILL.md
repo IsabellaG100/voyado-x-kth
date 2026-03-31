@@ -7,6 +7,10 @@ description: "Runs code review on stories that are in review status. Use when a 
 
 Review implemented stories that have `status: "review"` in the backlog.
 
+## Workspace Scope
+
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+
 ## Pre-flight Checks
 
 1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
@@ -141,6 +145,27 @@ For each story, produce:
        > ```
        > Then create a Pull Request on GitHub targeting `main`.
     - If more stories in backlog: "You still have stories in the backlog. Use the voyado-impl skill to continue, or commit what you have."
+
+## Response Formatting
+
+Always produce clean, human-friendly, well-formatted output. Use headings, tables, bullet lists, and visual separators to make responses easy to scan. Avoid walls of text.
+
+## Commit After Review
+
+After completing the review (and any auto-fixes), suggest a commit:
+
+> **Suggested commit:**
+> ```
+> git add apps/<team-module>/
+> git commit -m "fix(<team-module>): address code review feedback"
+> ```
+> Want me to commit these changes for you?
+
+If the user agrees, run the commit on their behalf. If ALL stories are approved and done, suggest a final commit message instead:
+
+> ```
+> git commit -m "feat(<team-module>): complete implementation — all stories reviewed"
+> ```
 
 ## Tone
 

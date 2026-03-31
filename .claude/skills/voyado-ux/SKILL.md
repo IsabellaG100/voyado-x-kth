@@ -7,6 +7,10 @@ description: "Generates UX design guidelines and component specifications from t
 
 Generate UX design guidelines, layout specifications, and component design tokens based on the team's PRD and the Voyado Essence design system.
 
+## Workspace Scope
+
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+
 ## Pre-flight Checks
 
 1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
@@ -109,6 +113,10 @@ For each major UI element:
 #### Spacing
 - Scale: `--ess-spacing-{100,200,300,400,500,600,700,800,900,1000}` (4px to 64px)
 
+## Response Formatting
+
+Always produce clean, human-friendly, well-formatted output. Use headings, tables, bullet lists, and visual separators to make responses easy to scan. Avoid walls of text.
+
 ## After Generation
 
 9. **Write the UX spec** to `apps/<team-module>/docs/ux-spec.md`.
@@ -121,6 +129,17 @@ For each major UI element:
     - Summary of design decisions
     - Key Essence tokens to use
     - Next step: "Use the voyado-plan skill to create your sprint backlog."
+
+12. **Suggest a commit** for the generated UX spec:
+
+    > **Suggested commit:**
+    > ```
+    > git add apps/<team-module>/docs/ux-spec.md workshop.json
+    > git commit -m "docs: generate UX spec for <module-name>"
+    > ```
+    > Want me to commit these changes for you?
+
+    If the user agrees, run the commit on their behalf.
 
 ## Constraints
 
