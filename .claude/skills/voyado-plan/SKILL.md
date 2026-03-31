@@ -1,15 +1,18 @@
-# Voyado Workshop — Sprint Planner
+---
+name: voyado-plan
+description: "Creates a sprint plan with epics and stories from the PRD. Use when a student needs to break down requirements into implementable tasks."
+---
 
-Apply these instructions when a student asks to create a plan, break down stories, create a backlog, or mentions "voyado plan".
+# Voyado Sprint Planner
 
 Break down the PRD into epics and implementable user stories with a structured backlog.
 
 ## Pre-flight Checks
 
-1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Say 'voyado start' to get set up."
+1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
 
 2. **Read `workshop.json`** to check progress:
-   - If `requirements` is not `completed`, STOP: "You need a PRD first. Say 'create PRD'."
+   - If `requirements` is not `completed`, STOP: "You need a PRD first. Use the voyado-prd skill."
    - If `breakdown` is already `completed`, inform the student and ask if they want to re-plan.
    - UX spec is NOT required — it's optional.
 
@@ -136,7 +139,7 @@ Every story MUST include:
 13. **Present the result**:
     - Total epics and stories created
     - MVP stories highlighted
-    - Estimated workflow: "You have X stories. Say 'implement next story' to start."
+    - Estimated workflow: "You have X stories. Use the voyado-impl skill to start implementing."
     - Remind them stories will be picked up in order
 
 ## Constraints

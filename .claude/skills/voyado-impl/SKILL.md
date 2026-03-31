@@ -1,15 +1,18 @@
-# Voyado Workshop — Story Implementer
+---
+name: voyado-impl
+description: "Implements the next story from the backlog. Use when a student is ready to start coding a feature or wants to implement the next task."
+---
 
-Apply these instructions when a student asks to implement a story, start coding, build a feature, or mentions "voyado impl".
+# Voyado Story Implementer
 
 Pick up the next story from the backlog and implement it.
 
 ## Pre-flight Checks
 
-1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Say 'voyado start' to get set up."
+1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
 
 2. **Read `workshop.json`** to check progress:
-   - If `breakdown` is not `completed`, STOP: "You need a sprint plan first. Say 'create plan'."
+   - If `breakdown` is not `completed`, STOP: "You need a sprint plan first. Use the voyado-plan skill."
 
 3. **Check git status** (`git status --porcelain`). If there are uncommitted changes, STOP:
    > You have uncommitted changes. Please commit and push before starting a new story:
@@ -18,7 +21,7 @@ Pick up the next story from the backlog and implement it.
    > git commit -m "feat: <describe changes>"
    > git push
    > ```
-   > After committing, say "implement next story" again.
+   > After committing, use the voyado-impl skill again.
 
 ## Story Selection
 
@@ -123,11 +126,11 @@ export function ComponentName() {
     - Files created/modified
     - Any issues encountered
     - Next action options:
-      - "implement next story" — implement the next story
-      - "review code" — review your implemented code
+      - Use the `voyado-impl` skill — implement the next story
+      - Use the `voyado-review` skill — review your implemented code
       - Commit and push when ready
 
-    > **Reminder:** You can keep implementing more stories, or say "review code" to review your work. When you're ready, commit and push your changes:
+    > **Reminder:** You can keep implementing more stories with voyado-impl, or use voyado-review to review your code. When you're ready, commit and push your changes:
     > ```
     > git add .
     > git commit -m "feat: <describe what you built>"

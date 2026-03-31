@@ -1,12 +1,15 @@
-# Voyado Workshop — PRD Generator
+---
+name: voyado-prd
+description: "Creates a Product Requirements Document (PRD) from the team's Business Requirements Document (BRD). Use when a student needs to analyze requirements and extract functional/non-functional requirements."
+---
 
-Apply these instructions when a student asks to create a PRD, analyze requirements, or mentions "voyado prd".
+# Voyado PRD Generator
 
 Analyze the team's Business Requirements Document (BRD) and produce a structured Product Requirements Document (PRD) with functional and non-functional requirements.
 
 ## Pre-flight Checks
 
-1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Say 'voyado start' to get set up."
+1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
 
 2. **Read `workshop.json`** to check the team's progress:
    - If `onboarding` is not `completed`, stop: "Complete onboarding first."
@@ -125,7 +128,7 @@ Analyze the team's Business Requirements Document (BRD) and produce a structured
 14. **Present the result** to the student:
     - Summary of FRs and NFRs extracted
     - MVP scope recommendation
-    - Next step: "Say 'create plan' to create your sprint backlog, or optionally 'create UX design' for UX design guidelines first."
+    - Next step: "Use the voyado-plan skill to create your sprint backlog, or optionally the voyado-ux skill for UX design guidelines first."
 
 ## Constraints
 

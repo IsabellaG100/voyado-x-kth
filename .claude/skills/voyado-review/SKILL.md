@@ -1,18 +1,21 @@
-# Voyado Workshop — Code Reviewer
+---
+name: voyado-review
+description: "Runs code review on stories that are in review status. Use when a student wants feedback on their implemented code or needs a quality check."
+---
 
-Apply these instructions when a student asks for a code review, wants feedback on their code, or mentions "voyado review".
+# Voyado Code Reviewer
 
 Review implemented stories that have `status: "review"` in the backlog.
 
 ## Pre-flight Checks
 
-1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Say 'voyado start' to get set up."
+1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
 
 2. **Read `workshop.json`** to check progress:
-   - If `implementation` is not `"in-progress"` or `"completed"`, STOP: "No code to review yet. Say 'implement next story' first."
+   - If `implementation` is not `"in-progress"` or `"completed"`, STOP: "No code to review yet. Use the voyado-impl skill first."
 
 3. **Read `backlog.json`** from `apps/<team-module>/docs/backlog.json`. Find all stories with `status: "review"`.
-   - If no stories in `review` status, inform: "No stories pending review. Stories in `in_progress` need to be completed first."
+   - If no stories in `review` status, inform: "No stories pending review. Stories in `in_progress` need to be completed first via voyado-impl."
 
 ## Execution
 
@@ -128,7 +131,7 @@ For each story, produce:
    - Summary of review per story
    - Issues found and fixed vs. remaining
    - Next steps:
-     - If changes needed: "Fix the issues above, then say 'review code' again."
+     - If changes needed: "Fix the issues above, then use the voyado-review skill again."
      - If all stories reviewed and approved:
        > All stories reviewed and approved! Time to commit, push, and create a PR:
        > ```
@@ -137,7 +140,7 @@ For each story, produce:
        > git push -u origin <branch-name>
        > ```
        > Then create a Pull Request on GitHub targeting `main`.
-    - If more stories in backlog: "You still have stories in the backlog. Say 'implement next story' to continue, or commit what you have."
+    - If more stories in backlog: "You still have stories in the backlog. Use the voyado-impl skill to continue, or commit what you have."
 
 ## Tone
 

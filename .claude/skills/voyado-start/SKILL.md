@@ -1,8 +1,11 @@
+---
+name: voyado-start
+description: "The starting point for the Voyado workshop. Use when a student runs /voyado-start, asks how to begin, what to do next, or needs guidance on the workflow. Handles onboarding (if not done) and shows progress with next action recommendations."
+---
+
 # Voyado Workshop — Start
 
-Apply these instructions when a student asks to start the workshop, get onboarded, asks "what do I do next", or mentions "voyado start".
-
-You are the main entry point for the Voyado x KTH AI-driven SDLC workshop. This handles both **first-time onboarding** and **ongoing navigation**.
+You are the main entry point for the Voyado x KTH AI-driven SDLC workshop. This skill handles both **first-time onboarding** and **ongoing navigation**.
 
 ## Step 1: Check Onboarding Status
 
@@ -135,9 +138,9 @@ Your module: {Module Title}
 Your route: {Route}
 Your branch: team-{N}/feature (create this when you're ready)
 
-Next step: Say "create PRD" or "voyado prd" to analyze your business requirements and generate a PRD.
+Next step: Use the voyado-prd skill to analyze your business requirements and generate a PRD.
 
-You can say "voyado start" anytime to check your progress and see what to do next.
+You can use the voyado-start skill anytime to check your progress and see what to do next.
 ```
 
 ### Team Color Palette
@@ -190,14 +193,14 @@ Run `git status --porcelain`. If there are uncommitted changes, STOP and tell th
 
 Based on the team's step statuses:
 
-| Current State | Next Action | Command |
-|--------------|-------------|---------|
-| `requirements` = pending | Create PRD from business requirements | Say "create PRD" |
-| `breakdown` = pending | Plan epics and stories (optionally do UX design first) | Say "create plan" |
-| `implementation` = pending or in-progress | Implement next story | Say "implement next story" |
+| Current State | Next Action | Skill |
+|--------------|-------------|-------|
+| `requirements` = pending | Create PRD from business requirements | `voyado-prd` |
+| `breakdown` = pending | Plan epics and stories (optionally run `voyado-ux` first) | `voyado-plan` |
+| `implementation` = pending or in-progress | Implement next story | `voyado-impl` |
 | `implementation` = completed | Create PR and push | Manual: `git push` then create PR |
 | `pull-request` = pending | Push branch and create PR | Manual git operations |
-| `review` = pending | Run code review | Say "review code" |
+| `review` = pending | Run code review | `voyado-review` |
 | `review` = completed | Merge PR | Manual or mentor action |
 | `merge` = completed | Wait for deployment | Automatic via CI/CD |
 | `deployed` = completed | Done! Prepare for presentation | Celebrate! |
@@ -217,10 +220,10 @@ If `apps/<team-module>/docs/backlog.json` exists, show a summary:
 **Status:** [visual progress indicator]
 
 ### What's Next
-[Clear instruction with what to say/do next]
+[Clear instruction with the skill to use next]
 
 ### Optional Steps
-[Any optional actions like UX design]
+[Any optional actions like voyado-ux]
 
 ### Story Progress (if applicable)
 [Backlog summary table]
@@ -228,7 +231,7 @@ If `apps/<team-module>/docs/backlog.json` exists, show a summary:
 
 ## Important Notes
 
-- The UX design step is ALWAYS optional. Never block progress on it.
+- The UX design step (`voyado-ux`) is ALWAYS optional. Never block progress on it.
 - The `breakdown` step requires `requirements` to be completed (PRD must exist).
 - The `implementation` step requires `breakdown` to be completed (backlog must exist).
 - Always check for uncommitted changes FIRST before any recommendation (in navigator mode).

@@ -1,15 +1,18 @@
-# Voyado Workshop — UX Designer
+---
+name: voyado-ux
+description: "Generates UX design guidelines and component specifications from the PRD. This is an OPTIONAL step. Use when a student wants design guidance before implementation."
+---
 
-Apply these instructions when a student asks to create UX design guidelines, design the UI, or mentions "voyado ux". This is an OPTIONAL step.
+# Voyado UX Designer
 
 Generate UX design guidelines, layout specifications, and component design tokens based on the team's PRD and the Voyado Essence design system.
 
 ## Pre-flight Checks
 
-1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Say 'voyado start' to get set up."
+1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
 
 2. **Read `workshop.json`** to check progress:
-   - If `requirements` is not `completed`, STOP: "You need a PRD first. Say 'create PRD'."
+   - If `requirements` is not `completed`, STOP: "You need a PRD first. Use the voyado-prd skill."
    - This step is OPTIONAL — inform the student they can skip to sprint planning if they prefer.
 
 3. **Check git status** (`git status --porcelain`). If dirty, STOP and ask to commit/push.
@@ -117,7 +120,7 @@ For each major UI element:
 11. **Present the result**:
     - Summary of design decisions
     - Key Essence tokens to use
-    - Next step: "Say 'create plan' to create your sprint backlog."
+    - Next step: "Use the voyado-plan skill to create your sprint backlog."
 
 ## Constraints
 
