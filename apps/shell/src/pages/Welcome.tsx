@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Badge, AvatarStack, Loader } from '@voyado-kth/ui';
@@ -138,6 +139,10 @@ function getEffectiveCurrentStep(
 
 export function Welcome() {
   const navigate = useNavigate();
+  const cardRefs = useRef(new Map<string, HTMLDivElement>());
+  const previousRectsRef = useRef(new Map<string, DOMRect>());
+  const animationFramesRef = useRef<number[]>([]);
+  const [frontTeamByStep, setFrontTeamByStep] = useState<Record<string, string>>({});
   const github = useGitHubWorkshop({
     pollInterval: 60_000,
     token: import.meta.env.VITE_GITHUB_TOKEN,
@@ -147,25 +152,6 @@ export function Welcome() {
   const isLive = github.workshopData !== null;
 
   const totalSteps = workshopData.workflowSteps.length;
-
-  if (github.loading && !github.workshopData) {
-    return (
-      <div className={styles.page}>
-        <header className={styles.pageHeader}>
-          <div className={styles.pageTitleBlock}>
-            <h1 className={styles.pageTitle}>Workshop Dashboard</h1>
-            <p className={styles.pageSubtitle}>Loading live workshop schedule and team status…</p>
-          </div>
-        </header>
-        <div className={styles.loadingState}>
-          <Loader size="large" />
-          <p>Fetching live data from GitHub...</p>
-        </div>
-      </div>
-    );
-  }
-
-  const eventSubtitle = `${formatEventDate(workshopData.event.date)} · ${workshopData.event.startTime}–${workshopData.event.endTime} · ${workshopData.event.venue}`;
   const workflowSteps = getWorkflowSteps(workshopData);
   const teamsWithStage = workshopData.teams.map(team => {
     const teamBranchInfo = github.teamBranches[team.id];
@@ -195,11 +181,82 @@ export function Welcome() {
     ]),
   );
 
+  const layoutSignature = workflowSteps
+    .map(step => `${step.id}:${(teamsByStep[step.id] ?? []).map(entry => entry.team.id).join(',')}`)
+    .join('|');
+
+  useLayoutEffect(() => {
+    animationFramesRef.current.forEach(frame => window.cancelAnimationFrame(frame));
+    animationFramesRef.current = [];
+
+    const currentRects = new Map<string, DOMRect>();
+    cardRefs.current.forEach((node, teamId) => {
+      currentRects.set(teamId, node.getBoundingClientRect());
+    });
+
+    currentRects.forEach((currentRect, teamId) => {
+      const previousRect = previousRectsRef.current.get(teamId);
+      const node = cardRefs.current.get(teamId);
+
+      if (!previousRect || !node) {
+        return;
+      }
+
+      const deltaX = previousRect.left - currentRect.left;
+      const deltaY = previousRect.top - currentRect.top;
+
+      if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) {
+        return;
+      }
+
+      node.style.transition = 'none';
+      node.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+      const firstFrame = window.requestAnimationFrame(() => {
+        const secondFrame = window.requestAnimationFrame(() => {
+          node.style.transition = 'transform 420ms cubic-bezier(0.22, 1, 0.36, 1)';
+          node.style.transform = 'translate(0, 0)';
+        });
+        animationFramesRef.current.push(secondFrame);
+      });
+
+      animationFramesRef.current.push(firstFrame);
+    });
+
+    previousRectsRef.current = currentRects;
+
+    return () => {
+      animationFramesRef.current.forEach(frame => window.cancelAnimationFrame(frame));
+      animationFramesRef.current = [];
+    };
+  }, [layoutSignature]);
+
+  if (github.loading && !github.workshopData) {
+    return (
+      <div className={styles.page}>
+        <header className={styles.pageHeader}>
+          <div className={styles.pageTitleBlock}>
+            <h1 className={styles.pageTitle}>Workshop Dashboard</h1>
+            <p className={styles.pageSubtitle}>Loading live workshop schedule and team status…</p>
+          </div>
+        </header>
+        <div className={styles.loadingState}>
+          <Loader size="large" />
+          <p>Fetching live data from GitHub...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const eventSubtitle = `${formatEventDate(workshopData.event.date)} · ${workshopData.event.startTime}–${workshopData.event.endTime} · ${workshopData.event.venue}`;
+
   const renderTeamCard = (
     team: Team,
     teamBranchInfo: TeamBranchInfo | undefined,
     index: number,
     stackSize: number,
+    side: 'left' | 'right',
+    stepId: string,
   ) => {
     const color = teamColors[team.id] ?? '#666';
     const completedSteps = getCompletedSteps(team);
@@ -224,11 +281,27 @@ export function Welcome() {
     const branchName = teamBranchInfo?.branch.name ?? team.progress.branchName;
     const openPRs = teamBranchInfo?.pullRequests ?? [];
     const currentStepLabel = getStepLabel(workshopData, team.progress.currentStep);
+    const isFrontCard = frontTeamByStep[stepId]
+      ? frontTeamByStep[stepId] === team.id
+      : index === 0;
+
+    const bringToFront = () => {
+      setFrontTeamByStep(prev => ({ ...prev, [stepId]: team.id }));
+    };
 
     return (
       <div
         key={team.id}
-        className={styles.timelineCardShell}
+        ref={node => {
+          if (node) {
+            cardRefs.current.set(team.id, node);
+          } else {
+            cardRefs.current.delete(team.id);
+          }
+        }}
+        className={[styles.timelineCardShell, side === 'right' ? styles.timelineCardShellRight : '']
+          .filter(Boolean)
+          .join(' ')}
         style={
           {
             '--team-color': color,
@@ -242,10 +315,20 @@ export function Welcome() {
             className={styles.timelineCardInner}
             role="button"
             tabIndex={0}
-            onClick={() => navigate(team.module.route)}
+            onClick={() => {
+              if (!isFrontCard) {
+                bringToFront();
+                return;
+              }
+              navigate(team.module.route);
+            }}
             onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
+                if (!isFrontCard) {
+                  bringToFront();
+                  return;
+                }
                 navigate(team.module.route);
               }
             }}
@@ -328,10 +411,18 @@ export function Welcome() {
                   {teamCommits} commit{teamCommits !== 1 ? 's' : ''}
                 </span>
               )}
-              <span className={styles.timelineNavHint}>
+              <button
+                type="button"
+                className={styles.timelineNavHint}
+                onClick={e => {
+                  e.stopPropagation();
+                  navigate(team.module.route);
+                }}
+                aria-label={`Open ${team.module.title}`}
+              >
                 <ArrowRight size={12} strokeWidth={1.5} />
                 Open
-              </span>
+              </button>
             </div>
           </div>
         </Card>
@@ -367,6 +458,20 @@ export function Welcome() {
                 Using cached data
               </span>
             )}
+            <button
+              type="button"
+              className={[styles.refreshButton, github.refreshing ? styles.refreshButtonSpinning : '']
+                .filter(Boolean)
+                .join(' ')}
+              onClick={() => {
+                void github.refresh();
+              }}
+              aria-label="Force refresh workshop data"
+              title="Force refresh"
+              disabled={github.refreshing}
+            >
+              <RefreshCw size={14} strokeWidth={2} />
+            </button>
           </div>
         </div>
       </header>
@@ -384,6 +489,14 @@ export function Welcome() {
               const isActive = stepTeams.length > 0;
               const showOnLeft = reversedIndex % 2 === 0;
 
+              const orderedStepTeams =
+                stepTeams.length > 1 && frontTeamByStep[step.id]
+                  ? [
+                      ...stepTeams.filter(({ team }) => team.id === frontTeamByStep[step.id]),
+                      ...stepTeams.filter(({ team }) => team.id !== frontTeamByStep[step.id]),
+                    ]
+                  : stepTeams;
+
               return (
                 <div
                   key={step.id}
@@ -395,10 +508,10 @@ export function Welcome() {
                   ].filter(Boolean).join(' ')}
                 >
                   <div className={styles.timelineCardsColumn}>
-                    {showOnLeft && stepTeams.length > 0 && (
+                    {showOnLeft && orderedStepTeams.length > 0 && (
                       <div className={styles.teamCardStack}>
-                        {stepTeams.map(({ team, teamBranchInfo }, index) =>
-                          renderTeamCard(team, teamBranchInfo, index, stepTeams.length),
+                        {orderedStepTeams.map(({ team, teamBranchInfo }, index) =>
+                          renderTeamCard(team, teamBranchInfo, index, orderedStepTeams.length, 'left', step.id),
                         )}
                       </div>
                     )}
@@ -424,10 +537,10 @@ export function Welcome() {
                   </div>
 
                   <div className={styles.timelineCardsColumn}>
-                    {!showOnLeft && stepTeams.length > 0 && (
+                    {!showOnLeft && orderedStepTeams.length > 0 && (
                       <div className={styles.teamCardStack}>
-                        {stepTeams.map(({ team, teamBranchInfo }, index) =>
-                          renderTeamCard(team, teamBranchInfo, index, stepTeams.length),
+                        {orderedStepTeams.map(({ team, teamBranchInfo }, index) =>
+                          renderTeamCard(team, teamBranchInfo, index, orderedStepTeams.length, 'right', step.id),
                         )}
                       </div>
                     )}

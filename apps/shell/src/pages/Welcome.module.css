@@ -75,7 +75,8 @@
 
 .statusLive,
 .statusWarning,
-.statusFallback {
+.statusFallback,
+.refreshButton {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -95,6 +96,37 @@
   color: var(--ess-color-neutral-fg-weak);
 }
 
+.refreshButton {
+  appearance: none;
+  min-width: 28px;
+  min-height: 28px;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgba(24, 50, 74, 0.08);
+  border-radius: 999px;
+  color: var(--timeline-ink);
+  background: rgba(255, 255, 255, 0.78);
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.refreshButton:hover {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(24, 50, 74, 0.16);
+}
+
+.refreshButton:active {
+  transform: scale(0.96);
+}
+
+.refreshButton:disabled {
+  cursor: default;
+}
+
+.refreshButtonSpinning svg {
+  animation: refreshSpin 0.8s linear infinite;
+}
+
 .liveDot {
   width: 6px;
   height: 6px;
@@ -106,6 +138,11 @@
 @keyframes livePulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
+}
+
+@keyframes refreshSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .timelineSection {
@@ -318,10 +355,10 @@
   z-index: var(--stack-depth);
   width: calc(100% - ((var(--stack-depth) - 1) * var(--stack-offset)));
   margin-left: calc((var(--stack-depth) - 1) * var(--stack-offset));
-  transition: margin-left 220ms ease, width 220ms ease;
+  transition: margin-left 220ms ease, margin-right 220ms ease, width 220ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.timelineStepRight .timelineCardShell {
+.timelineCardShellRight {
   justify-self: end;
   margin-left: 0;
   margin-right: calc((var(--stack-depth) - 1) * var(--stack-offset));
@@ -343,6 +380,7 @@
   margin-left: calc((var(--stack-depth) - 1) * (var(--stack-offset) + 4px));
 }
 
+.timelineCardShellRight:hover,
 .timelineStepRight .teamCardStack:hover .timelineCardShell {
   margin-left: 0;
   margin-right: calc((var(--stack-depth) - 1) * (var(--stack-offset) + 4px));
@@ -383,6 +421,16 @@
   text-transform: uppercase;
   color: #fff;
   background: linear-gradient(180deg, var(--team-color), color-mix(in srgb, var(--team-color) 72%, #0d2235));
+}
+
+.timelineCardShellRight .timelineCardInner {
+  padding-left: var(--ess-spacing-400);
+  padding-right: calc(var(--ess-spacing-400) + 34px);
+}
+
+.timelineCardShellRight .timelineCardRail {
+  left: auto;
+  right: 0;
 }
 
 .timelineCardHeader {
@@ -521,6 +569,14 @@
   background: rgba(24, 50, 74, 0.055);
 }
 
+.timelineNavHint {
+  appearance: none;
+  border-width: 1px;
+  border-style: solid;
+  cursor: pointer;
+  font: inherit;
+}
+
 .timelineMetaChip:hover {
   background: rgba(24, 50, 74, 0.09);
 }
@@ -612,7 +668,7 @@
     margin-left: calc((var(--stack-depth) - 1) * 22px);
   }
 
-  .timelineStepRight .timelineCardShell {
+  .timelineCardShellRight {
     margin-left: 0;
     margin-right: calc((var(--stack-depth) - 1) * 22px);
   }
@@ -622,7 +678,8 @@
     margin-left: calc((var(--stack-depth) - 1) * 24px);
   }
 
-  .timelineStepRight .teamCardStack:hover .timelineCardShell {
+  .timelineStepRight .teamCardStack:hover .timelineCardShell,
+  .timelineCardShellRight:hover {
     margin-left: 0;
     margin-right: calc((var(--stack-depth) - 1) * 24px);
   }

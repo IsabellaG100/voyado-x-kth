@@ -86,6 +86,7 @@ export function useGitHubWorkshop(
 
   const clientRef = useRef<GitHubClient>(new GitHubClient(token));
   const isMounted = useRef(true);
+  const stateRef = useRef<WorkshopGitHubState | null>(null);
 
   const [state, setState] = useState<WorkshopGitHubState>({
     workshopData: null,
@@ -94,12 +95,31 @@ export function useGitHubWorkshop(
     pullRequests: [],
     teamBranches: {},
     loading: true,
+    refreshing: false,
     error: null,
     lastUpdated: null,
+    refresh: async () => {},
   });
 
-  const fetchData = useCallback(async () => {
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
+  const fetchData = useCallback(async (mode: 'initial' | 'background' | 'manual' = 'background') => {
     const client = clientRef.current;
+    const currentState = stateRef.current;
+    const hasWorkshopData = currentState?.workshopData !== null;
+    const shouldShowLoading = mode === 'initial' && !hasWorkshopData;
+    const shouldShowRefreshing = mode === 'manual' && hasWorkshopData;
+
+    if (shouldShowLoading || shouldShowRefreshing) {
+      setState((prev) => ({
+        ...prev,
+        loading: shouldShowLoading ? true : prev.loading,
+        refreshing: shouldShowRefreshing,
+        error: null,
+      }));
+    }
 
     try {
       // 1. Fetch workshop.json from main branch
@@ -174,8 +194,12 @@ export function useGitHubWorkshop(
         pullRequests,
         teamBranches,
         loading: false,
+        refreshing: false,
         error: null,
         lastUpdated: new Date(),
+        refresh: async () => {
+          await fetchData('manual');
+        },
       });
     } catch (err) {
       if (!isMounted.current) return;
@@ -184,6 +208,7 @@ export function useGitHubWorkshop(
       setState((prev) => ({
         ...prev,
         loading: false,
+        refreshing: false,
         error: message,
       }));
     }
@@ -191,9 +216,11 @@ export function useGitHubWorkshop(
 
   useEffect(() => {
     isMounted.current = true;
-    fetchData();
+    fetchData('initial');
 
-    const interval = setInterval(fetchData, pollInterval);
+    const interval = setInterval(() => {
+      void fetchData('background');
+    }, pollInterval);
 
     return () => {
       isMounted.current = false;
@@ -201,7 +228,12 @@ export function useGitHubWorkshop(
     };
   }, [fetchData, pollInterval]);
 
-  return state;
+  return {
+    ...state,
+    refresh: async () => {
+      await fetchData('manual');
+    },
+  };
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

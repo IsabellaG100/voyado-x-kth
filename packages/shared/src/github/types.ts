@@ -75,6 +75,8 @@ export interface WorkshopGitHubState {
   /** Branches and PRs matched to teams by team ID in branch name */
   teamBranches: Record<string, TeamBranchInfo>;
   loading: boolean;
+  refreshing: boolean;
   error: string | null;
   lastUpdated: Date | null;
+  refresh: () => Promise<void>;
 }
