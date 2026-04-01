@@ -9,7 +9,7 @@ You are the main entry point for the Voyado x KTH AI-driven SDLC workshop. This 
 
 ## Workspace Scope
 
-All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). **Exception:** This skill MUST write to both `.onboarding.json` and `workshop.json` in the repo root during onboarding. You may READ shared resources: `packages/`, `docs/`, `CLAUDE.md`. Never modify files outside the team's app folder other than the two root files listed above.
 
 ## Response Formatting
 
@@ -108,7 +108,11 @@ Ask: **"Does this look correct?"** If not, ask what needs to be corrected and lo
 
 ### 1.6 Save Onboarding Data
 
-1. **Write `.onboarding.json`** to the repo root:
+**CRITICAL: You MUST complete ALL items in this checklist. Do not skip any step. After writing each file, verify it was written correctly by reading it back.**
+
+#### Checklist — complete every item:
+
+- [ ] **1. Write `.onboarding.json`** to the repo root with this exact structure:
 
 ```json
 {
@@ -129,15 +133,23 @@ Ask: **"Does this look correct?"** If not, ask what needs to be corrected and lo
 }
 ```
 
-2. **Update `workshop.json`** — read the file, find the team by ID, then:
-   - Set `team.nickname` to the nickname (or leave empty)
-   - Set `team.members` to the collected members array
-   - Set `team.progress.currentStep` to `"requirements"`
-   - Set `team.progress.steps.onboarding` to `"completed"`
-   - Set `team.progress.lastActivity` to current ISO timestamp
-   - Write back with `JSON.stringify(data, null, 2)` + trailing newline
+- [ ] **2. Read `.onboarding.json` back** and verify it contains all members.
 
-3. **Display completion message:**
+- [ ] **3. Update `workshop.json`** — read the file, find the team by ID, then apply ALL of these changes:
+  - Set `team.nickname` to the nickname (or leave empty)
+  - Set `team.members` to the SAME members array written to `.onboarding.json` (copy it exactly — same names, emails, github usernames, roles, initials, avatarColors)
+  - Set `team.progress.currentStep` to `"requirements"`
+  - Set `team.progress.steps.onboarding` to `"completed"`
+  - Set `team.progress.lastActivity` to current ISO timestamp
+  - Write back with `JSON.stringify(data, null, 2)` + trailing newline
+
+- [ ] **4. Read `workshop.json` back** and verify:
+  - The team's `members` array is NOT empty
+  - The team's `members` array matches `.onboarding.json`
+  - The team's `progress.steps.onboarding` is `"completed"`
+  - If verification fails, fix the file immediately before proceeding.
+
+- [ ] **5. Display completion message:**
 
 ```
 You're all set! Your team is now onboarded.

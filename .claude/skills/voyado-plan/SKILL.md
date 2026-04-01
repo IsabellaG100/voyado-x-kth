@@ -9,7 +9,7 @@ Break down the PRD into epics and implementable user stories with a structured b
 
 ## Workspace Scope
 
-All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ (but not write) shared resources: `packages/`, `docs/`, `workshop.json`, `.onboarding.json`, `CLAUDE.md`. Never modify files outside the team's app folder.
+All file operations MUST be limited to the team's app directory as determined by `.onboarding.json` `teamId` (e.g., `team-5` → `apps/team-5-rewards-store/`). You may READ shared resources: `packages/`, `docs/`, `.onboarding.json`, `CLAUDE.md`. **Exception:** This skill MUST write to `workshop.json` in the repo root to update team progress. Never modify other files outside the team's app folder.
 
 ## Pre-flight Checks
 

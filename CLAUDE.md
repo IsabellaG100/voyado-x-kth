@@ -63,9 +63,21 @@ If a team module's export name changes, `App.tsx` must be updated to match.
 - PRs target `main`. CI runs typecheck + build on PR; deploy to Azure Static Web Apps on merge.
 - Never commit directly to `main`.
 
+## Agent Behavior
+
+When a skill is invoked, you MUST:
+
+1. **Read the entire skill** before starting. Understand every step.
+2. **Execute every step in order.** Do not skip steps, even if they seem redundant.
+3. **Complete all file writes the skill requires.** If a skill says to write to two files, write to both. Verify each write by reading the file back.
+4. **Treat checklist items as mandatory.** If a skill contains a checklist (`- [ ]`), every item must be completed before moving on.
+5. **Verify your work.** After writing a file, read it back and confirm the data is correct. If it's wrong, fix it immediately.
+
+Do not take shortcuts. Do not assume a step is unnecessary. Every instruction in a skill exists for a reason.
+
 ## Onboarding Check
 
-If `.onboarding.json` does not exist in the repo root, tell the user to run `/voyado:start` to get set up before proceeding with any other task.
+If `.onboarding.json` does not exist in the repo root, tell the user to run `/voyado-start` to get set up before proceeding with any other task.
 
 ## Key References
 

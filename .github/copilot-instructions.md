@@ -1,10 +1,22 @@
 # Copilot Instructions — Voyado x KTH Workshop
 
-## ⚠️ Onboarding Check (Do This First)
+## Agent Behavior
+
+When a skill is invoked, you MUST:
+
+1. **Read the entire skill** before starting. Understand every step.
+2. **Execute every step in order.** Do not skip steps, even if they seem redundant.
+3. **Complete all file writes the skill requires.** If a skill says to write to two files, write to both. Verify each write by reading the file back.
+4. **Treat checklist items as mandatory.** If a skill contains a checklist, every item must be completed before moving on.
+5. **Verify your work.** After writing a file, read it back and confirm the data is correct. If it's wrong, fix it immediately.
+
+Do not take shortcuts. Do not assume a step is unnecessary. Every instruction in a skill exists for a reason.
+
+## Onboarding Check (Do This First)
 
 Before doing anything else, check if `.onboarding.json` exists in the repository root directory. If it does **not** exist, the team has not been onboarded yet. In that case:
 
-1. Tell the student: "You haven't onboarded yet. Run `/voyado:start` to get set up."
+1. Tell the student: "You haven't onboarded yet. Say 'voyado start' to get set up."
 2. Do not proceed with any other task until onboarding is complete
 
 If `.onboarding.json` exists, the team is onboarded — proceed normally.
@@ -108,7 +120,7 @@ The GitHub Actions workflow (`.github/workflows/deploy.yml`):
 
 ## AI-Driven SDLC Workflow
 
-This workshop follows a structured AI-assisted development workflow. Detailed instructions for each step are in `.github/instructions/voyado-*.instructions.md` files. The consolidated workflow reference is in `.agents/voyado/copilot/workflow-instructions.md`.
+This workshop follows a structured AI-assisted development workflow. Skills are defined in `.agents/skills/voyado-*/SKILL.md` files.
 
 **Workflow:**
 ```
@@ -117,15 +129,15 @@ Onboarding → PRD → (optional: UX Design) → Planning → Implementation →
 
 **Available commands** (students can say these or use natural language):
 
-| Action | What to say | Instruction file |
-|--------|------------|------------------|
-| Onboard & navigate | "voyado start" or "start workshop" | `voyado-start.instructions.md` |
-| Check progress | "voyado status" or "show progress" | `voyado-status.instructions.md` |
-| Create PRD | "voyado prd" or "create PRD" | `voyado-prd.instructions.md` |
-| UX design (optional) | "voyado ux" or "create UX design" | `voyado-ux.instructions.md` |
-| Sprint planning | "voyado plan" or "create plan" | `voyado-plan.instructions.md` |
-| Implement story | "voyado impl" or "implement next story" | `voyado-impl.instructions.md` |
-| Code review | "voyado review" or "review code" | `voyado-review.instructions.md` |
+| Action | What to say | Skill |
+|--------|------------|-------|
+| Onboard & navigate | "voyado start" or "start workshop" | `voyado-start` |
+| Check progress | "voyado status" or "show progress" | `voyado-status` |
+| Create PRD | "voyado prd" or "create PRD" | `voyado-prd` |
+| UX design (optional) | "voyado ux" or "create UX design" | `voyado-ux` |
+| Sprint planning | "voyado plan" or "create plan" | `voyado-plan` |
+| Implement story | "voyado impl" or "implement next story" | `voyado-impl` |
+| Code review | "voyado review" or "review code" | `voyado-review` |
 
 **Story status flow:** `backlog` → `in_progress` → `review` → `done`
 
