@@ -140,11 +140,11 @@ export class GitHubClient {
     }
   }
 
-  /** Fetch open pull requests */
-  async fetchOpenPRs(): Promise<GitHubPullRequest[]> {
+  /** Fetch all pull requests (open + closed/merged) */
+  async fetchAllPRs(): Promise<GitHubPullRequest[]> {
     try {
       return await this.get<GitHubPullRequest[]>(
-        `${API_BASE}/repos/${OWNER}/${REPO}/pulls?state=open&per_page=100`,
+        `${API_BASE}/repos/${OWNER}/${REPO}/pulls?state=all&per_page=100`,
       );
     } catch {
       return [];

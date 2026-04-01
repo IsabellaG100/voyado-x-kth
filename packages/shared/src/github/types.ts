@@ -46,6 +46,7 @@ export interface GitHubPullRequest {
   user: { login: string; avatar_url: string } | null;
   created_at: string;
   updated_at: string;
+  merged_at: string | null;
 }
 
 // ─── Enriched workshop types ──────────────────────────────────────────────────
@@ -61,7 +62,8 @@ export interface MemberGitHubData {
 export interface TeamBranchInfo {
   branch: GitHubBranch;
   pullRequests: GitHubPullRequest[];
-  members: string[]; // GitHub usernames of team members contributing to this branch
+  mergedPRs: GitHubPullRequest[];
+  members: string[];
 }
 
 export interface WorkshopGitHubState {

@@ -1,4 +1,4 @@
-export type StepStatus = 'pending' | 'in_progress' | 'done' | 'skipped';
+export type StepStatus = 'pending' | 'in_progress' | 'completed' | 'done' | 'skipped';
 
 export interface WorkflowStep {
   id: string;

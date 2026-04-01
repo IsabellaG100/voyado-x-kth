@@ -47,7 +47,7 @@ const teamIcons: Record<string, typeof Heart> = {
 // ─── Helper functions ─────────────────────────────────────────────────────────
 
 function getCompletedSteps(team: Team): number {
-  return Object.values(team.progress.steps).filter(s => s === 'done').length;
+  return Object.values(team.progress.steps).filter(s => s === 'done' || s === 'completed').length;
 }
 
 function getOverallProgress(data: WorkshopData): number {
@@ -60,12 +60,24 @@ function getStepLabel(data: WorkshopData, stepId: string): string {
   return data.workflowSteps.find(s => s.id === stepId)?.label ?? stepId;
 }
 
-function getTeamsAtStep(data: WorkshopData, stepId: string): number {
-  return data.teams.filter(t => t.progress.currentStep === stepId).length;
+/** Workshop-based step IDs in order (used for cumulative counting) */
+const WORKSHOP_STEP_IDS = ['onboarding', 'requirements', 'breakdown', 'implementation'];
+
+/** Get the order index of a team's current step */
+function getStepOrder(data: WorkshopData, stepId: string): number {
+  return data.workflowSteps.find(s => s.id === stepId)?.order ?? 0;
 }
 
-function isStepCompletedByAny(data: WorkshopData, stepId: string): boolean {
-  return data.teams.some(t => t.progress.steps[stepId] === 'done');
+/**
+ * Count teams that have reached or passed a workshop step.
+ * A team at "implementation" (order 3) counts toward onboarding (0), requirements (1), breakdown (2), and implementation (3).
+ */
+function getTeamsAtOrPastStep(data: WorkshopData, stepId: string): number {
+  const stepOrder = getStepOrder(data, stepId);
+  return data.teams.filter(t => {
+    const teamOrder = getStepOrder(data, t.progress.currentStep);
+    return teamOrder >= stepOrder;
+  }).length;
 }
 
 function formatEventDate(dateStr: string): string {
@@ -157,42 +169,71 @@ export function Welcome() {
       <section className={styles.pipeline}>
         <p className={styles.pipelineTitle}>Workflow Pipeline</p>
         <div className={styles.pipelineTrack}>
-          {workshopData.workflowSteps.map(step => {
-            const count = getTeamsAtStep(workshopData, step.id);
-            const isActive = count > 0;
-            const isCompleted = isStepCompletedByAny(workshopData, step.id);
+          {(() => {
+            // Workshop-based steps: cumulative count (teams at or past each step)
+            const workshopSteps = WORKSHOP_STEP_IDS.map(id => {
+              const step = workshopData.workflowSteps.find(s => s.id === id);
+              const doneByAll = workshopData.teams.every(t => t.progress.steps[id] === 'done' || t.progress.steps[id] === 'completed');
+              return {
+                id,
+                label: step?.label ?? id,
+                count: getTeamsAtOrPastStep(workshopData, id),
+                doneByAll,
+              };
+            });
 
-            const stepClasses = [
-              styles.pipelineStep,
-              isActive ? styles.pipelineStepActive : '',
-              isCompleted ? styles.pipelineStepCompleted : '',
-            ].filter(Boolean).join(' ');
+            // GitHub-based steps
+            const allTeamBranches = Object.values(github.teamBranches);
+            const teamsWithOpenPRs = allTeamBranches.filter(t => t.pullRequests.length > 0).length;
+            const teamsWithMergedPRs = allTeamBranches.filter(t => t.mergedPRs.length > 0).length;
+            // Deployed = merged (CI auto-deploys on merge to main)
+            const teamsDeployed = teamsWithMergedPRs;
 
-            const nodeClasses = [
-              styles.pipelineNode,
-              isCompleted ? styles.pipelineNodeCompleted
-                : isActive ? styles.pipelineNodeActive : '',
-            ].filter(Boolean).join(' ');
+            const totalTeams = workshopData.teams.length;
+            const githubSteps = [
+              { id: 'review', label: 'Code Review', count: teamsWithOpenPRs, doneByAll: teamsWithOpenPRs >= totalTeams },
+              { id: 'merge', label: 'Merged', count: teamsWithMergedPRs, doneByAll: teamsWithMergedPRs >= totalTeams },
+              { id: 'deployed', label: 'Deployed', count: teamsDeployed, doneByAll: teamsDeployed >= totalTeams },
+            ];
 
-            return (
-              <div key={step.id} className={stepClasses}>
-                <div
-                  className={nodeClasses}
-                  title={`${count} team${count !== 1 ? 's' : ''} on this step`}
-                >
-                  {isCompleted ? (
-                    <Check size={18} strokeWidth={2.5} />
-                  ) : (
-                    count
-                  )}
-                  {count > 0 && isCompleted && (
-                    <span className={styles.pipelineCount}>{count}</span>
-                  )}
+            const allSteps = [...workshopSteps, ...githubSteps];
+
+            return allSteps.map(step => {
+              const isActive = step.count > 0;
+              const isCompleted = step.doneByAll;
+
+              const stepClasses = [
+                styles.pipelineStep,
+                isActive ? styles.pipelineStepActive : '',
+                isCompleted ? styles.pipelineStepCompleted : '',
+              ].filter(Boolean).join(' ');
+
+              const nodeClasses = [
+                styles.pipelineNode,
+                isCompleted ? styles.pipelineNodeCompleted
+                  : isActive ? styles.pipelineNodeActive : '',
+              ].filter(Boolean).join(' ');
+
+              return (
+                <div key={step.id} className={stepClasses}>
+                  <div
+                    className={nodeClasses}
+                    title={`${step.count} team${step.count !== 1 ? 's' : ''} at this step`}
+                  >
+                    {isCompleted ? (
+                      <Check size={18} strokeWidth={2.5} />
+                    ) : (
+                      step.count
+                    )}
+                    {step.count > 0 && isCompleted && (
+                      <span className={styles.pipelineCount}>{step.count}</span>
+                    )}
+                  </div>
+                  <span className={styles.pipelineLabel}>{step.label}</span>
                 </div>
-                <span className={styles.pipelineLabel}>{step.label}</span>
-              </div>
-            );
-          })}
+              );
+            });
+          })()}
         </div>
       </section>
 

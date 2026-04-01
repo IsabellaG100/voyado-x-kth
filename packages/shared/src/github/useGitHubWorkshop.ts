@@ -11,39 +11,37 @@ function matchTeamId(branchName: string): string | null {
   return match ? `team-${match[1]}` : null;
 }
 
-/** Build a map of teamId → { branch, pullRequests } from branches and PRs */
+/** Build a map of teamId → { branch, pullRequests, mergedPRs } from branches and all PRs */
 function buildTeamBranches(
   branches: GitHubBranch[],
-  pullRequests: GitHubPullRequest[],
+  allPRs: GitHubPullRequest[],
 ): Record<string, TeamBranchInfo> {
   const result: Record<string, TeamBranchInfo> = {};
 
-  // Find team branches (exclude main, test, and other non-team branches)
   for (const branch of branches) {
     const teamId = matchTeamId(branch.name);
     if (!teamId) continue;
-
-    // Keep the most recently pushed branch per team (last one wins in sorted order)
-    // If we already have a branch for this team, prefer the one with the latest commit
     if (!result[teamId]) {
-      result[teamId] = { branch, pullRequests: [], members: [] };
+      result[teamId] = { branch, pullRequests: [], mergedPRs: [], members: [] };
     }
   }
 
-  // Match PRs to teams by their source branch name
-  for (const pr of pullRequests) {
+  for (const pr of allPRs) {
     const teamId = matchTeamId(pr.head.ref);
     if (!teamId) continue;
 
     if (!result[teamId]) {
-      // PR exists but branch might have been deleted — still useful info
       const fakeBranch: GitHubBranch = {
         name: pr.head.ref,
         protected: false,
         commit: { sha: pr.head.sha, url: '' },
       };
-      result[teamId] = { branch: fakeBranch, pullRequests: [pr], members: [] };
-    } else {
+      result[teamId] = { branch: fakeBranch, pullRequests: [], mergedPRs: [], members: [] };
+    }
+
+    if (pr.merged_at) {
+      result[teamId].mergedPRs.push(pr);
+    } else if (pr.state === 'open') {
       result[teamId].pullRequests.push(pr);
     }
   }
@@ -109,10 +107,10 @@ export function useGitHubWorkshop(
 
       if (!isMounted.current) return;
 
-      // 2. Fetch branches + open PRs (needed before merge)
+      // 2. Fetch branches + all PRs (needed before merge)
       const [branches, pullRequests] = await Promise.all([
         client.fetchBranches(),
-        client.fetchOpenPRs(),
+        client.fetchAllPRs(),
       ]);
 
       if (!isMounted.current) return;
