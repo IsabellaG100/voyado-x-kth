@@ -3,6 +3,7 @@ import type {
   GitHubUserInfo,
   GitHubCommit,
   GitHubBranch,
+  GitHubPullRequest,
 } from './types';
 
 const OWNER = 'voyado';
@@ -123,6 +124,30 @@ export class GitHubClient {
       );
     } catch {
       return null;
+    }
+  }
+
+  /** Fetch a JSON file from a specific branch (base64 decoded) */
+  async fetchJsonFromBranch<T>(path: string, branch: string): Promise<T | null> {
+    try {
+      const data = await this.get<{ content: string; encoding: string }>(
+        `${API_BASE}/repos/${OWNER}/${REPO}/contents/${path}?ref=${encodeURIComponent(branch)}`,
+      );
+      const decoded = atob(data.content.replace(/\n/g, ''));
+      return JSON.parse(decoded) as T;
+    } catch {
+      return null;
+    }
+  }
+
+  /** Fetch open pull requests */
+  async fetchOpenPRs(): Promise<GitHubPullRequest[]> {
+    try {
+      return await this.get<GitHubPullRequest[]>(
+        `${API_BASE}/repos/${OWNER}/${REPO}/pulls?state=open&per_page=100`,
+      );
+    } catch {
+      return [];
     }
   }
 }

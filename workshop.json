@@ -188,14 +188,55 @@
     {
       "id": "team-5",
       "name": "Team 5",
-      "nickname": "",
+      "nickname": "Re-ward!",
       "module": {
         "route": "/rewards",
         "package": "@voyado-kth/team-5-rewards-store",
         "title": "Rewards Store",
         "description": "Points redemption and reward catalog management"
       },
-      "members": [],
+      "members": [
+        {
+          "name": "Meghdad Hadidi",
+          "email": "meghdad.1987@gmail.com",
+          "github": "meghdadhadidi",
+          "role": "Developer",
+          "initials": "MH",
+          "avatarColor": "#e8725a"
+        },
+        {
+          "name": "Meg",
+          "email": "megh.hadidi@gmail.com",
+          "github": "MeghdadHadidi",
+          "role": "UX Designer",
+          "initials": "ME",
+          "avatarColor": "#ed886e"
+        },
+        {
+          "name": "Amalia",
+          "email": "amalia.lundin@voyado.com",
+          "github": "",
+          "role": "Product Manager",
+          "initials": "AM",
+          "avatarColor": "#e35c42"
+        },
+        {
+          "name": "Laura",
+          "email": "laura@voyado.com",
+          "github": "",
+          "role": "Data Analyst",
+          "initials": "LA",
+          "avatarColor": "#f09e88"
+        },
+        {
+          "name": "Daniel",
+          "email": "daniel@voyado.com",
+          "github": "",
+          "role": "Product Designer",
+          "initials": "DA",
+          "avatarColor": "#d94a30"
+        }
+      ],
       "progress": {
         "currentStep": "onboarding",
         "steps": {

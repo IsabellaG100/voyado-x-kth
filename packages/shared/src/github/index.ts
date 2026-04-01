@@ -7,6 +7,8 @@ export type {
   GitHubCommitAuthor,
   GitHubBranch,
   GitHubBranchCommit,
+  GitHubPullRequest,
   MemberGitHubData,
+  TeamBranchInfo,
   WorkshopGitHubState,
 } from './types';

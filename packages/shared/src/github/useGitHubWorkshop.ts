@@ -1,8 +1,77 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { GitHubClient } from './client';
-import type { WorkshopGitHubState, MemberGitHubData } from './types';
+import type { WorkshopData } from '../types/workshop';
+import type { WorkshopGitHubState, MemberGitHubData, TeamBranchInfo, GitHubBranch, GitHubPullRequest } from './types';
 
 const DEFAULT_POLL_INTERVAL = 60_000; // 60 seconds
+
+/** Match a branch name to a team ID (e.g., "feature/team-5-rewards" → "team-5") */
+function matchTeamId(branchName: string): string | null {
+  const match = branchName.match(/team-(\d+)/);
+  return match ? `team-${match[1]}` : null;
+}
+
+/** Build a map of teamId → { branch, pullRequests } from branches and PRs */
+function buildTeamBranches(
+  branches: GitHubBranch[],
+  pullRequests: GitHubPullRequest[],
+): Record<string, TeamBranchInfo> {
+  const result: Record<string, TeamBranchInfo> = {};
+
+  // Find team branches (exclude main, test, and other non-team branches)
+  for (const branch of branches) {
+    const teamId = matchTeamId(branch.name);
+    if (!teamId) continue;
+
+    // Keep the most recently pushed branch per team (last one wins in sorted order)
+    // If we already have a branch for this team, prefer the one with the latest commit
+    if (!result[teamId]) {
+      result[teamId] = { branch, pullRequests: [], members: [] };
+    }
+  }
+
+  // Match PRs to teams by their source branch name
+  for (const pr of pullRequests) {
+    const teamId = matchTeamId(pr.head.ref);
+    if (!teamId) continue;
+
+    if (!result[teamId]) {
+      // PR exists but branch might have been deleted — still useful info
+      const fakeBranch: GitHubBranch = {
+        name: pr.head.ref,
+        protected: false,
+        commit: { sha: pr.head.sha, url: '' },
+      };
+      result[teamId] = { branch: fakeBranch, pullRequests: [pr], members: [] };
+    } else {
+      result[teamId].pullRequests.push(pr);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Merge team data from a feature branch's workshop.json into the main workshop data.
+ * The feature branch's team entry (matched by teamId) overrides the main branch's entry.
+ */
+function mergeTeamData(
+  mainData: WorkshopData,
+  teamId: string,
+  branchData: WorkshopData,
+): WorkshopData {
+  const branchTeam = branchData.teams.find(t => t.id === teamId);
+
+  console.log(`[useGitHubWorkshop] Merging data for team "${teamId}" from branch. Found team in branch: ${!!branchTeam}`);
+  if (!branchTeam) return mainData;
+
+  console.log(`[useGitHubWorkshop] Merging data for ${teamId} from branch "${branchTeam.module.title}"`, mainData.teams);
+
+  return {
+    ...mainData,
+    teams: mainData.teams.map(t => (t.id === teamId ? branchTeam : t)),
+  };
+}
 
 export interface UseGitHubWorkshopOptions {
   pollInterval?: number;
@@ -17,8 +86,6 @@ export function useGitHubWorkshop(
   // Resolve token: explicit option > env var
   const token = options.token ?? getEnvToken();
 
-  console.log('[useGitHubWorkshop] Using token:', token ? '***' : 'none');
-
   const clientRef = useRef<GitHubClient>(new GitHubClient(token));
   const isMounted = useRef(true);
 
@@ -26,6 +93,8 @@ export function useGitHubWorkshop(
     workshopData: null,
     members: {},
     branches: [],
+    pullRequests: [],
+    teamBranches: {},
     loading: true,
     error: null,
     lastUpdated: null,
@@ -40,22 +109,55 @@ export function useGitHubWorkshop(
 
       if (!isMounted.current) return;
 
-      // 2. Collect all unique github usernames from all teams
-      const allMembers = workshopData.teams.flatMap((t) => t.members);
-      const usernames = [
-        ...new Set(allMembers.map((m) => m.github).filter(Boolean)),
-      ];
-
-      // 3. Parallel fetch: avatars + commits + branches
-      const [avatarMap, commitsByUser, branches] = await Promise.all([
-        client.fetchUserAvatars(usernames),
-        fetchAllCommits(client, usernames),
+      // 2. Fetch branches + open PRs (needed before merge)
+      const [branches, pullRequests] = await Promise.all([
         client.fetchBranches(),
+        client.fetchOpenPRs(),
       ]);
 
       if (!isMounted.current) return;
 
-      // 4. Build member data map keyed by github username
+      // 3. Match branches and PRs to teams
+      const teamBranches = buildTeamBranches(branches, pullRequests);
+
+      // 4. Fetch workshop.json from each team's feature branch and merge
+      let mergedWorkshopData = workshopData;
+      const branchFetches = Object.entries(teamBranches).map(
+        async ([teamId, info]) => {
+          const branchWs = await client.fetchJsonFromBranch<WorkshopData>(
+            'workshop.json',
+            info.branch.name,
+          );
+          return { teamId, branchWs };
+        },
+      );
+      const branchResults = await Promise.all(branchFetches);
+
+      if (!isMounted.current) return;
+
+      for (const { teamId, branchWs } of branchResults) {
+        if (branchWs) {
+          mergedWorkshopData = mergeTeamData(mergedWorkshopData, teamId, branchWs);
+        }
+      }
+
+      console.log('[useGitHubWorkshop] Final merged workshop data:', mergedWorkshopData);
+
+      // 5. Collect usernames from MERGED data (includes feature branch members)
+      const allMembers = mergedWorkshopData.teams.flatMap((t) => t.members);
+      const usernames = [
+        ...new Set(allMembers.map((m) => m.github).filter(Boolean)),
+      ];
+
+      // 6. Fetch avatars + commits for all members
+      const [avatarMap, commitsByUser] = await Promise.all([
+        client.fetchUserAvatars(usernames),
+        fetchAllCommits(client, usernames),
+      ]);
+
+      if (!isMounted.current) return;
+
+      // 7. Build member data map keyed by github username
       const members: Record<string, MemberGitHubData> = {};
       for (const username of usernames) {
         const commits = commitsByUser[username] ?? [];
@@ -68,9 +170,11 @@ export function useGitHubWorkshop(
       }
 
       setState({
-        workshopData,
+        workshopData: mergedWorkshopData,
         members,
         branches,
+        pullRequests,
+        teamBranches,
         loading: false,
         error: null,
         lastUpdated: new Date(),

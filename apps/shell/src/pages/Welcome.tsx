@@ -223,9 +223,11 @@ export function Welcome() {
             return sum + (ghData?.commitCount ?? 0);
           }, 0);
 
-          const branchExists = team.progress.branchName
-            ? github.branches.some(b => b.name === team.progress.branchName)
-            : false;
+          // Auto-detect branch and PRs from GitHub (fallback to workshop.json progress)
+          const teamBranchInfo = github.teamBranches[team.id];
+          const branchName = teamBranchInfo?.branch.name ?? team.progress.branchName;
+          const branchExists = !!teamBranchInfo?.branch;
+          const openPRs = teamBranchInfo?.pullRequests ?? [];
 
           return (
             <Card key={team.id} className={styles.teamCard} hoverable>
@@ -297,13 +299,28 @@ export function Welcome() {
                 </div>
 
                 <div className={styles.teamCardFooter}>
-                  {team.progress.branchName && (
+                  {branchName && (
                     <span className={[styles.branchName, branchExists ? styles.branchExists : ''].filter(Boolean).join(' ')}>
                       <GitBranch size={12} strokeWidth={1.5} />
-                      {team.progress.branchName}
+                      {branchName}
                     </span>
                   )}
-                  {team.progress.prUrl && (
+                  {openPRs.length > 0 ? (
+                    openPRs.map(pr => (
+                      <a
+                        key={pr.number}
+                        href={pr.html_url}
+                        className={styles.prLink}
+                        onClick={e => e.stopPropagation()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Pull request #${pr.number}`}
+                      >
+                        <GitPullRequest size={12} strokeWidth={1.5} />
+                        PR #{pr.number}
+                      </a>
+                    ))
+                  ) : team.progress.prUrl ? (
                     <a
                       href={team.progress.prUrl}
                       className={styles.prLink}
@@ -315,7 +332,7 @@ export function Welcome() {
                       <GitPullRequest size={12} strokeWidth={1.5} />
                       PR #{team.progress.prNumber}
                     </a>
-                  )}
+                  ) : null}
                   {teamCommits > 0 && (
                     <span className={styles.commitCount}>
                       <GitCommitHorizontal size={12} strokeWidth={1.5} />

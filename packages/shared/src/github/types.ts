@@ -36,6 +36,18 @@ export interface GitHubBranch {
   commit: GitHubBranchCommit;
 }
 
+export interface GitHubPullRequest {
+  number: number;
+  title: string;
+  html_url: string;
+  state: string;
+  head: { ref: string; sha: string };
+  base: { ref: string };
+  user: { login: string; avatar_url: string } | null;
+  created_at: string;
+  updated_at: string;
+}
+
 // ─── Enriched workshop types ──────────────────────────────────────────────────
 
 export interface MemberGitHubData {
@@ -45,10 +57,21 @@ export interface MemberGitHubData {
   profileUrl: string | null;
 }
 
+/** Branch matched to a team by its name containing the team ID */
+export interface TeamBranchInfo {
+  branch: GitHubBranch;
+  pullRequests: GitHubPullRequest[];
+  members: string[]; // GitHub usernames of team members contributing to this branch
+}
+
 export interface WorkshopGitHubState {
   workshopData: WorkshopData | null;
   members: Record<string, MemberGitHubData>;
   branches: GitHubBranch[];
+  /** Open PRs from the repo */
+  pullRequests: GitHubPullRequest[];
+  /** Branches and PRs matched to teams by team ID in branch name */
+  teamBranches: Record<string, TeamBranchInfo>;
   loading: boolean;
   error: string | null;
   lastUpdated: Date | null;
