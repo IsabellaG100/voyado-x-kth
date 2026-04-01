@@ -1,9 +1,61 @@
-/* ─── Page shell ────────────────────────────────────────────────────────────── */
 .page {
+  --timeline-rail: rgba(26, 52, 74, 0.14);
+  --timeline-ink: #18324a;
+  --timeline-muted: #6f7f90;
+  --timeline-surface: rgba(255, 255, 255, 0.88);
+  --timeline-border: rgba(24, 50, 74, 0.1);
+  --timeline-shadow: 0 28px 60px rgba(21, 50, 71, 0.12);
+  --stack-offset: 34px;
   min-height: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(71, 144, 255, 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(67, 165, 132, 0.16), transparent 32%),
+    linear-gradient(180deg, #f8fafc 0%, #eef3f6 100%);
 }
 
-/* ─── Loading state ────────────────────────────────────────────────────────── */
+.pageHeader {
+  position: absolute;
+  inset: 20px 28px auto 28px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.pageTitleBlock {
+  position: absolute;
+  inset: 0 auto auto 0;
+  min-width: 0;
+  max-width: 34rem;
+  pointer-events: auto;
+}
+
+.pageTitle {
+  margin: 0;
+  font-family: var(--ess-font-family-display);
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 0.94;
+  color: var(--timeline-ink);
+}
+
+.pageSubtitle {
+  margin: var(--ess-spacing-100) 0 0;
+  max-width: 48ch;
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: var(--timeline-muted);
+}
+
+.pageStatusBlock {
+  position: absolute;
+  inset: 0 0 auto auto;
+  padding-top: 6px;
+  pointer-events: auto;
+}
+
 .loadingState {
   display: flex;
   flex-direction: column;
@@ -15,20 +67,32 @@
   font-size: var(--ess-font-size-medium);
 }
 
-/* ─── Header status indicators ─────────────────────────────────────────────── */
 .headerStatus {
   display: flex;
   align-items: center;
   gap: var(--ess-spacing-300);
 }
 
-.statusLive {
+.statusLive,
+.statusWarning,
+.statusFallback {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 12px;
   font-weight: var(--ess-font-weight-medium);
+}
+
+.statusLive {
   color: var(--ess-color-success-bg);
+}
+
+.statusWarning {
+  color: var(--ess-color-danger-bg);
+}
+
+.statusFallback {
+  color: var(--ess-color-neutral-fg-weak);
 }
 
 .liveDot {
@@ -41,438 +105,555 @@
 
 @keyframes livePulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.35; }
 }
 
-.statusWarning {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-danger-bg);
+.timelineSection {
+  flex: 1;
+  min-height: 0;
+  padding: 0 var(--ess-spacing-700) var(--ess-spacing-200);
+  overflow: hidden;
 }
 
-.statusFallback {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-neutral-fg-weak);
-}
-
-/* ─── KPI summary row ───────────────────────────────────────────────────────── */
-.kpiRow {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--ess-spacing-400);
-  padding: var(--ess-spacing-500) var(--ess-spacing-700);
-}
-
-/* ─── Workflow pipeline ─────────────────────────────────────────────────────── */
-.pipeline {
-  padding: var(--ess-spacing-500) var(--ess-spacing-700);
-}
-
-.pipelineTitle {
-  font-family: var(--ess-font-family);
-  font-size: var(--ess-font-size-small);
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-neutral-fg-weak);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 0 0 var(--ess-spacing-400);
-}
-
-/* The track is the container — a continuous line runs through it via ::before */
-.pipelineTrack {
-  display: flex;
-  align-items: flex-start;
+.timeline {
   position: relative;
-  padding: var(--ess-spacing-400) var(--ess-spacing-300);
-  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--ess-spacing-200);
+  height: 100%;
+  padding: 42px 0 16px;
 }
 
-/* Continuous connecting rail behind all nodes */
-.pipelineTrack::before {
+.timeline::before {
   content: '';
   position: absolute;
-  top: calc(var(--ess-spacing-400) + 19px); /* vertically center on 40px nodes */
-  left: var(--ess-spacing-300);
-  right: var(--ess-spacing-300);
-  height: 2px;
-  background: var(--ess-color-neutral-border);
-  z-index: 0;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background:
+    linear-gradient(180deg, rgba(67, 165, 132, 0.45) 0%, rgba(71, 144, 255, 0.18) 25%, rgba(24, 50, 74, 0.12) 100%);
+  transform: translateX(-50%);
 }
 
-.pipelineStep {
+.timelineStep {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 160px minmax(0, 1fr);
+  gap: var(--ess-spacing-200);
+  align-items: center;
+  min-height: 0;
+  flex: 1;
+}
+
+.timelineCardsColumn {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.timelineStepLeft .timelineCardsColumn:first-child,
+.timelineStepRight .timelineCardsColumn:last-child {
+  display: flex;
+}
+
+.timelineStepLeft .timelineCardsColumn:last-child,
+.timelineStepRight .timelineCardsColumn:first-child {
+  min-height: 1px;
+}
+
+.timelineNodeColumn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.timelineNodeGlow {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(71, 144, 255, 0.18), transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.timelineStepCompleted .timelineNodeGlow {
+  background: radial-gradient(circle, rgba(67, 165, 132, 0.2), transparent 72%);
+}
+
+.timelineNode {
+  position: relative;
+  z-index: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--ess-spacing-200);
-  flex: 1;
-  min-width: 80px;
-  position: relative;
-  z-index: 1;
+  text-align: center;
 }
 
-.pipelineNode {
-  width: 40px;
-  height: 40px;
+.timelineNodeCount {
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid rgba(24, 50, 74, 0.14);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 35px rgba(20, 48, 69, 0.12);
   font-family: var(--ess-font-family-display);
-  font-size: var(--ess-font-size-medium);
+  font-size: 1.2rem;
   font-weight: var(--ess-font-weight-bold);
-  border: 2.5px solid var(--ess-color-neutral-border);
-  background: var(--ess-color-neutral-weak-bg);
-  color: var(--ess-color-neutral-fg-weak);
-  position: relative;
-  z-index: 1;
-  transition: border-color 300ms ease, background 300ms ease, color 300ms ease,
-    box-shadow 300ms ease, transform 300ms ease;
-  flex-shrink: 0;
+  color: var(--timeline-ink);
+  backdrop-filter: blur(18px);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
 }
 
-/* Step has teams currently on it */
-.pipelineNodeActive {
-  border-color: var(--ess-color-primary-bg);
-  background: var(--ess-color-primary-bg);
-  color: #ffffff;
-  box-shadow: 0 0 0 5px rgba(45, 110, 109, 0.12);
-  transform: scale(1.05);
+.timelineStepActive .timelineNodeCount {
+  border-color: rgba(71, 144, 255, 0.32);
+  background: linear-gradient(180deg, #ffffff 0%, #eef6ff 100%);
+  transform: scale(1.03);
 }
 
-/* Step has been completed by at least one team — gentle pulse */
-.pipelineNodeCompleted {
-  border-color: var(--ess-color-success-bg);
-  background: var(--ess-color-success-bg);
-  color: #ffffff;
-  animation: stepPulse 2.4s ease-in-out infinite;
+.timelineStepCompleted .timelineNodeCount {
+  border-color: rgba(67, 165, 132, 0.38);
+  background: linear-gradient(180deg, #fbfffd 0%, #e8f7f0 100%);
+  color: #2b715b;
 }
 
-@keyframes stepPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(67, 165, 132, 0.35);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(67, 165, 132, 0);
-  }
-}
-
-.pipelineLabel {
-  font-size: 11px;
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-neutral-fg-weak);
-  text-align: center;
-  white-space: nowrap;
-  line-height: 1.3;
-  padding: 0 2px;
-}
-
-.pipelineNodeActive + .pipelineLabel,
-.pipelineNodeCompleted + .pipelineLabel {
-  /* This doesn't work as sibling since label is after node in parent — handle in step */
-}
-
-.pipelineStepActive .pipelineLabel {
-  color: var(--ess-color-primary-bg);
-  font-weight: var(--ess-font-weight-semibold);
-}
-
-.pipelineStepCompleted .pipelineLabel {
-  color: var(--ess-color-success-bg);
-  font-weight: var(--ess-font-weight-semibold);
-}
-
-/* Count badge sitting on the node */
-.pipelineCount {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: var(--ess-font-weight-bold);
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
-  border-radius: 8px;
-  background: var(--ess-color-neutral-fg-weak);
-  color: #fff;
-  position: absolute;
-  top: -4px;
-  right: -6px;
-  z-index: 2;
-  font-family: var(--ess-font-family);
-}
-
-.pipelineStepActive .pipelineCount {
-  background: var(--ess-color-primary-bg);
-}
-
-.pipelineStepCompleted .pipelineCount {
-  background: var(--ess-color-success-bg);
-}
-
-/* ─── Team grid ─────────────────────────────────────────────────────────────── */
-.teamGridTitle {
-  font-family: var(--ess-font-family);
-  font-size: var(--ess-font-size-small);
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-neutral-fg-weak);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0 var(--ess-spacing-700);
-  margin: var(--ess-spacing-200) 0 0;
-}
-
-.teamGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--ess-spacing-400);
-  padding: var(--ess-spacing-400) var(--ess-spacing-700) var(--ess-spacing-700);
-}
-
-/* ─── Team card ─────────────────────────────────────────────────────────────── */
-.teamCard {
-  padding: 0 !important;
-  overflow: hidden;
-}
-
-.teamCardInner {
+.timelineNodeText {
   display: flex;
   flex-direction: column;
-  gap: var(--ess-spacing-300);
-  padding: var(--ess-spacing-450);
-  border-left: 4px solid transparent;
-  cursor: pointer;
-  outline: none;
-  transition: background 150ms var(--ess-ease-out);
+  gap: 4px;
+  max-width: 132px;
 }
 
-.teamCardInner:focus-visible {
+.timelineNodeLabel {
+  font-size: 11px;
+  font-weight: var(--ess-font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--timeline-ink);
+}
+
+.timelineNodeCaption {
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--timeline-muted);
+}
+
+.teamCardStack {
+  position: relative;
+  width: min(100%, 520px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding-left: calc(var(--stack-offset) * 3);
+}
+
+.timelineStepLeft .teamCardStack {
+  margin-left: auto;
+  margin-right: 14px;
+}
+
+.timelineStepRight .teamCardStack {
+  margin-left: 0px;
+  padding-left: 0;
+  padding-right: calc(var(--stack-offset) * 3);
+}
+
+.timelineStepLeft .teamCardStack::after,
+.timelineStepRight .teamCardStack::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.timelineStepLeft .teamCardStack::after {
+  right: -24px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 10px solid rgba(255, 255, 255, 0.94);
+}
+
+.timelineStepRight .teamCardStack::after {
+  left: -18px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 10px solid rgba(255, 255, 255, 0.94);
+}
+
+.timelineStepLeft .teamCardStack::before,
+.timelineStepRight .teamCardStack::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: rgba(24, 50, 74, 0.18);
+}
+
+.timelineStepLeft .teamCardStack::before {
+  right: -14px;
+  width: 14px;
+}
+
+.timelineStepRight .teamCardStack::before {
+  left: -8px;
+  width: 8px;
+}
+
+.timelineCardShell {
+  --team-color: #18324a;
+  grid-area: 1 / 1;
+  justify-self: start;
+  position: relative;
+  z-index: var(--stack-depth);
+  width: calc(100% - ((var(--stack-depth) - 1) * var(--stack-offset)));
+  margin-left: calc((var(--stack-depth) - 1) * var(--stack-offset));
+  transition: margin-left 220ms ease, width 220ms ease;
+}
+
+.timelineStepRight .timelineCardShell {
+  justify-self: end;
+  margin-left: 0;
+  margin-right: calc((var(--stack-depth) - 1) * var(--stack-offset));
+  transition: margin-right 220ms ease, width 220ms ease;
+}
+
+.timelineCard {
+  overflow: hidden;
+  padding: 0 !important;
+  border: 1px solid var(--timeline-border);
+  background: var(--timeline-surface);
+  box-shadow: var(--timeline-shadow);
+  width: 100%;
+  transition: box-shadow 220ms ease;
+}
+
+.teamCardStack:hover .timelineCardShell {
+  width: calc(100% - ((var(--stack-depth) - 1) * (var(--stack-offset) + 4px)));
+  margin-left: calc((var(--stack-depth) - 1) * (var(--stack-offset) + 4px));
+}
+
+.timelineStepRight .teamCardStack:hover .timelineCardShell {
+  margin-left: 0;
+  margin-right: calc((var(--stack-depth) - 1) * (var(--stack-offset) + 4px));
+}
+
+.timelineCardInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ess-spacing-200);
+  min-height: 170px;
+  padding: var(--ess-spacing-300) var(--ess-spacing-400) var(--ess-spacing-300) calc(var(--ess-spacing-400) + 34px);
+  cursor: pointer;
+  outline: none;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.98), rgba(242, 247, 251, 0.92));
+}
+
+.timelineCardInner:focus-visible {
   outline: 2px solid var(--ess-color-primary-bg);
   outline-offset: -2px;
 }
 
-/* Card header */
-.teamCardHeader {
+.timelineCardRail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--stack-offset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px;
+  font-weight: var(--ess-font-weight-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(180deg, var(--team-color), color-mix(in srgb, var(--team-color) 72%, #0d2235));
+}
+
+.timelineCardHeader {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--ess-spacing-300);
 }
 
-.teamCardLeft {
+.timelineCardIdentity {
   display: flex;
-  flex-direction: column;
-  gap: var(--ess-spacing-100);
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ess-spacing-300);
   min-width: 0;
+  flex: 1;
 }
 
-.teamCardName {
-  font-size: var(--ess-font-size-tiny);
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-neutral-fg-weak);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-/* Icon + name in a row */
-.teamCardNameRow {
-  display: flex;
-  align-items: center;
-  gap: var(--ess-spacing-200);
-}
-
-.teamCardIcon {
-  width: 22px;
-  height: 22px;
-  border-radius: var(--ess-border-radius-small);
+.timelineCardIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: var(--team-color);
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--team-color) 28%, transparent);
 }
 
-.teamCardNickname {
-  font-family: var(--ess-font-family-display);
-  font-size: var(--ess-font-size-large);
+.timelineCardIdentityText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.timelineCardTeamName {
+  font-size: 10px;
   font-weight: var(--ess-font-weight-semibold);
-  color: var(--ess-color-neutral-fg-strong);
-  line-height: var(--ess-font-line-height-tight);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--timeline-muted);
 }
 
-.teamCardModule {
-  font-size: var(--ess-font-size-medium);
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-neutral-fg);
-  line-height: var(--ess-font-line-height-medium);
+.timelineCardProductName {
+  font-family: var(--ess-font-family-display);
+  font-size: 1.14rem;
+  line-height: 1;
+  color: var(--timeline-ink);
 }
 
-.teamCardRoute {
-  display: inline-block;
+.timelineCardRoute {
   font-family: var(--ess-font-family-mono);
-  font-size: 12px;
-  color: var(--ess-color-neutral-fg-weak);
-  background: var(--ess-color-neutral-bg);
-  border: 1px solid var(--ess-color-neutral-border);
-  padding: 1px 6px;
-  border-radius: var(--ess-border-radius-small);
-  margin-top: 2px;
+  font-size: 10px;
+  color: var(--timeline-muted);
 }
 
-.teamCardRight {
+.timelineCardMeta {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: var(--ess-spacing-200);
+  gap: 10px;
   flex-shrink: 0;
 }
 
-/* Current step pill */
-.stepBadge {
+.timelineStagePill {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-primary-bg);
-  background: rgba(45, 110, 109, 0.08);
-  padding: 2px 8px;
-  border-radius: var(--ess-border-radius-round);
-  white-space: nowrap;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: var(--ess-font-weight-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--team-color) 78%, #173047);
+  background: color-mix(in srgb, var(--team-color) 12%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--team-color) 20%, rgba(23, 48, 71, 0.08));
 }
 
-/* No members placeholder */
 .emptyMembers {
-  font-size: var(--ess-font-size-small);
-  color: var(--ess-color-neutral-fg-weak);
-  font-style: italic;
+  font-size: 12px;
+  color: var(--timeline-muted);
 }
 
-/* ─── Progress bar ──────────────────────────────────────────────────────────── */
-.progressBar {
+.timelineCardStepRow {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--ess-spacing-200);
-  width: 100%;
+  padding-inline: 2px;
+  font-size: 12px;
+  color: var(--timeline-muted);
 }
 
-.progressTrack {
-  flex: 1;
-  height: 4px;
-  background: var(--ess-color-neutral-bg-secondary);
-  border-radius: 2px;
+.timelineCardStepLabel,
+.timelineCardStepValue {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timelineProgressTrack {
+  height: 8px;
+  border-radius: 999px;
   overflow: hidden;
+  background: rgba(24, 50, 74, 0.07);
 }
 
-.progressFill {
+.timelineProgressFill {
   height: 100%;
-  border-radius: 2px;
-  transition: width 400ms var(--ess-ease-out);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--team-color), color-mix(in srgb, var(--team-color) 78%, #ffffff));
 }
 
-.progressLabel {
-  font-size: 12px;
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-neutral-fg-weak);
-  flex-shrink: 0;
-  min-width: 28px;
-  text-align: right;
-  font-family: var(--ess-font-family-mono);
-}
-
-/* ─── Card footer: branch / PR / nav hint ───────────────────────────────────── */
-.teamCardFooter {
+.timelineCardFooter {
   display: flex;
-  align-items: center;
-  gap: var(--ess-spacing-300);
-  padding-top: var(--ess-spacing-200);
-  border-top: 1px solid var(--ess-color-neutral-bg-secondary);
-  font-size: 13px;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
 }
 
-.branchName {
+.timelineMetaChip,
+.timelineNavHint {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-family: var(--ess-font-family-mono);
-  font-size: 12px;
-  color: var(--ess-color-neutral-fg-weak);
-}
-
-.prLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--ess-color-primary-bg);
-  font-size: 13px;
-  font-weight: var(--ess-font-weight-medium);
+  gap: 6px;
+  min-height: 26px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 11px;
   text-decoration: none;
+  color: var(--timeline-ink);
+  border: 1px solid rgba(24, 50, 74, 0.06);
+  background: rgba(24, 50, 74, 0.055);
 }
 
-.prLink:hover {
-  text-decoration: underline;
+.timelineMetaChip:hover {
+  background: rgba(24, 50, 74, 0.09);
 }
 
-.commitCount {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: var(--ess-font-weight-medium);
-  color: var(--ess-color-neutral-fg-weak);
-}
-
-.branchExists {
-  color: var(--ess-color-success-bg);
-}
-
-.navHint {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: var(--ess-color-neutral-fg-weak);
+.timelineNavHint {
   margin-left: auto;
-  transition: color 150ms var(--ess-ease-out), transform 150ms var(--ess-ease-out);
+  color: var(--timeline-muted);
 }
 
-.teamCardInner:hover .navHint {
-  color: var(--ess-color-primary-bg);
-  transform: translateX(2px);
-}
-
-/* ─── Responsive ────────────────────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .teamGrid {
-    grid-template-columns: 1fr;
+@media (max-width: 1100px) {
+  .pageHeader {
+    inset-inline: 24px;
   }
 
-  .kpiRow {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .pipelineLabel {
-    font-size: 10px;
+  .timelineStep {
+    grid-template-columns: minmax(0, 1fr) 144px minmax(0, 1fr);
   }
 }
 
-@media (max-width: 600px) {
-  .kpiRow {
-    grid-template-columns: 1fr 1fr;
-    padding: var(--ess-spacing-400);
+@media (max-width: 860px) {
+  .pageHeader {
+    inset-inline: 20px;
   }
 
-  .pipeline,
-  .teamGrid,
-  .teamGridTitle {
-    padding-left: var(--ess-spacing-400);
-    padding-right: var(--ess-spacing-400);
+  .timeline {
+    gap: var(--ess-spacing-300);
+  }
+
+  .timeline::before {
+    left: 32px;
+  }
+
+  .timelineStep {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: var(--ess-spacing-300);
+    min-height: auto;
+    flex: initial;
+  }
+
+  .timelineCardsColumn:first-child,
+  .timelineCardsColumn:last-child {
+    display: none !important;
+  }
+
+  .timelineNodeColumn {
+    grid-column: 1;
+  }
+
+  .timelineNode {
+    align-items: center;
+  }
+
+  .timelineNodeText {
+    max-width: none;
+  }
+
+  .timelineStep::after {
+    content: '';
+    grid-column: 2;
+    display: block;
+  }
+
+  .timelineStepLeft,
+  .timelineStepRight {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .timelineStepLeft .timelineCardsColumn:last-child,
+  .timelineStepRight .timelineCardsColumn:last-child,
+  .timelineStepLeft .timelineCardsColumn:first-child,
+  .timelineStepRight .timelineCardsColumn:first-child {
+    display: flex !important;
+    grid-column: 2;
+  }
+
+  .teamCardStack {
+    width: 100%;
+    padding-left: calc(var(--stack-offset) * 1.6);
+  }
+
+  .timelineStepLeft .teamCardStack,
+  .timelineStepRight .teamCardStack {
+    margin-inline: 0;
+    padding-right: 0;
+  }
+
+  .timelineCardShell {
+    width: calc(100% - ((var(--stack-depth) - 1) * 22px));
+    margin-left: calc((var(--stack-depth) - 1) * 22px);
+  }
+
+  .timelineStepRight .timelineCardShell {
+    margin-left: 0;
+    margin-right: calc((var(--stack-depth) - 1) * 22px);
+  }
+
+  .teamCardStack:hover .timelineCardShell {
+    width: calc(100% - ((var(--stack-depth) - 1) * 24px));
+    margin-left: calc((var(--stack-depth) - 1) * 24px);
+  }
+
+  .timelineStepRight .teamCardStack:hover .timelineCardShell {
+    margin-left: 0;
+    margin-right: calc((var(--stack-depth) - 1) * 24px);
+  }
+
+  .timelineStepLeft .teamCardStack::after,
+  .timelineStepRight .teamCardStack::after,
+  .timelineStepLeft .teamCardStack::before,
+  .timelineStepRight .teamCardStack::before {
+    display: none;
   }
 }
 
+@media (max-width: 640px) {
+  .timelineSection {
+    padding-inline: var(--ess-spacing-400);
+  }
+
+  .timelineCardInner {
+    min-height: 170px;
+    padding-right: var(--ess-spacing-200);
+  }
+
+  .timelineCardHeader {
+    flex-direction: column;
+  }
+
+  .timelineCardMeta {
+    align-items: flex-start;
+  }
+
+  .timelineNavHint {
+    margin-left: 0;
+  }
+}
