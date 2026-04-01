@@ -77,7 +77,7 @@ Do not take shortcuts. Do not assume a step is unnecessary. Every instruction in
 
 ## Onboarding Check
 
-If `.onboarding.json` does not exist in the repo root, tell the user to run `/voyado-start` to get set up before proceeding with any other task.
+If `.onboarding.json` does not exist in the repo root, tell the user to run `/voyado-help` to get set up before proceeding with any other task.
 
 ## Key References
 

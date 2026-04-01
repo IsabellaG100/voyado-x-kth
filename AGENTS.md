@@ -16,7 +16,7 @@ Do not take shortcuts. Do not assume a step is unnecessary. Every instruction in
 
 ## Onboarding Check
 
-If `.onboarding.json` does not exist in the repo root, tell the user to run the `voyado-start` skill to get set up before proceeding with any other task.
+If `.onboarding.json` does not exist in the repo root, tell the user to run the `voyado-help` skill to get set up before proceeding with any other task.
 
 ## Commands
 
@@ -58,7 +58,7 @@ Skills are defined in `.agents/skills/voyado-*/SKILL.md`. Available skills:
 
 | Skill | Purpose |
 |-------|---------|
-| `voyado-start` | Onboarding and workshop navigation |
+| `voyado-help` | Onboarding and workshop navigation |
 | `voyado-status` | Show workshop progress |
 | `voyado-prd` | Generate PRD from business requirements |
 | `voyado-ux` | Generate UX design spec (optional) |

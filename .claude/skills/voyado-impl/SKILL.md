@@ -13,7 +13,7 @@ All file operations MUST be limited to the team's app directory as determined by
 
 ## Pre-flight Checks
 
-1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
+1. **Read `.onboarding.json`** to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-help skill to get set up."
 
 2. **Read `workshop.json`** to check progress:
    - If `breakdown` is not `completed`, STOP: "You need a sprint plan first. Use the voyado-plan skill."

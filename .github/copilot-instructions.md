@@ -131,7 +131,7 @@ Onboarding → PRD → (optional: UX Design) → Planning → Implementation →
 
 | Action | What to say | Skill |
 |--------|------------|-------|
-| Onboard & navigate | "voyado start" or "start workshop" | `voyado-start` |
+| Onboard & navigate | "voyado start" or "start workshop" | `voyado-help` |
 | Check progress | "voyado status" or "show progress" | `voyado-status` |
 | Create PRD | "voyado prd" or "create PRD" | `voyado-prd` |
 | UX design (optional) | "voyado ux" or "create UX design" | `voyado-ux` |

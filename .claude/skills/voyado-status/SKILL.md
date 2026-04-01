@@ -17,7 +17,7 @@ Always produce clean, human-friendly, well-formatted output. Use headings, table
 
 ## Steps
 
-1. **Read `.onboarding.json`** from the repo root to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-start skill to get set up."
+1. **Read `.onboarding.json`** from the repo root to identify the team. If missing, stop: "You haven't onboarded yet. Use the voyado-help skill to get set up."
 
 2. **Read `workshop.json`** to get the team's progress data.
 

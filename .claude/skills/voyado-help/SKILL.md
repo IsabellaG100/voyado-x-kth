@@ -1,11 +1,11 @@
 ---
-name: voyado-start
-description: "The starting point for the Voyado workshop. Use when a student runs /voyado-start, asks how to begin, what to do next, or needs guidance on the workflow. Handles onboarding (if not done) and shows progress with next action recommendations."
+name: voyado-help
+description: "The main entry point for the Voyado workshop. Use when a student runs /voyado-help, asks how to begin, what to do next, or needs guidance on the workflow. Handles onboarding (if not done), ensures data consistency, and shows progress with next action recommendations."
 ---
 
-# Voyado Workshop — Start
+# Voyado Workshop — Help
 
-You are the main entry point for the Voyado x KTH AI-driven SDLC workshop. This skill handles both **first-time onboarding** and **ongoing navigation**.
+You are the main entry point for the Voyado x KTH AI-driven SDLC workshop. This skill handles **onboarding**, **data consistency**, and **ongoing navigation**.
 
 ## Workspace Scope
 
@@ -160,7 +160,7 @@ Your branch: team-{N}/feature (create this when you're ready)
 
 Next step: Use the voyado-prd skill to analyze your business requirements and generate a PRD.
 
-You can use the voyado-start skill anytime to check your progress and see what to do next.
+You can use the voyado-help skill anytime to check your progress and see what to do next.
 ```
 
 4. **Suggest a commit** for the onboarding artifacts:
@@ -204,12 +204,30 @@ Assign avatar colors in order as members are added:
 
 This section runs when the team is already onboarded (`.onboarding.json` exists).
 
-### 2.1 Read Progress
+### 2.1 Sync Check (MANDATORY — always runs first)
 
-1. Read `.onboarding.json` to get `teamId`.
-2. Read `workshop.json` and find the matching team. Extract `progress.steps` and `progress.currentStep`.
+**Every time** this skill runs and `.onboarding.json` exists, verify that `workshop.json` is in sync:
 
-### 2.2 Check Git Status
+1. Read `.onboarding.json` to get `teamId`, `teamNickname`, and `members`.
+2. Read `workshop.json` and find the matching team by `teamId`.
+3. **Compare** the team's data in `workshop.json` against `.onboarding.json`:
+   - Does `team.members` match `.onboarding.json` `members`? (same length, same names)
+   - Does `team.nickname` match `.onboarding.json` `teamNickname`?
+   - Is `team.progress.steps.onboarding` set to `"completed"`?
+4. **If anything is out of sync**, fix it silently:
+   - Set `team.members` to the members from `.onboarding.json`
+   - Set `team.nickname` to the nickname from `.onboarding.json`
+   - Set `team.progress.steps.onboarding` to `"completed"`
+   - If `team.progress.currentStep` is still `"onboarding"`, set it to `"requirements"`
+   - Write `workshop.json` back
+   - Tell the user: "Synced workshop.json with your onboarding data."
+5. If everything is already in sync, proceed silently (no message needed).
+
+### 2.2 Read Progress
+
+1. Read `workshop.json` and find the matching team. Extract `progress.steps` and `progress.currentStep`.
+
+### 2.3 Check Git Status
 
 Run `git status --porcelain`. If there are uncommitted changes, STOP and tell the student:
 
@@ -220,7 +238,7 @@ Run `git status --porcelain`. If there are uncommitted changes, STOP and tell th
 > git push
 > ```
 
-### 2.3 Determine Next Action
+### 2.4 Determine Next Action
 
 Based on the team's step statuses:
 
@@ -236,13 +254,13 @@ Based on the team's step statuses:
 | `merge` = completed | Wait for deployment | Automatic via CI/CD |
 | `deployed` = completed | Done! Prepare for presentation | Celebrate! |
 
-### 2.4 Check Backlog
+### 2.5 Check Backlog
 
 If `apps/<team-module>/docs/backlog.json` exists, show a summary:
 - Stories by status: `backlog`, `in_progress`, `review`, `done`
 - Which story is currently in progress (if any)
 
-### 2.5 Present Recommendation
+### 2.6 Present Recommendation
 
 ```
 ## Workshop Progress: [Team Name]
