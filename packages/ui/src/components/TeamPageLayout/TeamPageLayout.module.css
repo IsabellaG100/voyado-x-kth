@@ -1,0 +1,24 @@
+.page {
+}
+
+.teamInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ess-spacing-200);
+}
+
+.teamMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ess-spacing-100);
+}
+
+.teamName {
+  font-family: var(--ess-font-family-display);
+  font-size: var(--ess-font-size-base);
+  font-weight: var(--ess-font-weight-semibold);
+  color: var(--ess-color-neutral-fg);
+  white-space: nowrap;
+}

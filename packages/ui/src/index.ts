@@ -56,6 +56,9 @@ export type { StateBadgeProps, StateBadgeStatus } from './components/StateBadge/
 export { AvatarStack } from './components/AvatarStack/AvatarStack';
 export type { AvatarStackProps, AvatarMember } from './components/AvatarStack/AvatarStack';
 
+export { TeamPageLayout } from './components/TeamPageLayout/TeamPageLayout';
+export type { TeamPageLayoutProps } from './components/TeamPageLayout/TeamPageLayout';
+
 // Layouts
 export { Flex } from './layouts/Flex/Flex';
 export type { FlexProps } from './layouts/Flex/Flex';

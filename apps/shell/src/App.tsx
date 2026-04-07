@@ -4,22 +4,22 @@ import { Loader } from '@voyado-kth/ui';
 import { ShellLayout } from './layout/ShellLayout';
 
 const LoyaltyDashboard = lazy(() =>
-  import('@voyado-kth/team-1-loyalty-dashboard').then(m => ({ default: m.ComingSoon }))
+  import('@voyado-kth/team-1-loyalty-dashboard').then(m => ({ default: m.Index }))
 );
 const ProductCatalog = lazy(() =>
-  import('@voyado-kth/team-2-product-catalog').then(m => ({ default: m.ComingSoon }))
+  import('@voyado-kth/team-2-product-catalog').then(m => ({ default: m.Index }))
 );
 const CustomerSegments = lazy(() =>
-  import('@voyado-kth/team-3-customer-segments').then(m => ({ default: m.ComingSoon }))
+  import('@voyado-kth/team-3-customer-segments').then(m => ({ default: m.Index }))
 );
 const CampaignBuilder = lazy(() =>
-  import('@voyado-kth/team-4-campaign-builder').then(m => ({ default: m.ComingSoon }))
+  import('@voyado-kth/team-4-campaign-builder').then(m => ({ default: m.Index }))
 );
 const RewardsStore = lazy(() =>
-  import('@voyado-kth/team-5-rewards-store').then(m => ({ default: m.ComingSoon }))
+  import('@voyado-kth/team-5-rewards-store').then(m => ({ default: m.Index }))
 );
 const AnalyticsOverview = lazy(() =>
-  import('@voyado-kth/team-6-analytics-overview').then(m => ({ default: m.ComingSoon }))
+  import('@voyado-kth/team-6-analytics-overview').then(m => ({ default: m.Index }))
 );
 
 import { Welcome } from './pages/Welcome';
