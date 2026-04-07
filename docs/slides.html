@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voyado x KTH — AI-Augmented Development Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F8F7;
+  --bg-white:#FFFFFF;
+  --bg-card:#FFFFFF;
+  --bg-elevated:#F1F1EF;
+  --bg-code:#F1F1EF;
+  --fg:#21211F;
+  --fg-secondary:#4A4A46;
+  --fg-muted:#797971;
+  --fg-weak:#A9A9A3;
+  --border:#E2E2DF;
+  --border-light:#ECECEA;
+  --teal:#2D6E6D;
+  --teal-hover:#388988;
+  --teal-active:#204F4E;
+  --teal-bg:#2D6E6D0C;
+  --teal-bg-strong:#2D6E6D18;
+  --coral:#FF5858;
+  --coral-soft:#FF585818;
+  --burgundy:#791A3F;
+  --burgundy-soft:#791A3F12;
+  --green:#43A584;
+  --blue:#4790FF;
+  --purple:#7B61FF;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg:0 4px 12px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.04);
+  --shadow-xl:0 8px 32px rgba(0,0,0,0.1),0 2px 8px rgba(0,0,0,0.05);
+  --radius-sm:4px;
+  --radius-md:6px;
+  --radius-lg:12px;
+  --radius-pill:100em;
+  --font-display:'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-in-out:cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:var(--font-body);font-size:16px;
+  line-height:1.6;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Progress bar ── */
+#progress{
+  position:fixed;top:0;left:0;height:3px;
+  background:var(--teal);width:0;z-index:100;
+  transition:width .5s var(--ease-out);
+}
+
+/* ── Nav dots ── */
+#nav{
+  position:fixed;right:24px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;z-index:100;
+}
+.nav-dot{
+  width:8px;height:8px;border-radius:50%;
+  border:1.5px solid var(--fg-weak);background:transparent;
+  cursor:pointer;transition:all .3s var(--ease-out);
+  position:relative;
+}
+.nav-dot::after{
+  content:attr(data-label);
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-size:11px;letter-spacing:.02em;color:var(--fg-muted);
+  white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s;font-family:var(--font-body);font-weight:500;
+}
+.nav-dot:hover::after{opacity:1}
+.nav-dot.active{
+  background:var(--teal);border-color:var(--teal);
+  transform:scale(1.4);
+}
+
+/* ── Counter ── */
+#counter{
+  position:fixed;bottom:28px;left:36px;z-index:100;
+  font-family:var(--font-body);font-size:12px;
+  letter-spacing:.04em;color:var(--fg-weak);font-weight:500;
+}
+#counter span{color:var(--teal);font-weight:600}
+
+/* ── Keyboard hint ── */
+#keys{
+  position:fixed;bottom:28px;right:36px;z-index:100;
+  font-size:11px;color:var(--fg-weak);display:flex;gap:5px;align-items:center;
+  font-family:var(--font-body);
+}
+.key{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border:1px solid var(--border);
+  border-radius:var(--radius-sm);font-size:9px;
+  background:var(--bg-white);box-shadow:var(--shadow-sm);
+}
+
+/* ── Deck ── */
+#deck{
+  scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh;
+  scroll-behavior:smooth;
+}
+#deck::-webkit-scrollbar{display:none}
+.slide{
+  min-height:100vh;scroll-snap-align:start;
+  display:flex;align-items:center;justify-content:center;
+  padding:60px 80px;position:relative;overflow:hidden;
+}
+
+/* ── Content ── */
+.slide-inner{max-width:1060px;width:100%;position:relative;z-index:1}
+
+/* ── Typography ── */
+.part-label{
+  font-family:var(--font-body);font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--teal);font-weight:600;
+  margin-bottom:12px;display:inline-block;
+}
+h1{
+  font-family:var(--font-display);font-size:clamp(40px,5vw,64px);
+  line-height:1.1;font-weight:800;margin-bottom:24px;
+  letter-spacing:-.02em;color:var(--fg);
+}
+h1 .accent{color:var(--teal)}
+h1 .coral{color:var(--coral)}
+h2{
+  font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);
+  line-height:1.15;font-weight:700;margin-bottom:20px;
+  letter-spacing:-.015em;
+}
+h2 .accent{color:var(--teal)}
+h2 .coral{color:var(--coral)}
+.lead{
+  font-size:17px;line-height:1.65;color:var(--fg-secondary);
+  max-width:600px;margin-bottom:36px;
+}
+.lead strong{color:var(--fg);font-weight:600}
+.quote{
+  border-left:3px solid var(--teal);padding:12px 0 12px 20px;
+  color:var(--fg-secondary);font-size:15px;line-height:1.6;
+  margin-top:32px;max-width:640px;
+}
+.quote strong{color:var(--fg);font-weight:600}
+
+/* ── Tables ── */
+.table-wrap{margin:28px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead{background:var(--bg-elevated)}
+th{
+  text-align:left;font-weight:600;font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:var(--fg-muted);padding:10px 16px;
+  border-bottom:1px solid var(--border);
+}
+td{
+  padding:11px 16px;border-bottom:1px solid var(--border-light);
+  color:var(--fg-secondary);
+}
+td:first-child{color:var(--fg);font-weight:500}
+tr:last-child td{border-bottom:none}
+table code{
+  background:var(--bg-elevated);padding:2px 7px;border-radius:var(--radius-sm);
+  font-size:12px;color:var(--teal);font-family:'JetBrains Mono','Fira Code',monospace;
+}
+.table-card{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+
+/* ── Spectrum ── */
+.spectrum{
+  display:flex;align-items:flex-start;gap:0;
+  margin:36px 0 28px;position:relative;padding-top:44px;
+}
+.spectrum::before{
+  content:'';position:absolute;top:52px;left:6%;right:6%;
+  height:2px;z-index:0;
+  background:linear-gradient(90deg,var(--border),var(--teal),var(--teal-hover),var(--coral));
+}
+.spec-node{flex:1;text-align:center;position:relative;z-index:1;padding:0 10px}
+.spec-dot{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--border);background:var(--bg);
+  margin:0 auto 14px;position:relative;z-index:2;
+  transition:all .5s var(--ease-out);
+}
+.spec-node.active .spec-dot{
+  background:var(--teal);border-color:var(--teal);
+  width:20px;height:20px;
+  box-shadow:0 0 0 6px var(--teal-bg-strong),0 0 0 12px var(--teal-bg);
+}
+.spec-title{font-weight:700;font-size:13px;margin-bottom:4px;color:var(--fg);font-family:var(--font-display)}
+.spec-node.active .spec-title{color:var(--teal)}
+.spec-desc{font-size:12px;color:var(--fg-muted);line-height:1.45}
+.spec-badge{
+  position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+  background:var(--teal);color:#fff;font-size:10px;
+  padding:4px 12px;border-radius:var(--radius-pill);
+  letter-spacing:.04em;font-weight:600;white-space:nowrap;
+  font-family:var(--font-display);
+  animation:float-badge 3s ease-in-out infinite;
+}
+@keyframes float-badge{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-3px)}}
+
+/* ── Pipeline ── */
+.pipeline{display:flex;align-items:center;gap:0;margin:32px 0;flex-wrap:wrap}
+.pipe-step{display:flex;align-items:center;gap:0}
+.pipe-node{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-md);padding:10px 16px;text-align:center;
+  box-shadow:var(--shadow-sm);
+  transition:all .3s var(--ease-out);cursor:default;
+}
+.pipe-node:hover{
+  border-color:var(--teal);box-shadow:var(--shadow-md);
+  transform:translateY(-2px);
+}
+.pipe-label{font-weight:600;font-size:13px;white-space:nowrap;margin-bottom:1px;font-family:var(--font-display)}
+.pipe-time{font-size:11px;color:var(--fg-muted)}
+.pipe-arrow{color:var(--fg-weak);font-size:16px;padding:0 5px;flex-shrink:0}
+.pipe-final{border-color:var(--teal);background:var(--teal-bg)}
+.pipe-final .pipe-label{color:var(--teal)}
+
+/* ── Branch diagram ── */
+.branch-diagram{
+  margin:32px 0;padding:24px 28px;
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);
+  font-family:'JetBrains Mono','Fira Code',monospace;
+  font-size:13px;line-height:2;position:relative;overflow:hidden;
+}
+.branch-diagram::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+  background:var(--teal);border-radius:0 2px 2px 0;
+}
+.b-main{color:var(--fg-muted)}
+.b-feat{color:var(--teal);font-weight:600}
+.b-action{color:var(--coral);font-weight:500}
+.b-dim{color:var(--fg-weak)}
+.b-deploy{color:var(--teal);font-weight:700}
+
+/* ── Skill cards ── */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:12px;margin:28px 0;
+}
+.skill-card{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);padding:18px;
+  box-shadow:var(--shadow-sm);
+  transition:all .3s var(--ease-out);cursor:default;
+}
+.skill-card:hover{
+  border-color:var(--teal);box-shadow:var(--shadow-lg);
+  transform:translateY(-2px);
+}
+.skill-cmd{
+  font-family:'JetBrains Mono','Fira Code',monospace;font-size:12px;
+  color:var(--teal);margin-bottom:6px;font-weight:500;
+}
+.skill-name{font-weight:700;font-size:14px;margin-bottom:4px;font-family:var(--font-display)}
+.skill-desc{font-size:12px;color:var(--fg-muted);line-height:1.45}
+.skill-card.optional{border-style:dashed}
+.skill-card.optional .skill-cmd::after{
+  content:'optional';font-family:var(--font-body);
+  font-size:9px;color:var(--fg-weak);margin-left:8px;
+  letter-spacing:.04em;text-transform:uppercase;font-weight:600;
+}
+
+/* ── NL pills ── */
+.nl-examples{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
+.nl-pill{
+  background:var(--bg-elevated);border:1px solid var(--border-light);
+  border-radius:var(--radius-pill);padding:6px 14px;font-size:13px;
+  color:var(--fg-secondary);font-style:italic;transition:all .2s;
+}
+.nl-pill:hover{border-color:var(--teal);background:var(--teal-bg)}
+.nl-pill .arrow{color:var(--teal);font-style:normal;margin:0 4px;font-weight:600}
+
+/* ── Checklist ── */
+.checklist{list-style:none;margin:28px 0}
+.checklist li{
+  padding:9px 0;border-bottom:1px solid var(--border-light);
+  display:flex;align-items:center;gap:12px;font-size:14px;
+  color:var(--fg-secondary);
+}
+.check-box{
+  width:18px;height:18px;border-radius:var(--radius-sm);flex-shrink:0;
+  border:1.5px solid var(--border);background:var(--bg-white);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;cursor:pointer;
+}
+.check-box.checked{background:var(--green);border-color:var(--green)}
+.check-box.checked::after{content:'';width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-0.5px,-0.5px)}
+.checklist code{
+  background:var(--bg-elevated);padding:2px 7px;border-radius:var(--radius-sm);
+  font-size:12px;color:var(--teal);font-family:'JetBrains Mono',monospace;
+}
+
+/* ── Team grid ── */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}
+.team-pill{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);padding:14px 16px;
+  box-shadow:var(--shadow-sm);transition:all .3s var(--ease-out);
+  border-left:3px solid var(--teal);
+}
+.team-pill:nth-child(1){border-left-color:#2D6E6D}
+.team-pill:nth-child(2){border-left-color:#4790FF}
+.team-pill:nth-child(3){border-left-color:#43A584}
+.team-pill:nth-child(4){border-left-color:#791A3F}
+.team-pill:nth-child(5){border-left-color:#FF5858}
+.team-pill:nth-child(6){border-left-color:#7B61FF}
+.team-pill:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.team-num{font-size:10px;color:var(--fg-weak);letter-spacing:.06em;font-weight:600;text-transform:uppercase}
+.team-module{font-weight:700;font-size:13px;margin:3px 0 2px;font-family:var(--font-display)}
+.team-what{font-size:11px;color:var(--fg-muted);line-height:1.4}
+
+/* ── Two cols ── */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+
+/* ── Reveal animations ── */
+.reveal{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.08s}
+.reveal.d2{transition-delay:.16s}
+.reveal.d3{transition-delay:.24s}
+.reveal.d4{transition-delay:.32s}
+.reveal.d5{transition-delay:.4s}
+
+/* ── Title slide ── */
+.slide-title{text-align:center}
+.slide-title .slide-inner{display:flex;flex-direction:column;align-items:center}
+.logo-row{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:40px;
+}
+.logo-text{
+  font-family:var(--font-display);font-size:14px;
+  font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fg-muted);
+}
+.logo-x{color:var(--coral);font-weight:400;font-size:16px}
+.slide-title h1{margin-bottom:16px}
+.slide-title .lead{text-align:center;max-width:520px}
+.start-hint{
+  margin-top:44px;display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--fg-weak);
+  animation:pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── Bullet list ── */
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.feature-list li{color:var(--fg-secondary);font-size:14px;display:flex;align-items:baseline;gap:8px}
+.feature-list .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--teal);
+  flex-shrink:0;position:relative;top:1px;
+}
+.feature-list strong{color:var(--fg);font-weight:600}
+
+/* ── Slide backgrounds ── */
+.slide-hero{background:var(--bg-white)}
+.slide-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 50% at 80% 20%,var(--teal-bg),transparent),
+             radial-gradient(ellipse 40% 40% at 10% 80%,var(--coral-soft),transparent);
+  pointer-events:none;
+}
+.slide-alt{background:var(--bg)}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .slide{padding:40px 28px}
+  .cols{grid-template-columns:1fr;gap:24px}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  .spectrum{flex-wrap:wrap}
+  .spec-node{min-width:110px}
+  #nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<nav id="nav"></nav>
+<div id="counter"><span>1</span> / 8</div>
+<div id="keys"><span class="key">&uarr;</span><span class="key">&darr;</span> navigate</div>
+
+<div id="deck">
+
+<!-- ═══════ TITLE ═══════ -->
+<section class="slide slide-title slide-hero" data-label="Title">
+  <div class="slide-inner">
+    <div class="logo-row reveal">
+      <span class="logo-text">Voyado</span>
+      <span class="logo-x">&times;</span>
+      <span class="logo-text">KTH Medieteknik</span>
+    </div>
+    <h1 class="reveal d1">AI-Augmented<br><span class="accent">Development</span> Workshop</h1>
+    <p class="lead reveal d2">45 min building + 30 min Show &amp; Tell. 6 teams.<br>Real code. Deployed to the cloud.</p>
+    <div class="start-hint reveal d4">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Scroll or press &darr; to begin
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 1: SDLC ═══════ -->
+<section class="slide slide-alt" data-label="SDLC">
+  <div class="slide-inner">
+    <span class="part-label reveal">Part 1 &mdash; The Modern SDLC</span>
+    <h2 class="reveal d1">From Idea to <span class="accent">Production</span></h2>
+    <p class="lead reveal d2">How software gets built in a product company.</p>
+    <div class="table-wrap reveal d3">
+      <div class="table-card">
+        <table>
+          <thead><tr><th>Phase</th><th>What happens</th><th>Who</th></tr></thead>
+          <tbody>
+            <tr><td>Requirements</td><td>Understand the problem, define what to build</td><td>PM, Designer, Engineers</td></tr>
+            <tr><td>Design</td><td>Plan the user experience and technical approach</td><td>Designer, Engineers</td></tr>
+            <tr><td>Planning</td><td>Break work into small, deliverable pieces</td><td>Team</td></tr>
+            <tr><td>Implementation</td><td>Write the code</td><td>Engineers</td></tr>
+            <tr><td>Review</td><td>Peers review for quality and correctness</td><td>Engineers</td></tr>
+            <tr><td>Ship</td><td>Merge, build, deploy &mdash; code goes live</td><td>CI/CD pipeline</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="quote reveal d4">At Voyado, every feature follows this path &mdash; from a customer problem to live code serving <strong>millions of users</strong>.</p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2: AI-AUGMENTED ═══════ -->
+<section class="slide slide-hero" data-label="AI-Augmented">
+  <div class="slide-inner">
+    <span class="part-label reveal">Part 1 &mdash; AI-Augmented Engineering</span>
+    <h2 class="reveal d1">AI doesn't replace the developer &mdash;<br>it <span class="accent">amplifies</span> them</h2>
+    <p class="lead reveal d2"><strong>AI-augmented software engineering</strong> means AI works alongside developers at every stage &mdash; not just code completion.</p>
+    <div class="table-wrap reveal d3">
+      <div class="table-card">
+        <table>
+          <thead><tr><th>SDLC Phase</th><th>How AI helps</th></tr></thead>
+          <tbody>
+            <tr><td>Requirements</td><td>Analyze documents, extract features, ask clarifying questions</td></tr>
+            <tr><td>Design</td><td>Suggest design patterns, map data models, generate UX specs</td></tr>
+            <tr><td>Planning</td><td>Break features into stories, estimate complexity, order by dependency</td></tr>
+            <tr><td>Implementation</td><td>Write code, follow conventions, use design system tokens</td></tr>
+            <tr><td>Review</td><td>Check quality, find issues, auto-fix trivial problems</td></tr>
+            <tr><td>Ship</td><td>Suggest commit messages, help with git workflow</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="quote reveal d4">This is not <strong>"vibe coding"</strong>. This is structured AI collaboration &mdash; the AI follows <strong>your conventions</strong>, <strong>your design system</strong>, <strong>your architecture</strong>.</p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 3: SPECTRUM ═══════ -->
+<section class="slide slide-alt" data-label="Spectrum">
+  <div class="slide-inner">
+    <span class="part-label reveal">Part 1 &mdash; The Autonomy Spectrum</span>
+    <h2 class="reveal d1">From Copilot to <span class="accent">Agent</span></h2>
+    <p class="lead reveal d2">Where are we on the AI autonomy scale?</p>
+    <div class="spectrum reveal d3">
+      <div class="spec-node">
+        <div class="spec-dot"></div>
+        <div class="spec-title">Manual</div>
+        <div class="spec-desc">Write everything by hand</div>
+      </div>
+      <div class="spec-node">
+        <div class="spec-dot"></div>
+        <div class="spec-title">AI-Assisted</div>
+        <div class="spec-desc">Autocomplete &amp; suggestions. You drive, AI suggests.</div>
+      </div>
+      <div class="spec-node active">
+        <span class="spec-badge">You are here today</span>
+        <div class="spec-dot"></div>
+        <div class="spec-title">AI-Augmented</div>
+        <div class="spec-desc">AI executes full tasks. You review &amp; approve.</div>
+      </div>
+      <div class="spec-node">
+        <div class="spec-dot"></div>
+        <div class="spec-title">AI-Driven</div>
+        <div class="spec-desc">AI makes architectural decisions autonomously.</div>
+      </div>
+    </div>
+    <p class="quote reveal d4">Today you'll experience <strong>AI-augmented development</strong>: you give the AI a skill to run, it does the heavy lifting, you review and approve.</p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 4: WHAT YOU'LL DO ═══════ -->
+<section class="slide slide-hero" data-label="Today">
+  <div class="slide-inner">
+    <span class="part-label reveal">Part 1 &mdash; What You'll Do Today</span>
+    <h2 class="reveal d1">45 min building. 30 min demos.<br><span class="coral">Deployed to the cloud.</span></h2>
+    <div class="pipeline reveal d2">
+      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Requirements</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
+      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Create PRD</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
+      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Plan Sprint</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
+      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Implement</div><div class="pipe-time">20 min</div></div><span class="pipe-arrow">&rarr;</span></div>
+      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Review</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
+      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Push &amp; Merge</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
+      <div class="pipe-step"><div class="pipe-node pipe-final"><div class="pipe-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>Live!</div><div class="pipe-time">&nbsp;</div></div><span class="pipe-arrow">&rarr;</span></div>
+      <div class="pipe-step"><div class="pipe-node" style="border-color:var(--coral);background:var(--coral-soft)"><div class="pipe-label" style="color:var(--coral)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="vertical-align:-2px;margin-right:4px"><polygon points="5,3 19,12 5,21"/></svg>Demo!</div><div class="pipe-time">30 min</div></div></div>
+    </div>
+    <div class="cols reveal d3" style="margin-top:32px">
+      <div>
+        <p style="font-weight:700;margin-bottom:10px;font-family:var(--font-display)">Each team gets:</p>
+        <ul class="feature-list">
+          <li><span class="dot"></span>A <strong>module</strong> inside a real monorepo (React + TypeScript)</li>
+          <li><span class="dot"></span><strong>Business requirements</strong> describing what to build</li>
+          <li><span class="dot"></span><strong>AI skills</strong> that guide you through every step</li>
+          <li><span class="dot"></span>A <strong>feature branch</strong> for your code</li>
+          <li><span class="dot"></span>A <strong>CI/CD pipeline</strong> that deploys on merge</li>
+        </ul>
+      </div>
+      <div>
+        <p class="quote" style="margin-top:0">At the end, your code will be live at a real URL &mdash; just like shipping a feature at <strong>Voyado</strong>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 5: GIT BRANCHING ═══════ -->
+<section class="slide slide-alt" data-label="Branching">
+  <div class="slide-inner">
+    <span class="part-label reveal">Part 2 &mdash; Your Workflow</span>
+    <h2 class="reveal d1">Git Branching &mdash; <span class="accent">How your code ships</span></h2>
+    <p class="lead reveal d2">One rule: never push directly to <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--coral);font-family:'JetBrains Mono',monospace;font-size:14px">main</code>.</p>
+    <div class="branch-diagram reveal d3">
+      <div><span class="b-main">main</span> <span class="b-dim">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</span> <span class="b-dim">(always deployable)</span></div>
+      <div><span class="b-dim">&nbsp;&nbsp;|</span></div>
+      <div><span class="b-dim">&nbsp;&nbsp;&#9492;&mdash;</span> <span class="b-feat">team-5/rewards-store</span> <span class="b-dim">&rarr; commits &rarr;</span> <span class="b-action">Push</span> <span class="b-dim">&rarr;</span> <span class="b-action">PR</span> <span class="b-dim">&rarr;</span> <span class="b-action">Review</span> <span class="b-dim">&rarr;</span> <span class="b-action">Merge</span> <span class="b-dim">&rarr;</span> <span class="b-deploy">Deploy</span></div>
+    </div>
+    <div class="table-wrap reveal d4">
+      <div class="table-card">
+        <table>
+          <thead><tr><th>Step</th><th>Command</th></tr></thead>
+          <tbody>
+            <tr><td>Create branch</td><td><code>git checkout -b team-{n}/feature-name</code></td></tr>
+            <tr><td>Commit often</td><td><code>git add . && git commit -m "feat: add reward cards"</code></td></tr>
+            <tr><td>Push</td><td><code>git push -u origin team-{n}/feature-name</code></td></tr>
+            <tr><td>Create PR</td><td>On GitHub, target <code>main</code></td></tr>
+            <tr><td>Merge</td><td>After mentor approval &rarr; CI/CD auto-deploys</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 6: SKILLS ═══════ -->
+<section class="slide slide-hero" data-label="Skills">
+  <div class="slide-inner">
+    <span class="part-label reveal">Part 2 &mdash; Your AI Toolkit</span>
+    <h2 class="reveal d1">Workshop <span class="accent">Skills</span></h2>
+    <p class="lead reveal d2">AI skills that guide you through each SDLC step. Use a slash command or just ask in natural language.</p>
+    <div class="skills-grid reveal d3">
+      <div class="skill-card"><div class="skill-cmd">/voyado-help</div><div class="skill-name">Help</div><div class="skill-desc">Onboard your team, check progress, see what to do next</div></div>
+      <div class="skill-card"><div class="skill-cmd">/voyado-prd</div><div class="skill-name">PRD</div><div class="skill-desc">Generate a Product Requirements Document from your BRD</div></div>
+      <div class="skill-card optional"><div class="skill-cmd">/voyado-ux</div><div class="skill-name">UX Design</div><div class="skill-desc">Generate UX guidelines with Essence design tokens</div></div>
+      <div class="skill-card"><div class="skill-cmd">/voyado-plan</div><div class="skill-name">Sprint Plan</div><div class="skill-desc">Break PRD into epics and implementable stories</div></div>
+      <div class="skill-card"><div class="skill-cmd">/voyado-impl</div><div class="skill-name">Implement</div><div class="skill-desc">Pick up the next story and write the code</div></div>
+      <div class="skill-card"><div class="skill-cmd">/voyado-review</div><div class="skill-name">Code Review</div><div class="skill-desc">Review code for quality, conventions, accessibility</div></div>
+      <div class="skill-card"><div class="skill-cmd">/voyado-status</div><div class="skill-name">Status</div><div class="skill-desc">See your full progress at any time</div></div>
+    </div>
+    <p class="reveal d4" style="font-weight:600;font-size:13px;margin-bottom:10px;color:var(--fg-muted)">Or just ask in natural language:</p>
+    <div class="nl-examples reveal d4">
+      <span class="nl-pill">"Help me get started" <span class="arrow">&rarr;</span> voyado-help</span>
+      <span class="nl-pill">"Create my PRD" <span class="arrow">&rarr;</span> voyado-prd</span>
+      <span class="nl-pill">"Implement the next story" <span class="arrow">&rarr;</span> voyado-impl</span>
+    </div>
+    <p class="quote reveal d5">Works in <strong>Claude Code</strong>, <strong>GitHub Copilot</strong>, and <strong>Codex</strong> &mdash; same skills, all IDEs.</p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 7: STEPS ═══════ -->
+<section class="slide slide-alt" data-label="Steps">
+  <div class="slide-inner">
+    <span class="part-label reveal">Part 2 &mdash; Step-by-Step Flow</span>
+    <h2 class="reveal d1">Follow the <span class="accent">sequence</span></h2>
+    <p class="lead reveal d2">The AI guides you through each step. After each one, it suggests a commit.</p>
+    <div class="table-wrap reveal d3">
+      <div class="table-card">
+        <table>
+          <thead><tr><th>#</th><th>Step</th><th>Skill</th><th>Time</th><th>You do</th><th>AI does</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Onboard</td><td><code>/voyado-help</code></td><td>2 min</td><td>Answer team questions</td><td>Saves team data, syncs files</td></tr>
+            <tr><td>2</td><td>Understand</td><td style="color:var(--fg-muted)">read docs</td><td>3 min</td><td>Read requirements.md</td><td>&mdash;</td></tr>
+            <tr><td>3</td><td>Create PRD</td><td><code>/voyado-prd</code></td><td>5 min</td><td>Answer 3-5 priority questions</td><td>Generates full PRD</td></tr>
+            <tr><td>4</td><td>Plan Sprint</td><td><code>/voyado-plan</code></td><td>5 min</td><td>Review proposed stories</td><td>Creates epics &amp; stories</td></tr>
+            <tr><td>5</td><td>Implement</td><td><code>/voyado-impl</code></td><td>20 min</td><td>Review code, iterate</td><td>Implements one story at a time</td></tr>
+            <tr><td>6</td><td>Review</td><td><code>/voyado-review</code></td><td>5 min</td><td>Fix blocking issues</td><td>Auto-fixes trivial issues</td></tr>
+            <tr><td>7</td><td>Ship</td><td style="color:var(--fg-muted)">git + GitHub</td><td>5 min</td><td>Push, PR, mentor approval</td><td>&mdash;</td></tr>
+            <tr><td>8</td><td style="color:var(--coral);font-weight:600">Demo</td><td style="color:var(--fg-muted)">Show &amp; Tell</td><td>30 min</td><td>Present your module to everyone</td><td>&mdash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="quote reveal d4">Check progress anytime: <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px">/voyado-status</code> or <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px">/voyado-help</code></p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 8: LET'S BUILD ═══════ -->
+<section class="slide slide-title slide-hero" data-label="Go!">
+  <div class="slide-inner">
+    <span class="part-label reveal">Let's go</span>
+    <h2 class="reveal d1" style="font-size:clamp(34px,4vw,52px)">Let's <span class="coral">Build!</span></h2>
+    <ul class="checklist reveal d2" style="max-width:500px;text-align:left;width:100%">
+      <li><span class="check-box"></span>Clone the repo and run <code>pnpm install</code></li>
+      <li><span class="check-box"></span>Open your AI tool (Claude Code, Copilot, or Codex)</li>
+      <li><span class="check-box"></span>Create your branch: <code>git checkout -b team-{n}/feature</code></li>
+      <li><span class="check-box"></span>Run <code>/voyado-help</code> to onboard your team</li>
+      <li><span class="check-box"></span>Follow the workflow &mdash; the AI will guide you</li>
+    </ul>
+    <div class="team-grid reveal d3" style="max-width:680px;width:100%;margin-top:32px">
+      <div class="team-pill"><div class="team-num">Team 1</div><div class="team-module">Loyalty Dashboard</div><div class="team-what">Member stats, tier distribution, points economy</div></div>
+      <div class="team-pill"><div class="team-num">Team 2</div><div class="team-module">Product Catalog</div><div class="team-what">Product grid, filters, search, wishlist</div></div>
+      <div class="team-pill"><div class="team-num">Team 3</div><div class="team-module">Customer Segments</div><div class="team-what">Segment builder with targeting rules</div></div>
+      <div class="team-pill"><div class="team-num">Team 4</div><div class="team-module">Campaign Builder</div><div class="team-what">Campaign creation wizard with templates</div></div>
+      <div class="team-pill"><div class="team-num">Team 5</div><div class="team-module">Rewards Store</div><div class="team-what">Reward catalog, point redemption, history</div></div>
+      <div class="team-pill"><div class="team-num">Team 6</div><div class="team-module">Analytics Overview</div><div class="team-what">KPI charts, metrics, date ranges</div></div>
+    </div>
+    <p class="quote reveal d4" style="text-align:center;max-width:440px;border-left:none;padding-left:0">Your mentor is here to help. Ask questions. Use the AI. Ship code. <strong>Have fun.</strong></p>
+  </div>
+</section>
+
+</div>
+
+<script>
+const deck=document.getElementById('deck'),slides=[...document.querySelectorAll('.slide')],progress=document.getElementById('progress'),counter=document.getElementById('counter'),nav=document.getElementById('nav'),total=slides.length;
+
+slides.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='nav-dot'+(i===0?' active':'');
+  d.dataset.label=s.dataset.label||`Slide ${i+1}`;
+  d.addEventListener('click',()=>slides[i].scrollIntoView({behavior:'smooth'}));
+  nav.appendChild(d);
+});
+const dots=[...document.querySelectorAll('.nav-dot')];
+
+const revealObs=new IntersectionObserver(e=>{
+  e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+let activeIndex=0;
+const slideObs=new IntersectionObserver(e=>{
+  e.forEach(el=>{
+    if(el.isIntersecting&&el.intersectionRatio>.5){
+      const idx=slides.indexOf(el.target);
+      if(idx!==-1){
+        activeIndex=idx;
+        dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+        counter.innerHTML=`<span>${idx+1}</span> / ${total}`;
+        progress.style.width=`${((idx+1)/total)*100}%`;
+      }
+    }
+  });
+},{threshold:.5});
+slides.forEach(s=>slideObs.observe(s));
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){
+    e.preventDefault();slides[Math.min(activeIndex+1,total-1)].scrollIntoView({behavior:'smooth'});
+  }else if(e.key==='ArrowUp'||e.key==='PageUp'){
+    e.preventDefault();slides[Math.max(activeIndex-1,0)].scrollIntoView({behavior:'smooth'});
+  }else if(e.key==='Home'){e.preventDefault();slides[0].scrollIntoView({behavior:'smooth'});}
+  else if(e.key==='End'){e.preventDefault();slides[total-1].scrollIntoView({behavior:'smooth'});}
+});
+
+// Interactive checklist
+document.querySelectorAll('.check-box').forEach(box=>{
+  box.addEventListener('click',()=>box.classList.toggle('checked'));
+});
+</script>
+</body>
+</html>
