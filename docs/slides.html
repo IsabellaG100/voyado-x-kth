@@ -180,40 +180,128 @@ table code{
   box-shadow:var(--shadow-sm);
 }
 
-/* ── Spectrum ── */
-.spectrum{
-  display:flex;align-items:flex-start;gap:0;
-  margin:36px 0 28px;position:relative;padding-top:44px;
+/* ── 7 Levels ── */
+.levels-container{
+  display:flex;gap:48px;height:calc(100vh - 100px);align-items:stretch;
+  position:relative;
 }
-.spectrum::before{
-  content:'';position:absolute;top:52px;left:6%;right:6%;
-  height:2px;z-index:0;
-  background:linear-gradient(90deg,var(--border),var(--teal),var(--teal-hover),var(--coral));
+.levels-sidebar{
+  width:220px;flex-shrink:0;display:flex;flex-direction:column;
+  padding:16px 0 0;
 }
-.spec-node{flex:1;text-align:center;position:relative;z-index:1;padding:0 10px}
-.spec-dot{
-  width:14px;height:14px;border-radius:50%;
-  border:2px solid var(--border);background:var(--bg);
-  margin:0 auto 14px;position:relative;z-index:2;
-  transition:all .5s var(--ease-out);
+.levels-sidebar-title{
+  font-family:var(--font-display);font-size:12px;font-weight:700;
+  color:var(--fg-muted);text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:28px;line-height:1.6;
 }
-.spec-node.active .spec-dot{
-  background:var(--teal);border-color:var(--teal);
-  width:20px;height:20px;
-  box-shadow:0 0 0 6px var(--teal-bg-strong),0 0 0 12px var(--teal-bg);
+.levels-track{
+  display:flex;flex-direction:column;gap:0;flex:1;position:relative;
+  justify-content:space-between;padding:4px 0 24px;
+  max-height:80%;
 }
-.spec-title{font-weight:700;font-size:13px;margin-bottom:4px;color:var(--fg);font-family:var(--font-display)}
-.spec-node.active .spec-title{color:var(--teal)}
-.spec-desc{font-size:12px;color:var(--fg-muted);line-height:1.45}
-.spec-badge{
-  position:absolute;top:-30px;left:50%;transform:translateX(-50%);
-  background:var(--teal);color:#fff;font-size:10px;
-  padding:4px 12px;border-radius:var(--radius-pill);
-  letter-spacing:.04em;font-weight:600;white-space:nowrap;
-  font-family:var(--font-display);
+.levels-track::before{
+  content:'';position:absolute;left:15px;top:16px;bottom:40px;width:2px;
+  background:var(--border);z-index:0;
+}
+.levels-track-fill{
+  position:absolute;left:15px;top:16px;width:2px;
+  background:var(--teal);z-index:1;
+  transition:height .5s var(--ease-out);
+}
+.level-marker{
+  display:flex;align-items:center;gap:12px;position:relative;z-index:2;
+  cursor:pointer;padding:3px 0;transition:all .3s var(--ease-out);
+}
+.level-marker-dot{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:13px;font-weight:700;
+  border:2px solid var(--border);background:var(--bg-white);
+  color:var(--fg-weak);transition:all .4s var(--ease-out);
+}
+.level-marker.active .level-marker-dot{
+  background:var(--teal);border-color:var(--teal);color:#fff;
+  box-shadow:0 0 0 4px var(--teal-bg-strong);
+  transform:scale(1.1);
+}
+.level-marker.past .level-marker-dot{
+  border-color:var(--teal);color:var(--teal);background:#EEF4F4;
+}
+.level-marker-label{
+  font-size:11px;color:var(--fg-weak);font-weight:500;
+  font-family:var(--font-display);transition:all .3s;
+  white-space:nowrap;
+  opacity:0;pointer-events:none;
+}
+.level-marker.active .level-marker-label{
+  color:var(--teal);font-weight:700;font-size:12px;
+  opacity:1;pointer-events:auto;
+}
+.level-marker.past .level-marker-label{color:var(--fg-muted);opacity:1;pointer-events:auto}
+
+.levels-stage{
+  flex:1;display:flex;align-items:center;position:relative;overflow:hidden;
+}
+.level-panel{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  justify-content:center;padding:0 48px 0 0;
+  opacity:0;transform:translateY(40px);
+  transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);
+  pointer-events:none;
+}
+.level-panel.active{
+  opacity:1;transform:translateY(0);pointer-events:auto;
+}
+.level-panel.exit-up{transform:translateY(-40px)}
+.level-num{
+  font-family:var(--font-display);font-size:13px;font-weight:700;
+  color:var(--teal);letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.level-name{
+  font-family:var(--font-display);font-size:42px;font-weight:800;
+  color:var(--fg);line-height:1.12;margin-bottom:22px;
+}
+.level-desc{
+  font-size:21px;line-height:1.65;color:var(--fg-secondary);
+  max-width:620px;margin-bottom:28px;
+}
+.level-core{
+  background:var(--teal-bg);border-left:3px solid var(--teal);
+  padding:14px 20px;border-radius:0 var(--radius-md) var(--radius-md) 0;
+  font-size:15px;color:var(--fg);font-style:italic;line-height:1.55;
+  max-width:580px;
+}
+.level-core strong{color:var(--teal);font-style:normal}
+.level-badge{
+  display:inline-block;background:var(--teal);color:#fff;
+  font-size:11px;font-weight:600;padding:5px 16px;
+  border-radius:var(--radius-pill);margin-bottom:14px;
+  font-family:var(--font-display);letter-spacing:.04em;
   animation:float-badge 3s ease-in-out infinite;
 }
-@keyframes float-badge{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-3px)}}
+@keyframes float-badge{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.levels-footer{
+  position:absolute;bottom:20px;right:0;left:268px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.levels-counter{
+  font-family:var(--font-display);font-size:12px;color:var(--fg-weak);
+  font-weight:500;letter-spacing:.02em;
+}
+.levels-counter span{color:var(--teal);font-weight:700}
+.levels-arrows{display:flex;gap:8px}
+.level-arrow{
+  width:38px;height:38px;border-radius:50%;border:1.5px solid var(--border);
+  background:var(--bg-white);color:var(--fg-secondary);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;transition:all .2s;
+  font-family:var(--font-body);line-height:1;
+}
+.level-arrow:hover:not(:disabled){
+  border-color:var(--teal);color:var(--teal);box-shadow:var(--shadow-md);
+}
+.level-arrow:disabled{opacity:.25;cursor:default}
 
 /* ── Pipeline ── */
 .pipeline{display:flex;align-items:center;gap:0;margin:32px 0;flex-wrap:wrap}
@@ -390,8 +478,19 @@ table code{
   .slide{padding:40px 28px}
   .cols{grid-template-columns:1fr;gap:24px}
   .team-grid{grid-template-columns:repeat(2,1fr)}
-  .spectrum{flex-wrap:wrap}
-  .spec-node{min-width:110px}
+  .levels-container{flex-direction:column;gap:20px;height:auto;min-height:calc(100vh - 100px)}
+  .levels-sidebar{width:100%;flex-direction:row;align-items:center;gap:16px;padding:0}
+  .levels-sidebar-title{margin-bottom:0;font-size:11px;white-space:nowrap}
+  .levels-track{flex-direction:row;gap:0;padding:0;justify-content:space-between;flex:1}
+  .levels-track::before{display:none}
+  .levels-track-fill{display:none}
+  .level-marker{flex-direction:column;gap:4px;padding:0}
+  .level-marker-dot{width:26px;height:26px;font-size:11px}
+  .level-marker-label{font-size:9px;text-align:center}
+  .level-name{font-size:28px}
+  .level-desc{font-size:17px}
+  .levels-footer{left:0;bottom:12px}
+  .levels-stage{min-height:300px}
   #nav{display:none}
 }
 </style>
@@ -472,36 +571,99 @@ table code{
   </div>
 </section>
 
-<!-- ═══════ SLIDE 3: SPECTRUM ═══════ -->
-<section class="slide slide-alt" data-label="Spectrum">
-  <div class="slide-inner">
-    <span class="part-label reveal">Part 1 &mdash; The Autonomy Spectrum</span>
-    <h2 class="reveal d1">From Copilot to <span class="accent">Agent</span></h2>
-    <p class="lead reveal d2">Where are we on the AI autonomy scale?</p>
-    <div class="spectrum reveal d3">
-      <div class="spec-node">
-        <div class="spec-dot"></div>
-        <div class="spec-title">Manual</div>
-        <div class="spec-desc">Write everything by hand</div>
+<!-- ═══════ SLIDE 3: 7 LEVELS ═══════ -->
+<section class="slide slide-alt" data-label="7 Levels" id="levelsSlide">
+  <div class="slide-inner" style="padding-top:32px;padding-bottom:0;height:100%">
+    <div class="levels-container reveal">
+      <div class="levels-sidebar">
+        <div class="levels-sidebar-title">The 7 Levels of<br>AI-Native Software<br>Development</div>
+        <div class="levels-track">
+          <div class="levels-track-fill" id="trackFill"></div>
+          <div class="level-marker active" data-idx="0">
+            <div class="level-marker-dot">1</div>
+            <div class="level-marker-label">Manual</div>
+          </div>
+          <div class="level-marker" data-idx="1">
+            <div class="level-marker-dot">2</div>
+            <div class="level-marker-label">Reference</div>
+          </div>
+          <div class="level-marker" data-idx="2">
+            <div class="level-marker-dot">3</div>
+            <div class="level-marker-label">Copy / Paste</div>
+          </div>
+          <div class="level-marker" data-idx="3">
+            <div class="level-marker-dot">4</div>
+            <div class="level-marker-label">Pair Programmer</div>
+          </div>
+          <div class="level-marker" data-idx="4">
+            <div class="level-marker-dot">5</div>
+            <div class="level-marker-label">Task Delegation</div>
+          </div>
+          <div class="level-marker" data-idx="5">
+            <div class="level-marker-dot">6</div>
+            <div class="level-marker-label">Initiative Exec.</div>
+          </div>
+          <div class="level-marker" data-idx="6">
+            <div class="level-marker-dot">7</div>
+            <div class="level-marker-label">Dark Factory</div>
+          </div>
+        </div>
       </div>
-      <div class="spec-node">
-        <div class="spec-dot"></div>
-        <div class="spec-title">AI-Assisted</div>
-        <div class="spec-desc">Autocomplete &amp; suggestions. You drive, AI suggests.</div>
+
+      <div class="levels-stage">
+        <div class="level-panel active" data-idx="0">
+          <div class="level-num">Level 1</div>
+          <h3 class="level-name">Manual Development</h3>
+          <p class="level-desc">Traditional, fully manual software development with no AI involvement.</p>
+          <div class="level-core"><strong>Core idea:</strong> everything is built directly by humans.</div>
+        </div>
+        <div class="level-panel" data-idx="1">
+          <div class="level-num">Level 2</div>
+          <h3 class="level-name">AI as Reference &amp; Suggestion</h3>
+          <p class="level-desc">AI is used as an enhanced search engine, documentation assistant, or autocomplete tool.</p>
+          <div class="level-core"><strong>Core idea:</strong> AI helps answer questions, not execute work.</div>
+        </div>
+        <div class="level-panel" data-idx="2">
+          <div class="level-num">Level 3</div>
+          <h3 class="level-name">Snippet Generator</h3>
+          <p class="level-desc">The developer asks AI to generate specific functions or snippets, then copy-pastes and integrates them into the codebase.</p>
+          <div class="level-core"><strong>Core idea:</strong> AI produces code fragments; the human stitches them together.</div>
+        </div>
+        <div class="level-panel" data-idx="3">
+          <div class="level-badge">&starf; You are here today</div>
+          <div class="level-num">Level 4</div>
+          <h3 class="level-name">Local AI Pair Programmer</h3>
+          <p class="level-desc">AI is embedded in the IDE or CLI and can be instructed to make changes across files. It executes short, scoped tasks autonomously (~10 min) before returning control.</p>
+          <div class="level-core"><strong>Core idea:</strong> AI actively modifies the codebase under direct human guidance.</div>
+        </div>
+        <div class="level-panel" data-idx="4">
+          <div class="level-num">Level 5</div>
+          <h3 class="level-name">Task-Based Delegation</h3>
+          <p class="level-desc">Humans assign complete tasks to AI instead of guiding step-by-step. The workflow becomes: specify task &rarr; assign &rarr; review. AI runs independently for longer intervals (~30 min).</p>
+          <div class="level-core"><strong>Core idea:</strong> humans manage tasks, not individual coding steps.</div>
+        </div>
+        <div class="level-panel" data-idx="5">
+          <div class="level-num">Level 6</div>
+          <h3 class="level-name">Initiative-Level Execution</h3>
+          <p class="level-desc">Humans define larger initiatives. AI breaks them down into epics and tasks, executes them, and iterates independently. Systems can run for extended periods (days) without a human in the loop.</p>
+          <div class="level-core"><strong>Core idea:</strong> humans define initiatives, AI plans and executes.</div>
+        </div>
+        <div class="level-panel" data-idx="6">
+          <div class="level-num">Level 7</div>
+          <h3 class="level-name">Dark Factory</h3>
+          <p class="level-desc">Humans provide vision, values, and strategic goals. AI determines what to build, defines initiatives, and fully implements them end-to-end.</p>
+          <div class="level-core"><strong>Core idea:</strong> software development operates as an autonomous system.</div>
+        </div>
       </div>
-      <div class="spec-node active">
-        <span class="spec-badge">You are here today</span>
-        <div class="spec-dot"></div>
-        <div class="spec-title">AI-Augmented</div>
-        <div class="spec-desc">AI executes full tasks. You review &amp; approve.</div>
-      </div>
-      <div class="spec-node">
-        <div class="spec-dot"></div>
-        <div class="spec-title">AI-Driven</div>
-        <div class="spec-desc">AI makes architectural decisions autonomously.</div>
+
+      <div class="levels-footer">
+        <div class="levels-counter">Level <span id="levelNum">1</span> / 7</div>
+        <div class="levels-arrows">
+          <button class="level-arrow" id="levelPrev" disabled aria-label="Previous level">&uarr;</button>
+          <button class="level-arrow" id="levelNext" aria-label="Next level">&darr;</button>
+        </div>
       </div>
     </div>
-    <p class="quote reveal d4">Today you'll experience <strong>AI-augmented development</strong>: you give the AI a skill to run, it does the heavy lifting, you review and approve.</p>
   </div>
 </section>
 
@@ -696,21 +858,102 @@ const slideObs=new IntersectionObserver(e=>{
     if(el.isIntersecting&&el.intersectionRatio>.5){
       const idx=slides.indexOf(el.target);
       if(idx!==-1){
+        const prevIdx=activeIndex;
         activeIndex=idx;
         dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
         counter.innerHTML=`<span>${idx+1}</span> / ${total}`;
         progress.style.width=`${((idx+1)/total)*100}%`;
+        // When entering levels slide, set appropriate starting level
+        if(levelsSlide&&idx===levelsIdx&&prevIdx!==levelsIdx){
+          levelsReleased=false;
+          setLevel(prevIdx>levelsIdx?totalLevels-1:0);
+        }
       }
     }
   });
 },{threshold:.5});
 slides.forEach(s=>slideObs.observe(s));
 
+// ── 7 Levels carousel ──
+const levelsSlide=document.getElementById('levelsSlide');
+const levelPanels=levelsSlide?[...levelsSlide.querySelectorAll('.level-panel')]:[];
+const levelMarkers=levelsSlide?[...levelsSlide.querySelectorAll('.level-marker')]:[];
+const levelPrev=document.getElementById('levelPrev');
+const levelNext=document.getElementById('levelNext');
+const levelNumEl=document.getElementById('levelNum');
+const trackFill=document.getElementById('trackFill');
+const levelsIdx=levelsSlide?slides.indexOf(levelsSlide):-1;
+const totalLevels=levelPanels.length;
+let currentLevel=0;
+let levelsCooldown=false;
+let levelsReleased=false;
+
+function setLevel(idx){
+  if(idx<0||idx>=totalLevels)return;
+  const prev=currentLevel;
+  currentLevel=idx;
+  levelPanels.forEach((p,i)=>{
+    p.classList.remove('active','exit-up');
+    if(i===idx)p.classList.add('active');
+    else if(i===prev&&idx>prev)p.classList.add('exit-up');
+  });
+  levelMarkers.forEach((m,i)=>{
+    m.classList.toggle('active',i===idx);
+    m.classList.toggle('past',i<idx);
+  });
+  if(levelPrev)levelPrev.disabled=idx===0;
+  if(levelNext)levelNext.disabled=idx===totalLevels-1;
+  if(levelNumEl)levelNumEl.textContent=idx+1;
+  // Animate track fill
+  if(trackFill){
+    const pct=totalLevels>1?idx/(totalLevels-1):0;
+    const trackEl=trackFill.parentElement;
+    if(trackEl){
+      const h=trackEl.offsetHeight-56;
+      trackFill.style.height=Math.round(pct*h)+'px';
+    }
+  }
+}
+
+if(levelPrev)levelPrev.addEventListener('click',()=>setLevel(currentLevel-1));
+if(levelNext)levelNext.addEventListener('click',()=>setLevel(currentLevel+1));
+levelMarkers.forEach((m,i)=>m.addEventListener('click',()=>setLevel(i)));
+
+// Intercept wheel on deck when levels slide is active
+deck.addEventListener('wheel',(e)=>{
+  if(activeIndex!==levelsIdx)return;
+  if(levelsReleased){return}
+  if(levelsCooldown){e.preventDefault();return}
+  const dir=e.deltaY>0?1:-1;
+  const next=currentLevel+dir;
+  if(next>=0&&next<totalLevels){
+    e.preventDefault();
+    levelsCooldown=true;
+    setLevel(next);
+    setTimeout(()=>levelsCooldown=false,500);
+  }else{
+    levelsReleased=true;
+  }
+},{passive:false});
+
+// Keyboard navigation (with levels interception)
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){
-    e.preventDefault();slides[Math.min(activeIndex+1,total-1)].scrollIntoView({behavior:'smooth'});
+    e.preventDefault();
+    if(activeIndex===levelsIdx&&currentLevel<totalLevels-1){
+      setLevel(currentLevel+1);
+    }else{
+      if(activeIndex===levelsIdx)levelsReleased=false;
+      slides[Math.min(activeIndex+1,total-1)].scrollIntoView({behavior:'smooth'});
+    }
   }else if(e.key==='ArrowUp'||e.key==='PageUp'){
-    e.preventDefault();slides[Math.max(activeIndex-1,0)].scrollIntoView({behavior:'smooth'});
+    e.preventDefault();
+    if(activeIndex===levelsIdx&&currentLevel>0){
+      setLevel(currentLevel-1);
+    }else{
+      if(activeIndex===levelsIdx)levelsReleased=false;
+      slides[Math.max(activeIndex-1,0)].scrollIntoView({behavior:'smooth'});
+    }
   }else if(e.key==='Home'){e.preventDefault();slides[0].scrollIntoView({behavior:'smooth'});}
   else if(e.key==='End'){e.preventDefault();slides[total-1].scrollIntoView({behavior:'smooth'});}
 });
