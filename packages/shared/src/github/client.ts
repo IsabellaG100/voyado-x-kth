@@ -6,7 +6,7 @@ import type {
   GitHubPullRequest,
 } from './types';
 
-const OWNER = 'voyado';
+const OWNER = 'MeghdadHadidi';
 const REPO = 'voyado-x-kth';
 const API_BASE = 'https://api.github.com';
 
