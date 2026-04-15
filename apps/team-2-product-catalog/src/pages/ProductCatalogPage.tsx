@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Product, ProductCategory } from '@voyado-kth/shared';
-import { Badge, Card } from '@voyado-kth/ui';
+import { Badge, Card, Input } from '@voyado-kth/ui';
+import { CatalogEmptyState } from '../components/CatalogEmptyState';
 import { CategoryFilterBar } from '../components/CategoryFilterBar';
 import { ProductCard } from '../components/ProductCard';
 import categoriesData from '../../data/categories.json';
@@ -11,7 +12,7 @@ type SortOptionId = 'name-asc' | 'price-asc' | 'price-desc' | 'rating-desc';
 
 const categories = categoriesData as ProductCategory[];
 const products = productsData as Product[];
-const controlPreview = ['Search field', 'Sort menu'];
+const controlPreview = ['Sort menu'];
 const sortLabels: Record<SortOptionId, string> = {
   'name-asc': 'Name A-Z',
   'price-asc': 'Price low-high',
@@ -96,15 +97,14 @@ export function ProductCatalogPage() {
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="catalog-planning-title">
         <div className={styles.heroCopy}>
-          <Badge variant="info">Story S2.2</Badge>
+          <Badge variant="info">Story S2.3</Badge>
           <h2 id="catalog-planning-title" className={styles.heroTitle}>
-            Category filtering is now part of the browsing flow.
+            Search now sharpens the catalog in real time.
           </h2>
           <p className={styles.heroDescription}>
-            The catalog now includes a real single-select filter bar with an All
-            option and category counts. Choosing a category updates the grid
-            instantly while the remaining search and sort controls stay staged
-            for the next stories.
+            The catalog now includes live search on top of the category filter.
+            Product matches update as you type, and a neutral empty state helps
+            the user recover quickly when no items match the query.
           </p>
         </div>
 
@@ -114,8 +114,8 @@ export function ProductCatalogPage() {
             <span className={styles.metricLabel}>catalog items rendered</span>
           </div>
           <div className={styles.metric}>
-            <span className={styles.metricValue}>{categorySummary.length}</span>
-            <span className={styles.metricLabel}>filter options available</span>
+            <span className={styles.metricValue}>{visibleProducts.length}</span>
+            <span className={styles.metricLabel}>matching cards visible</span>
           </div>
         </div>
       </section>
@@ -134,6 +134,14 @@ export function ProductCatalogPage() {
             categories={categorySummary}
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
+          />
+
+          <Input
+            type="search"
+            label="Search products"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={event => setSearchQuery(event.target.value)}
           />
 
           <div className={styles.placeholderRow}>
@@ -165,8 +173,9 @@ export function ProductCatalogPage() {
 
           <div className={styles.resultsIntro}>
             <div className={styles.canvasLead}>
-              The results region now responds to category changes immediately,
-              making the grid feel closer to a real storefront browsing flow.
+              The results region now responds to both category and search
+              changes, making the grid feel closer to a real storefront
+              browsing flow.
             </div>
             <div className={styles.previewGrid}>
               {catalogPreview.map(item => (
@@ -177,11 +186,18 @@ export function ProductCatalogPage() {
             </div>
           </div>
 
-          <div className={styles.productGrid} aria-label="Product catalog grid">
-            {visibleProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {visibleProducts.length > 0 ? (
+            <div className={styles.productGrid} aria-label="Product catalog grid">
+              {visibleProducts.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <CatalogEmptyState
+              query={searchQuery.trim() || 'your current filters'}
+              onReset={() => setSearchQuery('')}
+            />
+          )}
         </Card>
       </section>
     </main>
