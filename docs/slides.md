@@ -64,64 +64,89 @@ Manual          AI-Assisted          AI-Augmented          AI-Driven
 
 ---
 
-### Slide 4: What You'll Do Today
+### Slide 4: Form Your Teams (Before Dinner)
 
-**45 minutes building + 30 minutes Show & Tell. 6 teams. Real code. Deployed to the cloud.**
+**Time to find your crew!**
 
-```
-Read Requirements ──► Create PRD ──► Plan Sprint ──► Implement ──► Review ──► Push & Merge ──► Live!  ──► Demo!
-     5 min              5 min         5 min         20 min        5 min        5 min              30 min
-```
+When you're told to eat, grab your food and walk by the tables in the townhall. Each table has a **team mission card** — read the missions and find the one that excites you.
 
-Each team gets:
-- A **module** inside a real monorepo (React + TypeScript)
-- **Business requirements** describing what to build
-- **AI skills** that guide you through every step
-- A **feature branch** for your code
-- A **CI/CD pipeline** that deploys your code to the cloud when you merge
+**Roles to fill:**
 
-> At the end, your code will be live at a real URL — just like shipping a feature at Voyado.
+On each table there's a sign-up sheet. Choose a role and write your name next to it. These aren't hard-set — it's a position you *try to play well* during the assignment.
+
+| Role | What you do |
+|------|-------------|
+| **Developer** | Works with the code and AI tools. Needs a laptop. Pushes code to the repository. |
+| **Product Manager** | Owns the vision. Prioritizes what to build first. |
+| **UX Designer** | Shapes how the feature looks and feels. |
+| **QA Engineer** | Tests and validates that the feature works correctly. |
+
+**Important:**
+- The **Developer** must fill in their **email address** on the sheet — they'll receive a **ChatGPT guest Pro account** invitation.
+- If you're the first person at a table, you're the team lead — welcome and "hire" others who join.
+- **Before the next talk starts**, every team must have a Developer selected and ready.
+
+> Grab food. Explore the tables. Pick your mission. Form your team. Be back with a Developer ready!
 
 ---
 
-## PART 2: Your Workshop Workflow — Branching, Skills & Steps
+## PART 2: Your Workshop Workflow
 
 ---
 
-### Slide 5: Git Branching — How Your Code Gets to Production
+### Slide 5: Getting Started (After the AI Talk)
 
-**One rule: never push directly to `main`.**
+**Developer: verify your access first.**
+
+The developer who received the ChatGPT invitation should check that they can log in and the access works.
+
+**Set up your project:**
+
+| Step | What to do |
+|------|------------|
+| **Install pnpm** | `npm install -g pnpm` (or `brew install pnpm` on macOS) |
+| **Clone the repo** | `git clone <repo-url>` |
+| **Install dependencies** | `cd voyado-x-kth && pnpm install` |
+| **Run the dev server** | `pnpm dev` — opens at `localhost:3000` |
+
+> Once the dev server is running, you should see the shell app with empty module slots — your team will fill one of them.
+
+---
+
+### Slide 6: Branching Strategy
+
+**Why branches matter:** the code lives on GitHub with a default branch called `main`. In a real team, pushing directly to `main` would cause conflicts and break things. A branching strategy is an agreement between team members on how to work in parallel.
+
+**Our agreement:** every team creates a feature branch. All your work goes there. At the end, you merge into `main`.
 
 ```
 main ─────────────────────────────────────────────────► (always deployable)
   │
-  └── team-5/rewards-store ──► commits ──► Push ──► PR ──► Review ──► Merge ──► Deploy
+  └── feature/team-1 ──► commits ──► Push ──► PR ──► Review ──► Merge ──► Deploy
        (your feature branch)
 ```
 
-**What you do:**
+**Create your branch immediately after cloning:**
 
-| Step | Command |
-|------|---------|
-| Create your branch | `git checkout -b team-{n}/feature-name` |
-| Work & commit often | `git add . && git commit -m "feat: add reward cards"` |
-| Push when ready | `git push -u origin team-{n}/feature-name` |
-| Create a Pull Request | On GitHub, target `main` |
-| Mentor reviews & approves | On GitHub |
-| Merge | GitHub merge button |
-| Deployed automatically | CI/CD → Azure Static Web Apps |
+```bash
+git checkout -b feature/team-[team-id]
+```
 
-> The dashboard updates live — we can see your branch, your PR, and your deployment status in real time.
+Example: `git checkout -b feature/team-1`, `git checkout -b feature/team-3`
+
+> **This naming format is important — follow it exactly:** `feature/team-[team-id]`
 
 ---
 
-### Slide 6: Your AI Toolkit — Workshop Skills
+### Slide 7: Your AI Toolkit — Workshop Skills
 
-**We built a set of AI skills for this workshop.** Each skill guides the AI through a specific part of the SDLC. You trigger them with a slash command or just ask in natural language.
+**When you open the AI tool in this repository, a set of workshop skills are already installed.** These skills guide the AI through each SDLC step so it produces quality code that matches your team's mission and business requirements.
+
+**How to discover commands:** type `$` in the message box of your AI tool (Codex VS Code extension, Codex CLI, Codex desktop app, etc.) to see the list of available commands.
 
 | Skill | Command | What it does |
 |-------|---------|-------------|
-| **Help** | `/voyado-help` | Onboard your team, check progress, see what to do next |
+| **Help** | `/voyado-help` | See where you are in the process and what to do next. Run anytime! |
 | **PRD** | `/voyado-prd` | Read your requirements and generate a Product Requirements Document |
 | **UX** | `/voyado-ux` | *(Optional)* Generate UX design guidelines with Essence design tokens |
 | **Plan** | `/voyado-plan` | Break the PRD into epics and implementable stories |
@@ -129,45 +154,37 @@ main ─────────────────────────
 | **Review** | `/voyado-review` | Review your code for quality, conventions, and accessibility |
 | **Status** | `/voyado-status` | See your full progress at any time |
 
-**You can also just ask in natural language:**
-- "Help me get started" → triggers voyado-help
-- "Create my PRD" → triggers voyado-prd
-- "Implement the next story" → triggers voyado-impl
+**The commands follow a sequence** that mirrors the SDLC workflow. The **help command** (`/voyado-help`) is your compass — it tells you where you are and what step to take next.
 
-> Works in **Claude Code**, **GitHub Copilot**, and **Codex** — same skills, all IDEs.
+> Works in **Codex** (VS Code, CLI, Desktop) and **Claude Code** — same skills, all tools.
 
 ---
 
-### Slide 7: The Step-by-Step Workshop Flow
+### Slide 8: The Step-by-Step Workflow
 
 **Follow this sequence. The AI guides you through each step.**
 
-| # | Step | Skill | Time | What you do | What AI does |
-|---|------|-------|------|-------------|-------------|
-| 1 | **Onboard** | `/voyado-help` | 2 min | Answer team questions | Saves your team data, syncs everything |
-| 2 | **Understand** | *(read docs)* | 3 min | Read `docs/requirements.md` in your team's folder | — |
-| 3 | **Create PRD** | `/voyado-prd` | 5 min | Answer 3-5 interview questions about priorities | Generates a full PRD from your requirements |
-| 4 | **Plan Sprint** | `/voyado-plan` | 5 min | Review the proposed stories | Breaks PRD into epics and stories with files, data, components |
-| 5 | **Implement** | `/voyado-impl` | 20 min | Review code, run it, iterate | Implements one story at a time, following all conventions |
-| 6 | **Review** | `/voyado-review` | 5 min | Fix any blocking issues | Reviews code quality, auto-fixes trivial issues |
-| 7 | **Ship** | *(git + GitHub)* | 5 min | Push, create PR, get mentor approval | — |
-| 8 | **Demo** | *(Show & Tell)* | 30 min | Each team presents their module to everyone | — |
+| # | Step | What happens |
+|---|------|-------------|
+| 1 | **Create branch** | `git checkout -b feature/team-[team-id]` |
+| 2 | **Onboard** | Run any command (e.g. `/voyado-help`) — if you haven't onboarded, it will walk you through it. Provide team members' names and email addresses. |
+| 3 | **Commit & push** | After onboarding, commit and push. **Every skill requires the previous step's artifacts to be committed before it lets you proceed.** |
+| 4 | **Brainstorm** | The team sits together, reads the mission and business requirements. The AI skills guide you through the discussion. |
+| 5 | **Create PRD** | `/voyado-prd` — answer a few questions, get a full Product Requirements Document |
+| 6 | **Plan Sprint** | `/voyado-plan` — break the PRD into epics and stories |
+| 7 | **Implement** | `/voyado-impl` — pick up stories one at a time, write the code |
+| 8 | **Review** | `/voyado-review` — check code quality, fix issues |
+| 9 | **Ship** | Push your code, create a Pull Request on GitHub, ask for a code review |
+| 10 | **Merge** | When the PR is approved, merge into `main` — CI/CD deploys automatically |
+| 11 | **Demo!** | Each team presents their module to everyone |
 
-**After each step:** the AI suggests a commit message. Say "yes" and it commits for you.
+**After each step:** commit and push your work to your branch before moving on.
 
-**Check progress anytime:** run `/voyado-status` or `/voyado-help` to see where you are and what's next.
+**Check progress anytime:** run `/voyado-help` or `/voyado-status`.
 
 ---
 
-### Slide 8: Let's Build!
-
-**Your checklist to get started:**
-
-- [ ] Clone the repo and run `pnpm install`
-- [ ] Open your AI tool (Claude Code, Copilot, or Codex)
-- [ ] Create your feature branch: `git checkout -b team-{n}/your-feature`
-- [ ] Run `/voyado-help` to onboard your team
-- [ ] Follow the workflow — the AI will guide you
+### Slide 9: Let's Build!
 
 **Team assignments:**
 
@@ -180,4 +197,6 @@ main ─────────────────────────
 | Team 5 | Rewards Store | `/rewards` | Reward catalog, point redemption, history |
 | Team 6 | Analytics Overview | `/analytics` | KPI charts, metrics, date ranges |
 
-> Your mentor is here to help. Ask questions. Use the AI. Ship code. Have fun.
+**Don't worry if you get stuck.** You don't need to know git commands, pnpm, or AI tools by heart. Try to figure it out together as a team first. If you're stuck, just raise your hand and we'll be with you shortly.
+
+> Ask each other. Use the AI. Ship code. Have fun. We're here to help.

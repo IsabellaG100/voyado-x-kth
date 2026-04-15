@@ -400,7 +400,7 @@ table code{
 
 <div id="progress"></div>
 <nav id="nav"></nav>
-<div id="counter"><span>1</span> / 8</div>
+<div id="counter"><span>1</span> / 10</div>
 <div id="keys"><span class="key">&uarr;</span><span class="key">&darr;</span> navigate</div>
 
 <div id="deck">
@@ -505,75 +505,95 @@ table code{
   </div>
 </section>
 
-<!-- ═══════ SLIDE 4: WHAT YOU'LL DO ═══════ -->
-<section class="slide slide-hero" data-label="Today">
+<!-- ═══════ SLIDE 4: FORM TEAMS (BEFORE DINNER) ═══════ -->
+<section class="slide slide-hero" data-label="Teams">
   <div class="slide-inner">
-    <span class="part-label reveal">Part 1 &mdash; What You'll Do Today</span>
-    <h2 class="reveal d1">45 min building. 30 min demos.<br><span class="coral">Deployed to the cloud.</span></h2>
-    <div class="pipeline reveal d2">
-      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Requirements</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
-      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Create PRD</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
-      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Plan Sprint</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
-      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Implement</div><div class="pipe-time">20 min</div></div><span class="pipe-arrow">&rarr;</span></div>
-      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Review</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
-      <div class="pipe-step"><div class="pipe-node"><div class="pipe-label">Push &amp; Merge</div><div class="pipe-time">5 min</div></div><span class="pipe-arrow">&rarr;</span></div>
-      <div class="pipe-step"><div class="pipe-node pipe-final"><div class="pipe-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>Live!</div><div class="pipe-time">&nbsp;</div></div><span class="pipe-arrow">&rarr;</span></div>
-      <div class="pipe-step"><div class="pipe-node" style="border-color:var(--coral);background:var(--coral-soft)"><div class="pipe-label" style="color:var(--coral)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="vertical-align:-2px;margin-right:4px"><polygon points="5,3 19,12 5,21"/></svg>Demo!</div><div class="pipe-time">30 min</div></div></div>
-    </div>
-    <div class="cols reveal d3" style="margin-top:32px">
+    <span class="part-label reveal">Before Dinner</span>
+    <h2 class="reveal d1">Form Your <span class="accent">Teams</span></h2>
+    <p class="lead reveal d2">Grab your food, walk by the tables in the townhall, and <strong>read the team mission cards</strong>. Find the mission that excites you.</p>
+    <div class="cols reveal d3">
       <div>
-        <p style="font-weight:700;margin-bottom:10px;font-family:var(--font-display)">Each team gets:</p>
+        <p style="font-weight:700;margin-bottom:10px;font-family:var(--font-display)">Roles to fill:</p>
+        <div class="table-wrap" style="margin-top:0">
+          <div class="table-card">
+            <table>
+              <thead><tr><th>Role</th><th>What you do</th></tr></thead>
+              <tbody>
+                <tr><td>Developer</td><td>Works with code &amp; AI. Needs a laptop. Pushes code.</td></tr>
+                <tr><td>Product Manager</td><td>Owns the vision. Prioritizes what to build.</td></tr>
+                <tr><td>UX Designer</td><td>Shapes how the feature looks and feels.</td></tr>
+                <tr><td>QA Engineer</td><td>Tests and validates that the feature works.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--fg-muted);margin-top:12px">Roles aren't hard-set &mdash; it's a position you <em>try to play well</em>.</p>
+      </div>
+      <div>
+        <p style="font-weight:700;margin-bottom:10px;font-family:var(--font-display)">How it works:</p>
         <ul class="feature-list">
-          <li><span class="dot"></span>A <strong>module</strong> inside a real monorepo (React + TypeScript)</li>
-          <li><span class="dot"></span><strong>Business requirements</strong> describing what to build</li>
-          <li><span class="dot"></span><strong>AI skills</strong> that guide you through every step</li>
-          <li><span class="dot"></span>A <strong>feature branch</strong> for your code</li>
-          <li><span class="dot"></span>A <strong>CI/CD pipeline</strong> that deploys on merge</li>
+          <li><span class="dot"></span>Each table has a <strong>sign-up sheet</strong> &mdash; write your name next to a role</li>
+          <li><span class="dot"></span>First person at the table? You're the lead &mdash; <strong>welcome &amp; "hire"</strong> others who join</li>
+          <li><span class="dot"></span>The <strong>Developer</strong> must fill in their <strong>email address</strong> to receive a <strong>ChatGPT guest Pro account</strong> invitation</li>
+          <li><span class="dot" style="background:var(--coral)"></span><strong style="color:var(--coral)">Before the next talk starts</strong>, every team must have a Developer selected and ready</li>
         </ul>
       </div>
-      <div>
-        <p class="quote" style="margin-top:0">At the end, your code will be live at a real URL &mdash; just like shipping a feature at <strong>Voyado</strong>.</p>
-      </div>
     </div>
+    <p class="quote reveal d4">Grab food. Explore the tables. Pick your mission. Form your team. <strong>Be back with a Developer ready!</strong></p>
   </div>
 </section>
 
-<!-- ═══════ SLIDE 5: GIT BRANCHING ═══════ -->
-<section class="slide slide-alt" data-label="Branching">
+<!-- ═══════ SLIDE 5: GETTING STARTED ═══════ -->
+<section class="slide slide-alt" data-label="Setup">
   <div class="slide-inner">
-    <span class="part-label reveal">Part 2 &mdash; Your Workflow</span>
-    <h2 class="reveal d1">Git Branching &mdash; <span class="accent">How your code ships</span></h2>
-    <p class="lead reveal d2">One rule: never push directly to <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--coral);font-family:'JetBrains Mono',monospace;font-size:14px">main</code>.</p>
-    <div class="branch-diagram reveal d3">
-      <div><span class="b-main">main</span> <span class="b-dim">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</span> <span class="b-dim">(always deployable)</span></div>
-      <div><span class="b-dim">&nbsp;&nbsp;|</span></div>
-      <div><span class="b-dim">&nbsp;&nbsp;&#9492;&mdash;</span> <span class="b-feat">team-5/rewards-store</span> <span class="b-dim">&rarr; commits &rarr;</span> <span class="b-action">Push</span> <span class="b-dim">&rarr;</span> <span class="b-action">PR</span> <span class="b-dim">&rarr;</span> <span class="b-action">Review</span> <span class="b-dim">&rarr;</span> <span class="b-action">Merge</span> <span class="b-dim">&rarr;</span> <span class="b-deploy">Deploy</span></div>
-    </div>
-    <div class="table-wrap reveal d4">
+    <span class="part-label reveal">Part 2 &mdash; Getting Started</span>
+    <h2 class="reveal d1">Verify Access &amp; <span class="accent">Set Up</span></h2>
+    <p class="lead reveal d2"><strong>Developer:</strong> check that your ChatGPT guest Pro account invitation worked and you can log in.</p>
+    <div class="table-wrap reveal d3">
       <div class="table-card">
         <table>
-          <thead><tr><th>Step</th><th>Command</th></tr></thead>
+          <thead><tr><th>Step</th><th>What to do</th></tr></thead>
           <tbody>
-            <tr><td>Create branch</td><td><code>git checkout -b team-{n}/feature-name</code></td></tr>
-            <tr><td>Commit often</td><td><code>git add . && git commit -m "feat: add reward cards"</code></td></tr>
-            <tr><td>Push</td><td><code>git push -u origin team-{n}/feature-name</code></td></tr>
-            <tr><td>Create PR</td><td>On GitHub, target <code>main</code></td></tr>
-            <tr><td>Merge</td><td>After mentor approval &rarr; CI/CD auto-deploys</td></tr>
+            <tr><td>Install pnpm</td><td><code>npm install -g pnpm</code> &nbsp;(or <code>brew install pnpm</code> on macOS)</td></tr>
+            <tr><td>Clone the repo</td><td><code>git clone &lt;repo-url&gt;</code></td></tr>
+            <tr><td>Install dependencies</td><td><code>cd voyado-x-kth && pnpm install</code></td></tr>
+            <tr><td>Run dev server</td><td><code>pnpm dev</code> &mdash; opens at <code>localhost:3000</code></td></tr>
           </tbody>
         </table>
       </div>
     </div>
+    <p class="quote reveal d4">Once the dev server is running, you'll see the shell app with empty module slots &mdash; <strong>your team will fill one of them</strong>.</p>
   </div>
 </section>
 
-<!-- ═══════ SLIDE 6: SKILLS ═══════ -->
-<section class="slide slide-hero" data-label="Skills">
+<!-- ═══════ SLIDE 6: BRANCHING STRATEGY ═══════ -->
+<section class="slide slide-hero" data-label="Branching">
+  <div class="slide-inner">
+    <span class="part-label reveal">Part 2 &mdash; Branching Strategy</span>
+    <h2 class="reveal d1">Work in Parallel, <span class="accent">Merge to Main</span></h2>
+    <p class="lead reveal d2">The code lives on GitHub with a default branch called <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--coral);font-family:'JetBrains Mono',monospace;font-size:14px">main</code>. In a real team, pushing directly to main causes conflicts. A <strong>branching strategy</strong> is an agreement on how to work in parallel.</p>
+    <div class="branch-diagram reveal d3">
+      <div><span class="b-main">main</span> <span class="b-dim">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</span> <span class="b-dim">(always deployable)</span></div>
+      <div><span class="b-dim">&nbsp;&nbsp;|</span></div>
+      <div><span class="b-dim">&nbsp;&nbsp;&#9492;&mdash;</span> <span class="b-feat">feature/team-1</span> <span class="b-dim">&rarr; commits &rarr;</span> <span class="b-action">Push</span> <span class="b-dim">&rarr;</span> <span class="b-action">PR</span> <span class="b-dim">&rarr;</span> <span class="b-action">Review</span> <span class="b-dim">&rarr;</span> <span class="b-action">Merge</span> <span class="b-dim">&rarr;</span> <span class="b-deploy">Deploy</span></div>
+    </div>
+    <p class="reveal d3" style="font-weight:700;font-size:15px;margin:20px 0 8px;font-family:var(--font-display)">Create your branch immediately after cloning:</p>
+    <div class="reveal d3" style="background:var(--bg-code);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:14px 20px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:15px;color:var(--teal);display:inline-block">
+      git checkout -b feature/team-[team-id]
+    </div>
+    <p class="reveal d4" style="font-size:13px;color:var(--fg-muted);margin-top:12px">Example: <code>feature/team-1</code>, <code>feature/team-3</code>, <code>feature/team-5</code></p>
+    <p class="quote reveal d5">This naming format is important &mdash; <strong>follow it exactly:</strong> <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px">feature/team-[team-id]</code></p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 7: AI SKILLS ═══════ -->
+<section class="slide slide-alt" data-label="Skills">
   <div class="slide-inner">
     <span class="part-label reveal">Part 2 &mdash; Your AI Toolkit</span>
     <h2 class="reveal d1">Workshop <span class="accent">Skills</span></h2>
-    <p class="lead reveal d2">AI skills that guide you through each SDLC step. Use a slash command or just ask in natural language.</p>
+    <p class="lead reveal d2">When you open the AI tool in this repo, <strong>a set of skills are already installed</strong>. They guide the AI through each SDLC step. Type <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:14px">$</code> in the message box to see available commands.</p>
     <div class="skills-grid reveal d3">
-      <div class="skill-card"><div class="skill-cmd">/voyado-help</div><div class="skill-name">Help</div><div class="skill-desc">Onboard your team, check progress, see what to do next</div></div>
+      <div class="skill-card"><div class="skill-cmd">/voyado-help</div><div class="skill-name">Help</div><div class="skill-desc">Your compass &mdash; shows where you are and what to do next. Run anytime!</div></div>
       <div class="skill-card"><div class="skill-cmd">/voyado-prd</div><div class="skill-name">PRD</div><div class="skill-desc">Generate a Product Requirements Document from your BRD</div></div>
       <div class="skill-card optional"><div class="skill-cmd">/voyado-ux</div><div class="skill-name">UX Design</div><div class="skill-desc">Generate UX guidelines with Essence design tokens</div></div>
       <div class="skill-card"><div class="skill-cmd">/voyado-plan</div><div class="skill-name">Sprint Plan</div><div class="skill-desc">Break PRD into epics and implementable stories</div></div>
@@ -581,56 +601,47 @@ table code{
       <div class="skill-card"><div class="skill-cmd">/voyado-review</div><div class="skill-name">Code Review</div><div class="skill-desc">Review code for quality, conventions, accessibility</div></div>
       <div class="skill-card"><div class="skill-cmd">/voyado-status</div><div class="skill-name">Status</div><div class="skill-desc">See your full progress at any time</div></div>
     </div>
-    <p class="reveal d4" style="font-weight:600;font-size:13px;margin-bottom:10px;color:var(--fg-muted)">Or just ask in natural language:</p>
-    <div class="nl-examples reveal d4">
-      <span class="nl-pill">"Help me get started" <span class="arrow">&rarr;</span> voyado-help</span>
-      <span class="nl-pill">"Create my PRD" <span class="arrow">&rarr;</span> voyado-prd</span>
-      <span class="nl-pill">"Implement the next story" <span class="arrow">&rarr;</span> voyado-impl</span>
-    </div>
-    <p class="quote reveal d5">Works in <strong>Claude Code</strong>, <strong>GitHub Copilot</strong>, and <strong>Codex</strong> &mdash; same skills, all IDEs.</p>
+    <p class="quote reveal d4">The commands follow a <strong>sequence that mirrors the SDLC workflow</strong>. The help command is your compass &mdash; it always tells you what step to take next.</p>
+    <p class="reveal d5" style="font-size:13px;color:var(--fg-muted);margin-top:12px">Works in <strong style="color:var(--fg)">Codex</strong> (VS Code, CLI, Desktop) and <strong style="color:var(--fg)">Claude Code</strong> &mdash; same skills, all tools.</p>
   </div>
 </section>
 
-<!-- ═══════ SLIDE 7: STEPS ═══════ -->
-<section class="slide slide-alt" data-label="Steps">
+<!-- ═══════ SLIDE 8: STEP-BY-STEP ═══════ -->
+<section class="slide slide-hero" data-label="Steps">
   <div class="slide-inner">
     <span class="part-label reveal">Part 2 &mdash; Step-by-Step Flow</span>
-    <h2 class="reveal d1">Follow the <span class="accent">sequence</span></h2>
-    <p class="lead reveal d2">The AI guides you through each step. After each one, it suggests a commit.</p>
+    <h2 class="reveal d1">Follow the <span class="accent">Sequence</span></h2>
+    <p class="lead reveal d2">The AI guides you. <strong>Commit &amp; push after every step</strong> &mdash; the next skill requires the previous artifacts.</p>
     <div class="table-wrap reveal d3">
       <div class="table-card">
         <table>
-          <thead><tr><th>#</th><th>Step</th><th>Skill</th><th>Time</th><th>You do</th><th>AI does</th></tr></thead>
+          <thead><tr><th>#</th><th>Step</th><th>What happens</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td>Onboard</td><td><code>/voyado-help</code></td><td>2 min</td><td>Answer team questions</td><td>Saves team data, syncs files</td></tr>
-            <tr><td>2</td><td>Understand</td><td style="color:var(--fg-muted)">read docs</td><td>3 min</td><td>Read requirements.md</td><td>&mdash;</td></tr>
-            <tr><td>3</td><td>Create PRD</td><td><code>/voyado-prd</code></td><td>5 min</td><td>Answer 3-5 priority questions</td><td>Generates full PRD</td></tr>
-            <tr><td>4</td><td>Plan Sprint</td><td><code>/voyado-plan</code></td><td>5 min</td><td>Review proposed stories</td><td>Creates epics &amp; stories</td></tr>
-            <tr><td>5</td><td>Implement</td><td><code>/voyado-impl</code></td><td>20 min</td><td>Review code, iterate</td><td>Implements one story at a time</td></tr>
-            <tr><td>6</td><td>Review</td><td><code>/voyado-review</code></td><td>5 min</td><td>Fix blocking issues</td><td>Auto-fixes trivial issues</td></tr>
-            <tr><td>7</td><td>Ship</td><td style="color:var(--fg-muted)">git + GitHub</td><td>5 min</td><td>Push, PR, mentor approval</td><td>&mdash;</td></tr>
-            <tr><td>8</td><td style="color:var(--coral);font-weight:600">Demo</td><td style="color:var(--fg-muted)">Show &amp; Tell</td><td>30 min</td><td>Present your module to everyone</td><td>&mdash;</td></tr>
+            <tr><td>1</td><td>Create branch</td><td><code>git checkout -b feature/team-[team-id]</code></td></tr>
+            <tr><td>2</td><td>Onboard</td><td>Run any command (e.g. <code>/voyado-help</code>) &mdash; it walks you through onboarding. Provide names &amp; emails.</td></tr>
+            <tr><td>3</td><td>Commit &amp; push</td><td>Commit onboarding artifacts. <strong>Every skill needs the previous step committed.</strong></td></tr>
+            <tr><td>4</td><td>Brainstorm</td><td>Team reads the mission &amp; requirements together. AI skills guide the discussion.</td></tr>
+            <tr><td>5</td><td>Create PRD</td><td><code>/voyado-prd</code> &mdash; answer questions, get a full PRD</td></tr>
+            <tr><td>6</td><td>Plan Sprint</td><td><code>/voyado-plan</code> &mdash; break PRD into epics &amp; stories</td></tr>
+            <tr><td>7</td><td>Implement</td><td><code>/voyado-impl</code> &mdash; pick up stories one at a time, write the code</td></tr>
+            <tr><td>8</td><td>Review</td><td><code>/voyado-review</code> &mdash; check code quality, fix issues</td></tr>
+            <tr><td>9</td><td>Ship</td><td>Push your code, create a Pull Request on GitHub, ask for a code review</td></tr>
+            <tr><td>10</td><td>Merge</td><td>When PR is approved, merge to <code>main</code> &mdash; CI/CD deploys automatically</td></tr>
+            <tr><td style="color:var(--coral);font-weight:600">11</td><td style="color:var(--coral);font-weight:600">Demo!</td><td>Each team presents their module to everyone</td></tr>
           </tbody>
         </table>
       </div>
     </div>
-    <p class="quote reveal d4">Check progress anytime: <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px">/voyado-status</code> or <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px">/voyado-help</code></p>
+    <p class="quote reveal d4">Check progress anytime: <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px">/voyado-help</code> or <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px">/voyado-status</code></p>
   </div>
 </section>
 
-<!-- ═══════ SLIDE 8: LET'S BUILD ═══════ -->
-<section class="slide slide-title slide-hero" data-label="Go!">
+<!-- ═══════ SLIDE 9: TEAM ASSIGNMENTS ═══════ -->
+<section class="slide slide-alt" data-label="Assignments">
   <div class="slide-inner">
-    <span class="part-label reveal">Let's go</span>
-    <h2 class="reveal d1" style="font-size:clamp(34px,4vw,52px)">Let's <span class="coral">Build!</span></h2>
-    <ul class="checklist reveal d2" style="max-width:500px;text-align:left;width:100%">
-      <li><span class="check-box"></span>Clone the repo and run <code>pnpm install</code></li>
-      <li><span class="check-box"></span>Open your AI tool (Claude Code, Copilot, or Codex)</li>
-      <li><span class="check-box"></span>Create your branch: <code>git checkout -b team-{n}/feature</code></li>
-      <li><span class="check-box"></span>Run <code>/voyado-help</code> to onboard your team</li>
-      <li><span class="check-box"></span>Follow the workflow &mdash; the AI will guide you</li>
-    </ul>
-    <div class="team-grid reveal d3" style="max-width:680px;width:100%;margin-top:32px">
+    <span class="part-label reveal">Team Assignments</span>
+    <h2 class="reveal d1">Find Your <span class="accent">Module</span></h2>
+    <div class="team-grid reveal d2" style="max-width:780px;width:100%;margin-top:24px">
       <div class="team-pill"><div class="team-num">Team 1</div><div class="team-module">Loyalty Dashboard</div><div class="team-what">Member stats, tier distribution, points economy</div></div>
       <div class="team-pill"><div class="team-num">Team 2</div><div class="team-module">Product Catalog</div><div class="team-what">Product grid, filters, search, wishlist</div></div>
       <div class="team-pill"><div class="team-num">Team 3</div><div class="team-module">Customer Segments</div><div class="team-what">Segment builder with targeting rules</div></div>
@@ -638,7 +649,25 @@ table code{
       <div class="team-pill"><div class="team-num">Team 5</div><div class="team-module">Rewards Store</div><div class="team-what">Reward catalog, point redemption, history</div></div>
       <div class="team-pill"><div class="team-num">Team 6</div><div class="team-module">Analytics Overview</div><div class="team-what">KPI charts, metrics, date ranges</div></div>
     </div>
-    <p class="quote reveal d4" style="text-align:center;max-width:440px;border-left:none;padding-left:0">Your mentor is here to help. Ask questions. Use the AI. Ship code. <strong>Have fun.</strong></p>
+    <p class="quote reveal d3" style="margin-top:28px">Each team's <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:var(--radius-sm);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px">docs/</code> folder contains business requirements &mdash; read them before you start.</p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 10: LET'S BUILD ═══════ -->
+<section class="slide slide-title slide-hero" data-label="Go!">
+  <div class="slide-inner">
+    <span class="part-label reveal">Let's go</span>
+    <h2 class="reveal d1" style="font-size:clamp(34px,4vw,52px)">Let's <span class="coral">Build!</span></h2>
+    <ul class="checklist reveal d2" style="max-width:540px;text-align:left;width:100%">
+      <li><span class="check-box"></span>Install pnpm: <code>npm install -g pnpm</code></li>
+      <li><span class="check-box"></span>Clone the repo &amp; run <code>pnpm install</code></li>
+      <li><span class="check-box"></span>Create your branch: <code>git checkout -b feature/team-[id]</code></li>
+      <li><span class="check-box"></span>Open your AI tool and run <code>/voyado-help</code></li>
+      <li><span class="check-box"></span>Follow the workflow &mdash; commit &amp; push after every step</li>
+      <li><span class="check-box"></span>When done: push, create PR, get review, merge</li>
+    </ul>
+    <p class="quote reveal d3" style="text-align:center;max-width:520px;border-left:none;padding-left:0;margin-top:28px">Don't worry if you get stuck. Try to figure it out together first. If you need help, just <strong>raise your hand</strong> &mdash; we'll be with you shortly.</p>
+    <p class="reveal d4" style="text-align:center;font-size:15px;color:var(--fg-secondary);margin-top:16px">Ask each other. Use the AI. Ship code. <strong style="color:var(--teal)">Have fun.</strong></p>
   </div>
 </section>
 
