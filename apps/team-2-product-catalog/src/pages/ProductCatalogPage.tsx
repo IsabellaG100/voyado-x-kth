@@ -4,6 +4,7 @@ import { Badge, Card, Input } from '@voyado-kth/ui';
 import { CatalogEmptyState } from '../components/CatalogEmptyState';
 import { CategoryFilterBar } from '../components/CategoryFilterBar';
 import { ProductCard } from '../components/ProductCard';
+import { SortControl } from '../components/SortControl';
 import categoriesData from '../../data/categories.json';
 import productsData from '../../data/products.json';
 import styles from './ProductCatalogPage.module.css';
@@ -12,7 +13,6 @@ type SortOptionId = 'name-asc' | 'price-asc' | 'price-desc' | 'rating-desc';
 
 const categories = categoriesData as ProductCategory[];
 const products = productsData as Product[];
-const controlPreview = ['Sort menu'];
 const sortLabels: Record<SortOptionId, string> = {
   'name-asc': 'Name A-Z',
   'price-asc': 'Price low-high',
@@ -97,14 +97,15 @@ export function ProductCatalogPage() {
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="catalog-planning-title">
         <div className={styles.heroCopy}>
-          <Badge variant="info">Story S2.3</Badge>
+          <Badge variant="info">Story S3.1</Badge>
           <h2 id="catalog-planning-title" className={styles.heroTitle}>
-            Search now sharpens the catalog in real time.
+            Sorting now gives the catalog multiple browse modes.
           </h2>
           <p className={styles.heroDescription}>
-            The catalog now includes live search on top of the category filter.
-            Product matches update as you type, and a neutral empty state helps
-            the user recover quickly when no items match the query.
+            The catalog now supports sorting the visible results by name, price,
+            and rating. The active sort order applies on top of the existing
+            category and search filters, so users can browse the same result set
+            from different angles instantly.
           </p>
         </div>
 
@@ -115,7 +116,7 @@ export function ProductCatalogPage() {
           </div>
           <div className={styles.metric}>
             <span className={styles.metricValue}>{visibleProducts.length}</span>
-            <span className={styles.metricLabel}>matching cards visible</span>
+            <span className={styles.metricLabel}>cards in current sort order</span>
           </div>
         </div>
       </section>
@@ -144,13 +145,7 @@ export function ProductCatalogPage() {
             onChange={event => setSearchQuery(event.target.value)}
           />
 
-          <div className={styles.placeholderRow}>
-            {controlPreview.map(item => (
-              <div key={item} className={styles.placeholderPill}>
-                {item}
-              </div>
-            ))}
-          </div>
+          <SortControl value={sortOption} onChange={value => setSortOption(value as SortOptionId)} />
 
           <div className={styles.stateList} aria-label="Catalog state preview">
             {statePreview.map(item => (
@@ -173,9 +168,9 @@ export function ProductCatalogPage() {
 
           <div className={styles.resultsIntro}>
             <div className={styles.canvasLead}>
-              The results region now responds to both category and search
+              The results region now responds to category, search, and sort
               changes, making the grid feel closer to a real storefront
-              browsing flow.
+              browsing flow with multiple browse modes.
             </div>
             <div className={styles.previewGrid}>
               {catalogPreview.map(item => (
