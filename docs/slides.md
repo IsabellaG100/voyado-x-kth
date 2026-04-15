@@ -32,7 +32,15 @@ On each table there's a sign-up sheet. Choose a role and write your name next to
 
 ---
 
-### Slide 2: From Idea to Production — The Software Development Lifecycle
+### AI-Augmented Development
+
+*(Full-screen divider slide — teal background, white text)*
+
+# AI-Augmented Development
+
+---
+
+### Slide 2: From Idea to Production— The Software Development Lifecycle
 
 **Building software is a cross-functional effort — every phase requires different skills working together.**
 
@@ -81,6 +89,8 @@ The industry calls this **AI-augmented software engineering** (Gartner's term). 
 | **7** | Dark Factory | Humans provide vision, values, and strategic goals. AI determines what to build, defines initiatives, and fully implements them end-to-end. | Software development operates as an autonomous system. |
 
 > ★ **Level 4 — Today's workshop.** You give the AI a task to run, it does the heavy lifting, you review and approve.
+
+> Engineers will be building, tweaking, and adapting these factories for the foreseeable future. **We won't stop building — we'll stop building the product and start building the engines that build the product.**
 
 ---
 
