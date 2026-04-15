@@ -19,15 +19,15 @@
 | **Review** | Peers review the code for quality and correctness | Engineers |
 | **Ship** | Merge, build, deploy — code goes live | CI/CD pipeline |
 
-> At Voyado, every feature follows this path — from a customer problem to live code serving millions of users.
+> At Voyado, every feature follows this path — from a customer problem to live code.
 
 ---
 
 ### Slide 2: Enter AI-Augmented Software Engineering
 
-**AI doesn't replace the developer — it amplifies them.**
+**AI amplifies every stage of product development.**
 
-The industry calls this **AI-augmented software engineering** (Gartner's term). The idea: AI tools work alongside developers at every stage of the SDLC — not just code completion.
+The industry calls this **AI-augmented software engineering** (Gartner's term). The idea: AI tools work alongside the team at every stage of the SDLC — not just code completion.
 
 | SDLC Phase | How AI helps |
 |------------|-------------|
@@ -56,7 +56,7 @@ The industry calls this **AI-augmented software engineering** (Gartner's term). 
 | **6** | Initiative-Level Execution | Humans define larger initiatives. AI breaks them down into epics and tasks, executes them, and iterates independently. Systems can run for extended periods (days) without a human in the loop. | Humans define initiatives, AI plans and executes. |
 | **7** | Dark Factory | Humans provide vision, values, and strategic goals. AI determines what to build, defines initiatives, and fully implements them end-to-end. | Software development operates as an autonomous system. |
 
-> ★ **Level 5 — You are here today.** You give the AI a task to run, it does the heavy lifting, you review and approve.
+> ★ **Level 4 — Today's workshop.** You give the AI a task to run, it does the heavy lifting, you review and approve.
 
 ---
 
