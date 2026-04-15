@@ -221,6 +221,8 @@ export function ProductCatalogPage() {
         product={selectedProduct}
         open={selectedProduct !== null}
         onClose={() => setSelectedProduct(null)}
+        isWishlisted={selectedProduct ? wishlistIds.includes(selectedProduct.id) : false}
+        onToggleWishlist={handleToggleWishlist}
       />
     </main>
   );
