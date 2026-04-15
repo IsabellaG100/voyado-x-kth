@@ -121,6 +121,14 @@
   gap: var(--ess-spacing-300);
 }
 
+.headerBadges {
+  display: flex;
+  align-items: center;
+  gap: var(--ess-spacing-200);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .eyebrow {
   margin: 0 0 var(--ess-spacing-100);
   font-size: var(--ess-font-size-small);
@@ -277,6 +285,10 @@
 
   .sectionHeader {
     flex-direction: column;
+  }
+
+  .headerBadges {
+    justify-content: flex-start;
   }
 
   .stateItem {

@@ -1,5 +1,5 @@
 import type { Product } from '@voyado-kth/shared';
-import { Badge, Card, Chip } from '@voyado-kth/ui';
+import { Badge, Button, Card, Chip } from '@voyado-kth/ui';
 import styles from './ProductCard.module.css';
 
 function formatPrice(price: number, currency: string) {
@@ -21,9 +21,15 @@ function getInitials(name: string) {
 
 export interface ProductCardProps {
   product: Product;
+  isWishlisted: boolean;
+  onToggleWishlist: (productId: string) => void;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({
+  product,
+  isWishlisted,
+  onToggleWishlist,
+}: ProductCardProps) {
   return (
     <Card className={styles.card} hoverable>
       <article className={styles.article} aria-label={product.name}>
@@ -48,6 +54,17 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className={styles.metaRow}>
             <Chip label={product.category} />
             <span className={styles.rating}>{product.rating.toFixed(1)} ★</span>
+          </div>
+
+          <div className={styles.actionRow}>
+            <Button
+              variant={isWishlisted ? 'primary' : 'ghost'}
+              size="small"
+              onClick={() => onToggleWishlist(product.id)}
+              aria-pressed={isWishlisted}
+            >
+              {isWishlisted ? '♥ Saved' : '♡ Save'}
+            </Button>
           </div>
 
           <div className={styles.textBlock}>

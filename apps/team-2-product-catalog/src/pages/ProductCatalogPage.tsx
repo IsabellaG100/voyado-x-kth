@@ -20,12 +20,22 @@ const sortLabels: Record<SortOptionId, string> = {
   'rating-desc': 'Rating highest',
 };
 
+function toggleWishlistId(currentIds: string[], productId: string) {
+  return currentIds.includes(productId)
+    ? currentIds.filter(id => id !== productId)
+    : [...currentIds, productId];
+}
+
 export function ProductCatalogPage() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState<SortOptionId>('name-asc');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [wishlistIds, setWishlistIds] = useState<string[]>([]);
+
+  const handleToggleWishlist = (productId: string) => {
+    setWishlistIds(currentIds => toggleWishlistId(currentIds, productId));
+  };
 
   const matchingProducts = products.filter(product => {
     const matchesCategory =
@@ -97,15 +107,15 @@ export function ProductCatalogPage() {
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="catalog-planning-title">
         <div className={styles.heroCopy}>
-          <Badge variant="info">Story S3.1</Badge>
+          <Badge variant="info">Story S3.2</Badge>
           <h2 id="catalog-planning-title" className={styles.heroTitle}>
-            Sorting now gives the catalog multiple browse modes.
+            Wishlist actions now personalize the catalog.
           </h2>
           <p className={styles.heroDescription}>
-            The catalog now supports sorting the visible results by name, price,
-            and rating. The active sort order applies on top of the existing
-            category and search filters, so users can browse the same result set
-            from different angles instantly.
+            The catalog now lets users save products directly from the grid and
+            keeps a visible wishlist count in the page header. Wishlist state is
+            stored locally and stays in sync while the user filters, searches,
+            and sorts.
           </p>
         </div>
 
@@ -115,8 +125,8 @@ export function ProductCatalogPage() {
             <span className={styles.metricLabel}>catalog items rendered</span>
           </div>
           <div className={styles.metric}>
-            <span className={styles.metricValue}>{visibleProducts.length}</span>
-            <span className={styles.metricLabel}>cards in current sort order</span>
+            <span className={styles.metricValue}>{wishlistIds.length}</span>
+            <span className={styles.metricLabel}>items on the wishlist</span>
           </div>
         </div>
       </section>
@@ -128,7 +138,12 @@ export function ProductCatalogPage() {
               <p className={styles.eyebrow}>Controls region</p>
               <h3 className={styles.sectionTitle}>Quick-find toolbar</h3>
             </div>
-            <span className={styles.sectionNote}>Ready for S2.2-S3.1</span>
+            <div className={styles.headerBadges}>
+              <span className={styles.sectionNote}>Ready for S3.2-S4.2</span>
+              <Badge variant={wishlistIds.length > 0 ? 'info' : 'neutral'}>
+                Wishlist ({wishlistIds.length})
+              </Badge>
+            </div>
           </div>
 
           <CategoryFilterBar
@@ -184,7 +199,12 @@ export function ProductCatalogPage() {
           {visibleProducts.length > 0 ? (
             <div className={styles.productGrid} aria-label="Product catalog grid">
               {visibleProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  isWishlisted={wishlistIds.includes(product.id)}
+                  onToggleWishlist={handleToggleWishlist}
+                />
               ))}
             </div>
           ) : (

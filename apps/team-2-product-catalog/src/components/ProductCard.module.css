@@ -71,6 +71,12 @@
   gap: var(--ess-spacing-300);
 }
 
+.actionRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .rating {
   font-size: var(--ess-font-size-small);
   font-weight: var(--ess-font-weight-medium);
