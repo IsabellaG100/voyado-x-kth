@@ -19,15 +19,15 @@
 | **Review** | Peers review the code for quality and correctness | Engineers |
 | **Ship** | Merge, build, deploy — code goes live | CI/CD pipeline |
 
-> At Voyado, every feature follows this path — from a customer problem to live code serving millions of users.
+> At Voyado, every feature follows this path — from a customer problem to live code.
 
 ---
 
 ### Slide 2: Enter AI-Augmented Software Engineering
 
-**AI doesn't replace the developer — it amplifies them.**
+**AI amplifies every stage of product development.**
 
-The industry calls this **AI-augmented software engineering** (Gartner's term). The idea: AI tools work alongside developers at every stage of the SDLC — not just code completion.
+The industry calls this **AI-augmented software engineering** (Gartner's term). The idea: AI tools work alongside the team at every stage of the SDLC — not just code completion.
 
 | SDLC Phase | How AI helps |
 |------------|-------------|
@@ -42,25 +42,21 @@ The industry calls this **AI-augmented software engineering** (Gartner's term). 
 
 ---
 
-### Slide 3: The Spectrum — From Copilot to Agent
+### Slide 3: The 7 Levels of AI-Native Software Development
 
 **Where are we on the AI autonomy scale?**
 
-```
-Manual          AI-Assisted          AI-Augmented          AI-Driven
-  |                  |                    |                    |
-  Write everything   Autocomplete        AI handles full      AI makes
-  by hand            & suggestions       workflows with       architectural
-                                         human guidance       decisions
-                                              ^
-                                         You are here today
-```
+| Level | Name | Description | Core Idea |
+|-------|------|-------------|-----------|
+| **1** | Manual Development | Traditional, fully manual software development with no AI involvement. | Everything is built directly by humans. |
+| **2** | AI as Reference & Suggestion | AI is used as an enhanced search engine, documentation assistant, or autocomplete tool. | AI helps answer questions, not execute work. |
+| **3** | Snippet Generator (Copy/Paste) | The developer asks AI to generate specific functions or snippets, then copy-pastes and integrates them into the codebase. | AI produces code fragments; the human stitches them together. |
+| **4** | Local AI Pair Programmer ★ | AI is embedded in the IDE or CLI and can be instructed to make changes across files. It executes short, scoped tasks autonomously (~10 min) before returning control. | AI actively modifies the codebase under direct human guidance. |
+| **5** | Task-Based Delegation | Humans assign complete tasks to AI instead of guiding step-by-step. The workflow becomes: specify task → assign → review. AI runs independently for longer intervals (~30 min). | Humans manage tasks, not individual coding steps. |
+| **6** | Initiative-Level Execution | Humans define larger initiatives. AI breaks them down into epics and tasks, executes them, and iterates independently. Systems can run for extended periods (days) without a human in the loop. | Humans define initiatives, AI plans and executes. |
+| **7** | Dark Factory | Humans provide vision, values, and strategic goals. AI determines what to build, defines initiatives, and fully implements them end-to-end. | Software development operates as an autonomous system. |
 
-- **AI-Assisted** = Copilot autocomplete, chat Q&A (you drive, AI suggests)
-- **AI-Augmented** = AI executes full tasks — generates a PRD, plans a sprint, implements a story — but you review and approve (today's workshop)
-- **AI-Driven** = AI makes design decisions autonomously (not quite there yet for production)
-
-> Today you'll experience **AI-augmented development**: you give the AI a skill to run, it does the heavy lifting, you review and approve.
+> ★ **Level 4 — Today's workshop.** You give the AI a task to run, it does the heavy lifting, you review and approve.
 
 ---
 
