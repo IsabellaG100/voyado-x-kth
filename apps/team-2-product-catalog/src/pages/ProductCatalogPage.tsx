@@ -1,15 +1,95 @@
+import { useState } from 'react';
+import type { Product, ProductCategory } from '@voyado-kth/shared';
 import { Badge, Card } from '@voyado-kth/ui';
+import categoriesData from '../../data/categories.json';
+import productsData from '../../data/products.json';
 import styles from './ProductCatalogPage.module.css';
 
-const controlPreview = ['Category filters', 'Search field', 'Sort menu'];
+type SortOptionId = 'name-asc' | 'price-asc' | 'price-desc' | 'rating-desc';
 
-const catalogPreview = [
-  'Wishlist-aware product cards',
-  'Responsive product grid',
-  'Empty state and detail dialog hooks',
-];
+const categories = categoriesData as ProductCategory[];
+const products = productsData as Product[];
+const controlPreview = ['Category filters', 'Search field', 'Sort menu'];
+const sortLabels: Record<SortOptionId, string> = {
+  'name-asc': 'Name A-Z',
+  'price-asc': 'Price low-high',
+  'price-desc': 'Price high-low',
+  'rating-desc': 'Rating highest',
+};
 
 export function ProductCatalogPage() {
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOption, setSortOption] = useState<SortOptionId>('name-asc');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [wishlistIds, setWishlistIds] = useState<string[]>([]);
+
+  const matchingProducts = products.filter(product => {
+    const matchesCategory =
+      activeCategory === 'all' || product.category === activeCategory;
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    const matchesSearch =
+      normalizedQuery.length === 0 ||
+      product.name.toLowerCase().includes(normalizedQuery);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  const visibleProducts = [...matchingProducts].sort((left, right) => {
+    switch (sortOption) {
+      case 'price-asc':
+        return left.price - right.price;
+      case 'price-desc':
+        return right.price - left.price;
+      case 'rating-desc':
+        return right.rating - left.rating;
+      case 'name-asc':
+      default:
+        return left.name.localeCompare(right.name);
+    }
+  });
+
+  const categorySummary = [
+    { id: 'all', name: 'All products', productCount: products.length },
+    ...categories,
+  ];
+
+  const statePreview = [
+    {
+      label: 'Active category',
+      value:
+        activeCategory === 'all'
+          ? 'All products'
+          : (categories.find(category => category.id === activeCategory)?.name ??
+            activeCategory),
+    },
+    {
+      label: 'Search query',
+      value: searchQuery || 'No query set',
+    },
+    {
+      label: 'Sort preset',
+      value: sortLabels[sortOption],
+    },
+    {
+      label: 'Selected product',
+      value: selectedProduct?.name ?? 'No product selected',
+    },
+    {
+      label: 'Wishlist state',
+      value:
+        wishlistIds.length > 0
+          ? `${wishlistIds.length} saved`
+          : 'No saved products yet',
+    },
+  ];
+
+  const catalogPreview = [
+    `${visibleProducts.length} visible products`,
+    `${categorySummary.length} category options ready`,
+    `${products.filter(product => !product.inStock).length} out-of-stock states loaded`,
+  ];
+
   return (
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="catalog-planning-title">
@@ -28,12 +108,12 @@ export function ProductCatalogPage() {
 
         <div className={styles.heroMetrics} aria-label="Planned catalog sections">
           <div className={styles.metric}>
-            <span className={styles.metricValue}>3</span>
-            <span className={styles.metricLabel}>control zones</span>
+            <span className={styles.metricValue}>{products.length}</span>
+            <span className={styles.metricLabel}>typed products loaded</span>
           </div>
           <div className={styles.metric}>
-            <span className={styles.metricValue}>1</span>
-            <span className={styles.metricLabel}>catalog canvas</span>
+            <span className={styles.metricValue}>{categories.length}</span>
+            <span className={styles.metricLabel}>typed categories loaded</span>
           </div>
         </div>
       </section>
@@ -52,6 +132,15 @@ export function ProductCatalogPage() {
             {controlPreview.map(item => (
               <div key={item} className={styles.placeholderPill}>
                 {item}
+              </div>
+            ))}
+          </div>
+
+          <div className={styles.stateList} aria-label="Catalog state preview">
+            {statePreview.map(item => (
+              <div key={item.label} className={styles.stateItem}>
+                <span className={styles.stateLabel}>{item.label}</span>
+                <strong className={styles.stateValue}>{item.value}</strong>
               </div>
             ))}
           </div>
@@ -80,6 +169,13 @@ export function ProductCatalogPage() {
                     <span className={styles.previewLabel}>{item}</span>
                   </div>
                 ))}
+              </div>
+
+              <div className={styles.dataFootnote}>
+                Baseline state is ready for
+                {' '}
+                {categorySummary[0].name.toLowerCase()}
+                , derived filtering, sorting, selection, and wishlist flows.
               </div>
             </div>
           </div>
