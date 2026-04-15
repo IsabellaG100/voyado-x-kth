@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Product, ProductCategory } from '@voyado-kth/shared';
 import { Badge, Card } from '@voyado-kth/ui';
+import { CategoryFilterBar } from '../components/CategoryFilterBar';
 import { ProductCard } from '../components/ProductCard';
 import categoriesData from '../../data/categories.json';
 import productsData from '../../data/products.json';
@@ -10,7 +11,7 @@ type SortOptionId = 'name-asc' | 'price-asc' | 'price-desc' | 'rating-desc';
 
 const categories = categoriesData as ProductCategory[];
 const products = productsData as Product[];
-const controlPreview = ['Category filters', 'Search field', 'Sort menu'];
+const controlPreview = ['Search field', 'Sort menu'];
 const sortLabels: Record<SortOptionId, string> = {
   'name-asc': 'Name A-Z',
   'price-asc': 'Price low-high',
@@ -87,7 +88,7 @@ export function ProductCatalogPage() {
 
   const catalogPreview = [
     `${visibleProducts.length} visible products`,
-    `${categorySummary.length} category options ready`,
+    `${categorySummary.find(category => category.id === activeCategory)?.name ?? 'All products'} active`,
     `${products.filter(product => !product.inStock).length} out-of-stock states loaded`,
   ];
 
@@ -95,15 +96,15 @@ export function ProductCatalogPage() {
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="catalog-planning-title">
         <div className={styles.heroCopy}>
-          <Badge variant="info">Story S2.1</Badge>
+          <Badge variant="info">Story S2.2</Badge>
           <h2 id="catalog-planning-title" className={styles.heroTitle}>
-            The catalog is now a real shopping surface.
+            Category filtering is now part of the browsing flow.
           </h2>
           <p className={styles.heroDescription}>
-            Team 2 now has a responsive product grid with shared card styling,
-            category labels, pricing, stock visibility, and rating cues. The
-            control rail is still staged for the next stories, but the browsing
-            experience is officially on the page.
+            The catalog now includes a real single-select filter bar with an All
+            option and category counts. Choosing a category updates the grid
+            instantly while the remaining search and sort controls stay staged
+            for the next stories.
           </p>
         </div>
 
@@ -113,8 +114,8 @@ export function ProductCatalogPage() {
             <span className={styles.metricLabel}>catalog items rendered</span>
           </div>
           <div className={styles.metric}>
-            <span className={styles.metricValue}>{visibleProducts.length}</span>
-            <span className={styles.metricLabel}>cards in the grid</span>
+            <span className={styles.metricValue}>{categorySummary.length}</span>
+            <span className={styles.metricLabel}>filter options available</span>
           </div>
         </div>
       </section>
@@ -128,6 +129,12 @@ export function ProductCatalogPage() {
             </div>
             <span className={styles.sectionNote}>Ready for S2.2-S3.1</span>
           </div>
+
+          <CategoryFilterBar
+            categories={categorySummary}
+            activeCategory={activeCategory}
+            onCategoryChange={setActiveCategory}
+          />
 
           <div className={styles.placeholderRow}>
             {controlPreview.map(item => (
@@ -158,8 +165,8 @@ export function ProductCatalogPage() {
 
           <div className={styles.resultsIntro}>
             <div className={styles.canvasLead}>
-              The results region now renders real products from the shared data
-              model, ready for filters, search, sorting, and detail flows.
+              The results region now responds to category changes immediately,
+              making the grid feel closer to a real storefront browsing flow.
             </div>
             <div className={styles.previewGrid}>
               {catalogPreview.map(item => (
