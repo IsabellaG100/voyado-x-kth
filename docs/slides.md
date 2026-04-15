@@ -70,8 +70,6 @@ The industry calls this **AI-augmented software engineering** (Gartner's term). 
 | Review | Check quality, find issues, auto-fix trivial problems |
 | Ship | Suggest commit messages, help with git workflow |
 
-> This is not "vibe coding" (letting AI generate code you never read). This is structured, guided AI collaboration — the AI follows your team's conventions, your design system, your architecture.
-
 ---
 
 ### Slide 4: The 7 Levels of AI-Native Software Development

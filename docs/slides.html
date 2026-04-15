@@ -240,7 +240,7 @@ table code{
 .level-marker.past .level-marker-label{color:var(--fg-muted);opacity:1;pointer-events:auto}
 
 .levels-stage{
-  flex:1;display:flex;align-items:center;position:relative;overflow:hidden;
+  flex:1;display:flex;align-items:center;position:relative;overflow:visible;
 }
 .level-panel{
   position:absolute;inset:0;display:flex;flex-direction:column;
@@ -252,7 +252,7 @@ table code{
 .level-panel.active{
   opacity:1;transform:translateY(0);pointer-events:auto;
 }
-.level-panel.exit-up{transform:translateY(-40px)}
+.level-panel.exit-up{transform:translateY(-40px);opacity:0}
 .level-num{
   font-family:var(--font-display);font-size:13px;font-weight:700;
   color:var(--teal);letter-spacing:.08em;text-transform:uppercase;
@@ -273,6 +273,27 @@ table code{
   max-width:580px;
 }
 .level-core strong{color:var(--teal);font-style:normal}
+.level-img-wrap{
+  position:absolute;right:-10px;bottom:40px;
+  border-radius:var(--radius-md);overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
+  border:2px solid var(--border);
+  z-index:1;pointer-events:none;
+  opacity:0;transform:scale(.92);
+  transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);
+}
+.level-panel.show-images .level-img-wrap{
+  opacity:1;transform:none;
+}
+.level-img-wrap img{display:block;width:100%;height:100%;object-fit:cover}
+.level-panel.show-images .level-img-wrap.tilt-r{transform:rotate(2deg)}
+.level-panel.show-images .level-img-wrap.tilt-l{transform:rotate(-2.5deg)}
+.level-panel.show-images .level-img-wrap.tilt-r2{transform:rotate(1.5deg)}
+.level-panel.show-images .level-img-wrap.img-tall{transform:translateY(-50%) translateX(50%) rotate(2deg)}
+.level-img-wrap.img-tall{width:auto;height:85vh;left:auto;right:0;top:50%;bottom:auto;transform:translateY(-50%) translateX(50%) rotate(2deg)}
+.level-img-wrap.img-logo{width:200px;height:auto;right:20px;top:auto;bottom:220px;border:none;box-shadow:none;border-radius:var(--radius-sm)}
+.level-img-wrap.img-wide{width:280px;height:auto;right:-5px;bottom:50px}
+.level-img-wrap.img-square{width:220px;height:180px;right:10px;bottom:30px}
 .level-badge{
   display:inline-block;background:var(--teal);color:#fff;
   font-size:11px;font-weight:600;padding:5px 16px;
@@ -611,7 +632,7 @@ table code{
         </table>
       </div>
     </div>
-    <p class="quote reveal d4">This is not <strong>"vibe coding"</strong>. This is structured AI collaboration &mdash; the AI follows <strong>your conventions</strong>, <strong>your design system</strong>, <strong>your architecture</strong>.</p>
+
   </div>
 </section>
 
@@ -686,21 +707,25 @@ table code{
         </div>
         <div class="level-panel" data-idx="4">
           <div class="level-num">Level 5</div>
-          <h3 class="level-name">Task-Based Delegation</h3>
-          <p class="level-desc">Humans assign complete tasks to AI instead of guiding step-by-step. The workflow becomes: specify task &rarr; assign &rarr; review. AI runs independently for longer intervals (~30 min).</p>
-          <div class="level-core"><strong>Core idea:</strong> humans manage tasks, not individual coding steps.</div>
+          <h3 class="level-name" style="max-width:60%">Task-Based Delegation</h3>
+          <p class="level-desc" style="max-width:60%">Humans assign complete tasks to AI instead of guiding step-by-step. The workflow becomes: specify task &rarr; assign &rarr; review. AI runs independently for longer intervals (~30 min).</p>
+          <div class="level-core" style="max-width:60%"><strong>Core idea:</strong> humans manage tasks, not individual coding steps.</div>
+          <div class="level-img-wrap img-tall tilt-r"><img src="level5.png" alt="Slack task delegation flow"></div>
         </div>
         <div class="level-panel" data-idx="5">
           <div class="level-num">Level 6</div>
           <h3 class="level-name">Initiative-Level Execution</h3>
           <p class="level-desc">Humans define larger initiatives. AI breaks them down into epics and tasks, executes them, and iterates independently. Systems can run for extended periods (days) without a human in the loop.</p>
           <div class="level-core"><strong>Core idea:</strong> humans define initiatives, AI plans and executes.</div>
+          <div class="level-img-wrap img-logo tilt-l"><img src="level6a.png" alt="Hermes Agent"></div>
+          <div class="level-img-wrap img-square tilt-r2"><img src="level6b.png" alt="Hermes VMs running"></div>
         </div>
         <div class="level-panel" data-idx="6">
           <div class="level-num">Level 7</div>
           <h3 class="level-name">Dark Factory</h3>
           <p class="level-desc">Humans provide vision, values, and strategic goals. AI determines what to build, defines initiatives, and fully implements them end-to-end.</p>
           <div class="level-core"><strong>Core idea:</strong> software development operates as an autonomous system.</div>
+          <div class="level-img-wrap img-wide tilt-l"><img src="level7.png" alt="Paperclip runs your business"></div>
         </div>
         <div class="level-panel" data-idx="7">
           <h3 class="level-name">The role of the engineer</h3>
@@ -909,14 +934,24 @@ const totalLevels=levelPanels.length;
 let currentLevel=0;
 let levelsCooldown=false;
 let levelsReleased=false;
+let imagesShown=false;
 
-function setLevel(idx){
+// Detect which levels have images
+function levelHasImages(idx){
+  return levelPanels[idx]&&levelPanels[idx].querySelector('.level-img-wrap');
+}
+
+function setLevel(idx,forceShowImages){
   if(idx<0||idx>=totalLevels)return;
   const prev=currentLevel;
   currentLevel=idx;
+  imagesShown=!!forceShowImages;
   levelPanels.forEach((p,i)=>{
-    p.classList.remove('active','exit-up');
-    if(i===idx)p.classList.add('active');
+    p.classList.remove('active','exit-up','show-images');
+    if(i===idx){
+      p.classList.add('active');
+      if(forceShowImages)p.classList.add('show-images');
+    }
     else if(i===prev&&idx>prev)p.classList.add('exit-up');
   });
   levelMarkers.forEach((m,i)=>{
@@ -924,9 +959,8 @@ function setLevel(idx){
     m.classList.toggle('past',i<idx);
   });
   if(levelPrev)levelPrev.disabled=idx===0;
-  if(levelNext)levelNext.disabled=idx===totalLevels-1;
+  if(levelNext)levelNext.disabled=idx===totalLevels-1&&(imagesShown||!levelHasImages(idx));
   if(levelNumEl)levelNumEl.textContent=idx+1;
-  // Animate track fill
   if(trackFill){
     const pct=totalLevels>1?idx/(totalLevels-1):0;
     const trackEl=trackFill.parentElement;
@@ -937,8 +971,34 @@ function setLevel(idx){
   }
 }
 
-if(levelPrev)levelPrev.addEventListener('click',()=>setLevel(currentLevel-1));
-if(levelNext)levelNext.addEventListener('click',()=>setLevel(currentLevel+1));
+function advanceLevel(){
+  if(levelHasImages(currentLevel)&&!imagesShown){
+    imagesShown=true;
+    levelPanels[currentLevel].classList.add('show-images');
+    return true;
+  }
+  if(currentLevel<totalLevels-1){
+    setLevel(currentLevel+1);
+    return true;
+  }
+  return false;
+}
+
+function retreatLevel(){
+  if(levelHasImages(currentLevel)&&imagesShown){
+    imagesShown=false;
+    levelPanels[currentLevel].classList.remove('show-images');
+    return true;
+  }
+  if(currentLevel>0){
+    setLevel(currentLevel-1,true);
+    return true;
+  }
+  return false;
+}
+
+if(levelPrev)levelPrev.addEventListener('click',()=>retreatLevel());
+if(levelNext)levelNext.addEventListener('click',()=>advanceLevel());
 levelMarkers.forEach((m,i)=>m.addEventListener('click',()=>setLevel(i)));
 
 // Intercept wheel on deck when levels slide is active
@@ -947,11 +1007,10 @@ deck.addEventListener('wheel',(e)=>{
   if(levelsReleased){return}
   if(levelsCooldown){e.preventDefault();return}
   const dir=e.deltaY>0?1:-1;
-  const next=currentLevel+dir;
-  if(next>=0&&next<totalLevels){
+  const handled=dir>0?advanceLevel():retreatLevel();
+  if(handled){
     e.preventDefault();
     levelsCooldown=true;
-    setLevel(next);
     setTimeout(()=>levelsCooldown=false,500);
   }else{
     levelsReleased=true;
@@ -962,18 +1021,24 @@ deck.addEventListener('wheel',(e)=>{
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){
     e.preventDefault();
-    if(activeIndex===levelsIdx&&currentLevel<totalLevels-1){
-      setLevel(currentLevel+1);
+    if(activeIndex===levelsIdx){
+      const handled=advanceLevel();
+      if(!handled){
+        levelsReleased=false;
+        slides[Math.min(activeIndex+1,total-1)].scrollIntoView({behavior:'smooth'});
+      }
     }else{
-      if(activeIndex===levelsIdx)levelsReleased=false;
       slides[Math.min(activeIndex+1,total-1)].scrollIntoView({behavior:'smooth'});
     }
   }else if(e.key==='ArrowUp'||e.key==='PageUp'){
     e.preventDefault();
-    if(activeIndex===levelsIdx&&currentLevel>0){
-      setLevel(currentLevel-1);
+    if(activeIndex===levelsIdx){
+      const handled=retreatLevel();
+      if(!handled){
+        levelsReleased=false;
+        slides[Math.max(activeIndex-1,0)].scrollIntoView({behavior:'smooth'});
+      }
     }else{
-      if(activeIndex===levelsIdx)levelsReleased=false;
       slides[Math.max(activeIndex-1,0)].scrollIntoView({behavior:'smooth'});
     }
   }else if(e.key==='Home'){e.preventDefault();slides[0].scrollIntoView({behavior:'smooth'});}
