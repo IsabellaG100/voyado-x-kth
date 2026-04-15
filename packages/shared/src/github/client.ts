@@ -49,7 +49,7 @@ export class GitHubClient {
   /** Fetch workshop.json from the main branch */
   async fetchWorkshopJson(): Promise<WorkshopData> {
     const data = await this.get<{ content: string; encoding: string }>(
-      `${API_BASE}/repos/${OWNER}/${REPO}/contents/workshop.json?ref=test`,
+      `${API_BASE}/repos/${OWNER}/${REPO}/contents/workshop.json?ref=main`,
     );
     const decoded = atob(data.content.replace(/\n/g, ''));
     return JSON.parse(decoded) as WorkshopData;
