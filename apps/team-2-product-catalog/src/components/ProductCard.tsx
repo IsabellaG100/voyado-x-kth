@@ -23,16 +23,22 @@ export interface ProductCardProps {
   product: Product;
   isWishlisted: boolean;
   onToggleWishlist: (productId: string) => void;
+  onOpenDetails: (product: Product) => void;
 }
 
 export function ProductCard({
   product,
   isWishlisted,
   onToggleWishlist,
+  onOpenDetails,
 }: ProductCardProps) {
   return (
     <Card className={styles.card} hoverable>
-      <article className={styles.article} aria-label={product.name}>
+      <article
+        className={styles.article}
+        aria-label={product.name}
+        onClick={() => onOpenDetails(product)}
+      >
         <div className={styles.mediaWrap}>
           <img
             className={styles.media}
@@ -60,7 +66,10 @@ export function ProductCard({
             <Button
               variant={isWishlisted ? 'primary' : 'ghost'}
               size="small"
-              onClick={() => onToggleWishlist(product.id)}
+              onClick={event => {
+                event.stopPropagation();
+                onToggleWishlist(product.id);
+              }}
               aria-pressed={isWishlisted}
             >
               {isWishlisted ? '♥ Saved' : '♡ Save'}

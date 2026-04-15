@@ -4,6 +4,7 @@ import { Badge, Card, Input } from '@voyado-kth/ui';
 import { CatalogEmptyState } from '../components/CatalogEmptyState';
 import { CategoryFilterBar } from '../components/CategoryFilterBar';
 import { ProductCard } from '../components/ProductCard';
+import { ProductDetailDialog } from '../components/ProductDetailDialog';
 import { SortControl } from '../components/SortControl';
 import categoriesData from '../../data/categories.json';
 import productsData from '../../data/products.json';
@@ -107,15 +108,14 @@ export function ProductCatalogPage() {
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="catalog-planning-title">
         <div className={styles.heroCopy}>
-          <Badge variant="info">Story S3.2</Badge>
+          <Badge variant="info">Story S4.1</Badge>
           <h2 id="catalog-planning-title" className={styles.heroTitle}>
-            Wishlist actions now personalize the catalog.
+            Product details now open in a focused dialog.
           </h2>
           <p className={styles.heroDescription}>
-            The catalog now lets users save products directly from the grid and
-            keeps a visible wishlist count in the page header. Wishlist state is
-            stored locally and stays in sync while the user filters, searches,
-            and sorts.
+            Clicking a product card now opens a modal dialog, and closing it
+            returns you to the same filtered, searched, sorted catalog state.
+            This sets up the dialog shell before the richer detail content story.
           </p>
         </div>
 
@@ -125,8 +125,8 @@ export function ProductCatalogPage() {
             <span className={styles.metricLabel}>catalog items rendered</span>
           </div>
           <div className={styles.metric}>
-            <span className={styles.metricValue}>{wishlistIds.length}</span>
-            <span className={styles.metricLabel}>items on the wishlist</span>
+            <span className={styles.metricValue}>{selectedProduct ? 1 : 0}</span>
+            <span className={styles.metricLabel}>detail dialog open</span>
           </div>
         </div>
       </section>
@@ -204,6 +204,7 @@ export function ProductCatalogPage() {
                   product={product}
                   isWishlisted={wishlistIds.includes(product.id)}
                   onToggleWishlist={handleToggleWishlist}
+                  onOpenDetails={setSelectedProduct}
                 />
               ))}
             </div>
@@ -215,6 +216,12 @@ export function ProductCatalogPage() {
           )}
         </Card>
       </section>
+
+      <ProductDetailDialog
+        product={selectedProduct}
+        open={selectedProduct !== null}
+        onClose={() => setSelectedProduct(null)}
+      />
     </main>
   );
 }
