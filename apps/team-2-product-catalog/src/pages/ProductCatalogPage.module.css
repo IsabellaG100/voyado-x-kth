@@ -202,42 +202,16 @@
   font-weight: var(--ess-font-weight-medium);
 }
 
-.canvas {
-  position: relative;
-  display: flex;
-  flex: 1;
-  min-height: 0;
-  padding: var(--ess-spacing-300);
-  border-radius: var(--ess-border-radius-large);
-  background: linear-gradient(145deg, var(--ess-color-neutral-bg), rgba(255, 255, 255, 0.92));
-  overflow: hidden;
-}
-
-.canvasGlow {
-  position: absolute;
-  inset: -15% auto auto 60%;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--ess-color-blue-bg) 0%, transparent 72%);
-  opacity: 0.85;
-}
-
-.canvasContent {
-  position: relative;
-  z-index: var(--ess-level-curb);
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--ess-spacing-500);
-}
-
 .canvasLead {
   max-width: 40ch;
   font-size: var(--ess-font-size-large);
   line-height: var(--ess-font-line-height-body);
   color: var(--ess-color-neutral-fg);
+}
+
+.resultsIntro {
+  display: grid;
+  gap: var(--ess-spacing-400);
 }
 
 .previewGrid {
@@ -265,10 +239,10 @@
   color: var(--ess-color-neutral-fg);
 }
 
-.dataFootnote {
-  font-size: var(--ess-font-size-medium);
-  line-height: var(--ess-font-line-height-body);
-  color: var(--ess-color-neutral-fg-weak);
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--ess-spacing-400);
 }
 
 @media (max-width: 960px) {
@@ -284,6 +258,10 @@
   .heroMetrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
@@ -292,7 +270,8 @@
   }
 
   .heroMetrics,
-  .previewGrid {
+  .previewGrid,
+  .productGrid {
     grid-template-columns: 1fr;
   }
 

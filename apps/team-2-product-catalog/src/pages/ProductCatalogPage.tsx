@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Product, ProductCategory } from '@voyado-kth/shared';
 import { Badge, Card } from '@voyado-kth/ui';
+import { ProductCard } from '../components/ProductCard';
 import categoriesData from '../../data/categories.json';
 import productsData from '../../data/products.json';
 import styles from './ProductCatalogPage.module.css';
@@ -94,26 +95,26 @@ export function ProductCatalogPage() {
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="catalog-planning-title">
         <div className={styles.heroCopy}>
-          <Badge variant="info">Story S1.1</Badge>
+          <Badge variant="info">Story S2.1</Badge>
           <h2 id="catalog-planning-title" className={styles.heroTitle}>
-            A polished storefront is taking shape.
+            The catalog is now a real shopping surface.
           </h2>
           <p className={styles.heroDescription}>
-            This scaffold sets up the Product Catalog with dedicated control and
-            results regions so the next stories can layer in filtering, search,
-            sorting, wishlist actions, and product details without reworking the
-            page structure.
+            Team 2 now has a responsive product grid with shared card styling,
+            category labels, pricing, stock visibility, and rating cues. The
+            control rail is still staged for the next stories, but the browsing
+            experience is officially on the page.
           </p>
         </div>
 
         <div className={styles.heroMetrics} aria-label="Planned catalog sections">
           <div className={styles.metric}>
             <span className={styles.metricValue}>{products.length}</span>
-            <span className={styles.metricLabel}>typed products loaded</span>
+            <span className={styles.metricLabel}>catalog items rendered</span>
           </div>
           <div className={styles.metric}>
-            <span className={styles.metricValue}>{categories.length}</span>
-            <span className={styles.metricLabel}>typed categories loaded</span>
+            <span className={styles.metricValue}>{visibleProducts.length}</span>
+            <span className={styles.metricLabel}>cards in the grid</span>
           </div>
         </div>
       </section>
@@ -155,29 +156,24 @@ export function ProductCatalogPage() {
             <span className={styles.sectionNote}>Ready for S2.1-S4.2</span>
           </div>
 
-          <div className={styles.canvas}>
-            <div className={styles.canvasGlow} aria-hidden="true" />
-            <div className={styles.canvasContent}>
-              <div className={styles.canvasLead}>
-                Product cards, empty states, and the detail dialog will anchor
-                here as the catalog becomes interactive.
-              </div>
-
-              <div className={styles.previewGrid}>
-                {catalogPreview.map(item => (
-                  <div key={item} className={styles.previewTile}>
-                    <span className={styles.previewLabel}>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className={styles.dataFootnote}>
-                Baseline state is ready for
-                {' '}
-                {categorySummary[0].name.toLowerCase()}
-                , derived filtering, sorting, selection, and wishlist flows.
-              </div>
+          <div className={styles.resultsIntro}>
+            <div className={styles.canvasLead}>
+              The results region now renders real products from the shared data
+              model, ready for filters, search, sorting, and detail flows.
             </div>
+            <div className={styles.previewGrid}>
+              {catalogPreview.map(item => (
+                <div key={item} className={styles.previewTile}>
+                  <span className={styles.previewLabel}>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.productGrid} aria-label="Product catalog grid">
+            {visibleProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </div>
         </Card>
       </section>
