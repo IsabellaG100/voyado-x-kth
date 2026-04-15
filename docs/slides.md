@@ -6,61 +6,7 @@
 
 ---
 
-### Slide 1: From Idea to Production — The Software Development Lifecycle
-
-**How software gets built in a product company**
-
-| Phase | What happens | Who's involved |
-|-------|-------------|----------------|
-| **Requirements** | Understand the problem, define what to build | PM, Designer, Engineers |
-| **Design** | Plan the user experience and technical approach | Designer, Engineers |
-| **Planning** | Break work into small, deliverable pieces | Team |
-| **Implementation** | Write the code | Engineers |
-| **Review** | Peers review the code for quality and correctness | Engineers |
-| **Ship** | Merge, build, deploy — code goes live | CI/CD pipeline |
-
-> At Voyado, every feature follows this path — from a customer problem to live code.
-
----
-
-### Slide 2: Enter AI-Augmented Software Engineering
-
-**AI amplifies every stage of product development.**
-
-The industry calls this **AI-augmented software engineering** (Gartner's term). The idea: AI tools work alongside the team at every stage of the SDLC — not just code completion.
-
-| SDLC Phase | How AI helps |
-|------------|-------------|
-| Requirements | Analyze documents, extract features, ask clarifying questions |
-| Design | Suggest design patterns, map data models, generate UX specs |
-| Planning | Break features into stories, estimate complexity, order by dependency |
-| Implementation | Write code, follow conventions, use design system tokens |
-| Review | Check quality, find issues, auto-fix trivial problems |
-| Ship | Suggest commit messages, help with git workflow |
-
-> This is not "vibe coding" (letting AI generate code you never read). This is structured, guided AI collaboration — the AI follows your team's conventions, your design system, your architecture.
-
----
-
-### Slide 3: The 7 Levels of AI-Native Software Development
-
-**Where are we on the AI autonomy scale?**
-
-| Level | Name | Description | Core Idea |
-|-------|------|-------------|-----------|
-| **1** | Manual Development | Traditional, fully manual software development with no AI involvement. | Everything is built directly by humans. |
-| **2** | AI as Reference & Suggestion | AI is used as an enhanced search engine, documentation assistant, or autocomplete tool. | AI helps answer questions, not execute work. |
-| **3** | Snippet Generator (Copy/Paste) | The developer asks AI to generate specific functions or snippets, then copy-pastes and integrates them into the codebase. | AI produces code fragments; the human stitches them together. |
-| **4** | Local AI Pair Programmer ★ | AI is embedded in the IDE or CLI and can be instructed to make changes across files. It executes short, scoped tasks autonomously (~10 min) before returning control. | AI actively modifies the codebase under direct human guidance. |
-| **5** | Task-Based Delegation | Humans assign complete tasks to AI instead of guiding step-by-step. The workflow becomes: specify task → assign → review. AI runs independently for longer intervals (~30 min). | Humans manage tasks, not individual coding steps. |
-| **6** | Initiative-Level Execution | Humans define larger initiatives. AI breaks them down into epics and tasks, executes them, and iterates independently. Systems can run for extended periods (days) without a human in the loop. | Humans define initiatives, AI plans and executes. |
-| **7** | Dark Factory | Humans provide vision, values, and strategic goals. AI determines what to build, defines initiatives, and fully implements them end-to-end. | Software development operates as an autonomous system. |
-
-> ★ **Level 4 — Today's workshop.** You give the AI a task to run, it does the heavy lifting, you review and approve.
-
----
-
-### Slide 4: Form Your Teams (Before Dinner)
+### Slide 1: Form Your Teams (Before Dinner)
 
 **Time to find your crew!**
 
@@ -86,11 +32,69 @@ On each table there's a sign-up sheet. Choose a role and write your name next to
 
 ---
 
+### Slide 2: From Idea to Production — The Software Development Lifecycle
+
+**Building software is a cross-functional effort — every phase requires different skills working together.**
+
+| Phase | What happens | Who's involved |
+|-------|-------------|----------------|
+| **Requirements** | Understand the problem, define what to build | PM, Designer, Engineers |
+| **Design** | Plan the user experience and technical approach | Designer, Engineers |
+| **Planning** | Break work into small, deliverable pieces | Team |
+| **Implementation** | Write the code | Engineers |
+| **Review** | Peers review the code for quality and correctness | Engineers |
+| **Ship** | Merge, build, deploy — code goes live | CI/CD pipeline |
+
+---
+
+### Slide 3:Enter AI-Augmented Software Engineering
+
+**AI amplifies every stage of product development.**
+
+The industry calls this **AI-augmented software engineering** (Gartner's term). The idea: AI tools work alongside the team at every stage of the SDLC — not just code completion.
+
+| SDLC Phase | How AI helps |
+|------------|-------------|
+| Requirements | Analyze documents, extract features, ask clarifying questions |
+| Design | Suggest design patterns, map data models, generate UX specs |
+| Planning | Break features into stories, estimate complexity, order by dependency |
+| Implementation | Write code, follow conventions, use design system tokens |
+| Review | Check quality, find issues, auto-fix trivial problems |
+| Ship | Suggest commit messages, help with git workflow |
+
+> This is not "vibe coding" (letting AI generate code you never read). This is structured, guided AI collaboration — the AI follows your team's conventions, your design system, your architecture.
+
+---
+
+### Slide 4: The 7 Levels of AI-Native Software Development
+
+**Where are we on the AI autonomy scale?**
+
+| Level | Name | Description | Core Idea |
+|-------|------|-------------|-----------|
+| **1** | Manual Development | Traditional, fully manual software development with no AI involvement. | Everything is built directly by humans. |
+| **2** | AI as Reference & Suggestion | AI is used as an enhanced search engine, documentation assistant, or autocomplete tool. | AI helps answer questions, not execute work. |
+| **3** | Snippet Generator (Copy/Paste) | The developer asks AI to generate specific functions or snippets, then copy-pastes and integrates them into the codebase. | AI produces code fragments; the human stitches them together. |
+| **4** | Local AI Pair Programmer ★ | AI is embedded in the IDE or CLI and can be instructed to make changes across files. It executes short, scoped tasks autonomously (~10 min) before returning control. | AI actively modifies the codebase under direct human guidance. |
+| **5** | Task-Based Delegation | Humans assign complete tasks to AI instead of guiding step-by-step. The workflow becomes: specify task → assign → review. AI runs independently for longer intervals (~30 min). | Humans manage tasks, not individual coding steps. |
+| **6** | Initiative-Level Execution | Humans define larger initiatives. AI breaks them down into epics and tasks, executes them, and iterates independently. Systems can run for extended periods (days) without a human in the loop. | Humans define initiatives, AI plans and executes. |
+| **7** | Dark Factory | Humans provide vision, values, and strategic goals. AI determines what to build, defines initiatives, and fully implements them end-to-end. | Software development operates as an autonomous system. |
+
+> ★ **Level 4 — Today's workshop.** You give the AI a task to run, it does the heavy lifting, you review and approve.
+
+---
+
+### Slide 5: Workshop time!
+
+*(Full-screen teal divider slide — used for switching speakers)*
+
+---
+
 ## PART 2: Your Workshop Workflow
 
 ---
 
-### Slide 5: Getting Started (After the AI Talk)
+### Slide 6: Getting Started (After the AI Talk)
 
 **Developer: verify your access first.**
 
@@ -109,7 +113,7 @@ The developer who received the ChatGPT invitation should check that they can log
 
 ---
 
-### Slide 6: Branching Strategy
+### Slide 7: Branching Strategy
 
 **Why branches matter:** the code lives on GitHub with a default branch called `main`. In a real team, pushing directly to `main` would cause conflicts and break things. A branching strategy is an agreement between team members on how to work in parallel.
 
@@ -134,7 +138,7 @@ Example: `git checkout -b feature/team-1`, `git checkout -b feature/team-3`
 
 ---
 
-### Slide 7: Your AI Toolkit — Workshop Skills
+### Slide 8: Your AI Toolkit — Workshop Skills
 
 **When you open the AI tool in this repository, a set of workshop skills are already installed.** These skills guide the AI through each SDLC step so it produces quality code that matches your team's mission and business requirements.
 
@@ -156,7 +160,7 @@ Example: `git checkout -b feature/team-1`, `git checkout -b feature/team-3`
 
 ---
 
-### Slide 8: The Step-by-Step Workflow
+### Slide 9: The Step-by-Step Workflow
 
 **Follow this sequence. The AI guides you through each step.**
 
@@ -180,7 +184,7 @@ Example: `git checkout -b feature/team-1`, `git checkout -b feature/team-3`
 
 ---
 
-### Slide 9: Let's Build!
+### Slide 10: Let's Build!
 
 **Team assignments:**
 
