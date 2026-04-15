@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team ID Cards — Voyado × KTH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-muted: #8a8a8a;
+    --accent: #e8725a;
+    --accent-deep: #c8523a;
+    --surface: #ffffff;
+    --surface-warm: #faf8f6;
+    --rule: #d4d0cc;
+    --rule-light: #eae7e3;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface);
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 18mm 20mm 14mm 20mm;
+    page-break-after: always;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── Top Band ── */
+  .top-band {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 6mm;
+    margin-bottom: 4mm;
+  }
+
+  .team-number-block {
+    flex-shrink: 0;
+  }
+
+  .team-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    color: var(--ink-muted);
+    margin-bottom: 1mm;
+  }
+
+  .team-number {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 72pt;
+    line-height: 0.85;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+
+  .team-name-area {
+    flex: 1;
+    padding-top: 8mm;
+  }
+
+  .team-name-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--ink-muted);
+    margin-bottom: 2mm;
+  }
+
+  .team-name-line {
+    border-bottom: 1.5pt solid var(--ink);
+    height: 10mm;
+    width: 100%;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    width: 100%;
+    height: 0.5pt;
+    background: var(--rule);
+    margin: 5mm 0;
+  }
+
+  .divider--accent {
+    height: 2.5pt;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 40%, var(--rule-light) 40%);
+  }
+
+  /* ── Tech Block ── */
+  .tech-block {
+    background: var(--surface-warm);
+    border: 0.75pt solid var(--rule);
+    border-left: 3pt solid var(--ink);
+    padding: 4mm 5mm;
+    display: flex;
+    gap: 8mm;
+    flex-wrap: wrap;
+    margin-bottom: 2mm;
+  }
+
+  .tech-item {
+    display: flex;
+    align-items: baseline;
+    gap: 2mm;
+  }
+
+  .tech-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7.5pt;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .tech-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  /* ── Mission Section ── */
+  .mission-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2mm;
+  }
+
+  .mission-header {
+    display: flex;
+    align-items: center;
+    gap: 3mm;
+    margin-bottom: 4mm;
+  }
+
+  .mission-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: var(--accent-deep);
+    background: #fef0ed;
+    border: 0.75pt solid #f5d4cc;
+    padding: 1.5mm 3mm;
+    display: inline-block;
+  }
+
+  .mission-rule {
+    flex: 1;
+    height: 0.5pt;
+    background: var(--rule-light);
+  }
+
+  .mission-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 20pt;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 4mm;
+    letter-spacing: -0.01em;
+  }
+
+  .mission-paragraph {
+    font-family: 'Crimson Pro', serif;
+    font-size: 12.5pt;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 6mm;
+    max-width: 155mm;
+  }
+
+  .objectives {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4.5mm;
+    flex: 1;
+  }
+
+  .objective {
+    display: flex;
+    gap: 3.5mm;
+    align-items: flex-start;
+  }
+
+  .objective-marker {
+    flex-shrink: 0;
+    width: 6mm;
+    height: 6mm;
+    margin-top: 0.8mm;
+    border: 1.5pt solid var(--accent);
+    border-radius: 1mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7pt;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .objective-content {
+    flex: 1;
+  }
+
+  .objective-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 10.5pt;
+    color: var(--ink);
+    margin-bottom: 0.5mm;
+    line-height: 1.3;
+  }
+
+  .objective-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 10.5pt;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: auto;
+    padding-top: 4mm;
+    border-top: 0.5pt solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--ink-muted);
+  }
+
+  .footer-brand span {
+    color: var(--accent);
+  }
+
+  .footer-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 6.5pt;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Corner Mark ── */
+  .corner-mark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 28mm;
+    height: 28mm;
+    overflow: hidden;
+  }
+
+  .corner-mark::before {
+    content: '';
+    position: absolute;
+    top: -14mm;
+    right: -14mm;
+    width: 28mm;
+    height: 28mm;
+    background: var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.08;
+  }
+
+  /* ── Geometric Accent ── */
+  .geo-accent {
+    position: absolute;
+    bottom: 20mm;
+    right: 16mm;
+    width: 50mm;
+    height: 50mm;
+    opacity: 0.04;
+    border: 4pt solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .geo-accent::after {
+    content: '';
+    position: absolute;
+    top: 8mm;
+    left: 8mm;
+    right: 8mm;
+    bottom: 8mm;
+    border: 2pt solid var(--ink);
+    border-radius: 50%;
+  }
+
+  @media screen {
+    body {
+      background: #e8e4e0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .page {
+      background: white;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.12);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ████████████████████████████████████████████████████████████████████
+     TEAM 1 — LOYALTY DASHBOARD
+     ████████████████████████████████████████████████████████████████████ -->
+<div class="page">
+  <div class="corner-mark"></div>
+  <div class="geo-accent"></div>
+
+  <div class="top-band">
+    <div class="team-number-block">
+      <div class="team-label">Team</div>
+      <div class="team-number">01</div>
+    </div>
+    <div class="team-name-area">
+      <div class="team-name-label">Team Name</div>
+      <div class="team-name-line"></div>
+    </div>
+  </div>
+
+  <div class="divider divider--accent"></div>
+
+  <div class="tech-block">
+    <div class="tech-item">
+      <span class="tech-label">Team ID</span>
+      <span class="tech-value">team-1</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Branch</span>
+      <span class="tech-value">feature/team-1</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Route</span>
+      <span class="tech-value">/loyalty</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mission-section">
+    <div class="mission-header">
+      <span class="mission-tag">Your Mission</span>
+      <span class="mission-rule"></span>
+    </div>
+
+    <div class="mission-title">Loyalty Dashboard</div>
+
+    <p class="mission-paragraph">
+      Build a clear, scannable loyalty program dashboard that empowers program managers
+      to monitor health and performance at a glance. The dashboard surfaces key metrics,
+      tier breakdowns, enrollment trends, and member activity — giving stakeholders the
+      quick insights they need without deep analytics.
+    </p>
+
+    <ul class="objectives">
+      <li class="objective">
+        <div class="objective-marker">1</div>
+        <div class="objective-content">
+          <div class="objective-title">Track what matters</div>
+          <div class="objective-desc">Display KPIs (total members, active members, points balance, points issued) with trend indicators so managers instantly see if the program is growing or declining.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">2</div>
+        <div class="objective-content">
+          <div class="objective-title">Visualize the membership</div>
+          <div class="objective-desc">Show tier distribution and enrollment trends through intuitive CSS-based charts, making seasonal patterns and tier balance easy to spot.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">3</div>
+        <div class="objective-content">
+          <div class="objective-title">Surface real-time activity</div>
+          <div class="objective-desc">Present a live feed of recent loyalty events and a top-members leaderboard to highlight engagement and identify the most valuable members.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Voyado <span>×</span> KTH Medieteknik</div>
+    <div class="footer-note">AI-Augmented Development Workshop</div>
+  </div>
+</div>
+
+<!-- ████████████████████████████████████████████████████████████████████
+     TEAM 2 — PRODUCT CATALOG
+     ████████████████████████████████████████████████████████████████████ -->
+<div class="page">
+  <div class="corner-mark"></div>
+  <div class="geo-accent"></div>
+
+  <div class="top-band">
+    <div class="team-number-block">
+      <div class="team-label">Team</div>
+      <div class="team-number">02</div>
+    </div>
+    <div class="team-name-area">
+      <div class="team-name-label">Team Name</div>
+      <div class="team-name-line"></div>
+    </div>
+  </div>
+
+  <div class="divider divider--accent"></div>
+
+  <div class="tech-block">
+    <div class="tech-item">
+      <span class="tech-label">Team ID</span>
+      <span class="tech-value">team-2</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Branch</span>
+      <span class="tech-value">feature/team-2</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Route</span>
+      <span class="tech-value">/products</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mission-section">
+    <div class="mission-header">
+      <span class="mission-tag">Your Mission</span>
+      <span class="mission-rule"></span>
+    </div>
+
+    <div class="mission-title">Product Catalog</div>
+
+    <p class="mission-paragraph">
+      Deliver a polished e-commerce browsing experience where loyalty members can explore
+      products, discover what they love, and curate a personal wishlist. The catalog combines
+      filtering, search, and sorting to make finding the right product fast and enjoyable.
+    </p>
+
+    <ul class="objectives">
+      <li class="objective">
+        <div class="objective-marker">1</div>
+        <div class="objective-content">
+          <div class="objective-title">Browse with ease</div>
+          <div class="objective-desc">Present products in a responsive grid with category filters, real-time search, and multiple sort options so shoppers can quickly narrow down thousands of items.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">2</div>
+        <div class="objective-content">
+          <div class="objective-title">Engage through details</div>
+          <div class="objective-desc">Offer rich product detail views with descriptions, ratings, stock status, and tags — giving members the information they need to make confident choices.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">3</div>
+        <div class="objective-content">
+          <div class="objective-title">Personalize the experience</div>
+          <div class="objective-desc">Let members heart their favorite products into a wishlist, creating a personal collection that persists across filters and search queries.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Voyado <span>×</span> KTH Medieteknik</div>
+    <div class="footer-note">AI-Augmented Development Workshop</div>
+  </div>
+</div>
+
+<!-- ████████████████████████████████████████████████████████████████████
+     TEAM 3 — CUSTOMER SEGMENTS
+     ████████████████████████████████████████████████████████████████████ -->
+<div class="page">
+  <div class="corner-mark"></div>
+  <div class="geo-accent"></div>
+
+  <div class="top-band">
+    <div class="team-number-block">
+      <div class="team-label">Team</div>
+      <div class="team-number">03</div>
+    </div>
+    <div class="team-name-area">
+      <div class="team-name-label">Team Name</div>
+      <div class="team-name-line"></div>
+    </div>
+  </div>
+
+  <div class="divider divider--accent"></div>
+
+  <div class="tech-block">
+    <div class="tech-item">
+      <span class="tech-label">Team ID</span>
+      <span class="tech-value">team-3</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Branch</span>
+      <span class="tech-value">feature/team-3</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Route</span>
+      <span class="tech-value">/segments</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mission-section">
+    <div class="mission-header">
+      <span class="mission-tag">Your Mission</span>
+      <span class="mission-rule"></span>
+    </div>
+
+    <div class="mission-title">Customer Segments</div>
+
+    <p class="mission-paragraph">
+      Empower marketers to build and preview audience segments through an intuitive visual
+      rule builder — no SQL or technical skills required. The module turns complex customer
+      targeting into a simple, interactive experience with instant feedback on audience size.
+    </p>
+
+    <ul class="objectives">
+      <li class="objective">
+        <div class="objective-marker">1</div>
+        <div class="objective-content">
+          <div class="objective-title">Define audiences visually</div>
+          <div class="objective-desc">Provide a visual rule builder where marketers combine fields (tier, city, spend, points) with operators to create precise customer segments using AND logic.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">2</div>
+        <div class="objective-content">
+          <div class="objective-title">Preview before you commit</div>
+          <div class="objective-desc">Evaluate rules against real customer data in real-time, showing the match count and a sample of qualifying customers so marketers can refine criteria with confidence.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">3</div>
+        <div class="objective-content">
+          <div class="objective-title">Manage segments at a glance</div>
+          <div class="objective-desc">Display all existing segments in a browsable list with customer counts, descriptions, and detail views that show the full rule configuration and matching audience.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Voyado <span>×</span> KTH Medieteknik</div>
+    <div class="footer-note">AI-Augmented Development Workshop</div>
+  </div>
+</div>
+
+<!-- ████████████████████████████████████████████████████████████████████
+     TEAM 4 — CAMPAIGN BUILDER
+     ████████████████████████████████████████████████████████████████████ -->
+<div class="page">
+  <div class="corner-mark"></div>
+  <div class="geo-accent"></div>
+
+  <div class="top-band">
+    <div class="team-number-block">
+      <div class="team-label">Team</div>
+      <div class="team-number">04</div>
+    </div>
+    <div class="team-name-area">
+      <div class="team-name-label">Team Name</div>
+      <div class="team-name-line"></div>
+    </div>
+  </div>
+
+  <div class="divider divider--accent"></div>
+
+  <div class="tech-block">
+    <div class="tech-item">
+      <span class="tech-label">Team ID</span>
+      <span class="tech-value">team-4</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Branch</span>
+      <span class="tech-value">feature/team-4</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Route</span>
+      <span class="tech-value">/campaigns</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mission-section">
+    <div class="mission-header">
+      <span class="mission-tag">Your Mission</span>
+      <span class="mission-rule"></span>
+    </div>
+
+    <div class="mission-title">Campaign Builder</div>
+
+    <p class="mission-paragraph">
+      Give marketers a guided, wizard-style workflow for creating and managing multi-channel
+      marketing campaigns. From channel selection to content editing with live merge-tag
+      previews, the builder makes campaign creation fast, visual, and error-free.
+    </p>
+
+    <ul class="objectives">
+      <li class="objective">
+        <div class="objective-marker">1</div>
+        <div class="objective-content">
+          <div class="objective-title">Guide the creation flow</div>
+          <div class="objective-desc">Walk marketers through a 4-step wizard — choose channel (email/SMS/push), pick a template, edit content with merge tags, and review &amp; schedule.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">2</div>
+        <div class="objective-content">
+          <div class="objective-title">Preview personalized content</div>
+          <div class="objective-desc">Render merge tags like {{first_name}} and {{tier}} with sample data in a live preview pane, so marketers see exactly what recipients will receive.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">3</div>
+        <div class="objective-content">
+          <div class="objective-title">Manage campaign lifecycle</div>
+          <div class="objective-desc">Display all campaigns with status badges (draft, scheduled, sent, paused) and provide status management controls with valid transition rules.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Voyado <span>×</span> KTH Medieteknik</div>
+    <div class="footer-note">AI-Augmented Development Workshop</div>
+  </div>
+</div>
+
+<!-- ████████████████████████████████████████████████████████████████████
+     TEAM 5 — REWARDS STORE
+     ████████████████████████████████████████████████████████████████████ -->
+<div class="page">
+  <div class="corner-mark"></div>
+  <div class="geo-accent"></div>
+
+  <div class="top-band">
+    <div class="team-number-block">
+      <div class="team-label">Team</div>
+      <div class="team-number">05</div>
+    </div>
+    <div class="team-name-area">
+      <div class="team-name-label">Team Name</div>
+      <div class="team-name-line"></div>
+    </div>
+  </div>
+
+  <div class="divider divider--accent"></div>
+
+  <div class="tech-block">
+    <div class="tech-item">
+      <span class="tech-label">Team ID</span>
+      <span class="tech-value">team-5</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Branch</span>
+      <span class="tech-value">feature/team-5</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Route</span>
+      <span class="tech-value">/rewards</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mission-section">
+    <div class="mission-header">
+      <span class="mission-tag">Your Mission</span>
+      <span class="mission-rule"></span>
+    </div>
+
+    <div class="mission-title">Rewards Store</div>
+
+    <p class="mission-paragraph">
+      Create a member-facing rewards storefront where loyalty members can browse, filter,
+      and redeem rewards using their accumulated points. The store closes the loyalty loop
+      by turning points into tangible value — discounts, products, and experiences.
+    </p>
+
+    <ul class="objectives">
+      <li class="objective">
+        <div class="objective-marker">1</div>
+        <div class="objective-content">
+          <div class="objective-title">Show spending power upfront</div>
+          <div class="objective-desc">Display the member's points balance, tier, and name in a prominent header so they immediately know what they can afford before browsing.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">2</div>
+        <div class="objective-content">
+          <div class="objective-title">Browse and filter rewards</div>
+          <div class="objective-desc">Present a grid of reward cards with category filters (discounts, products, experiences), stock indicators, and smart disable logic for out-of-reach rewards.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">3</div>
+        <div class="objective-content">
+          <div class="objective-title">Redeem with confidence</div>
+          <div class="objective-desc">Provide a clear confirmation dialog showing points cost and balance impact, then update the balance in real-time and log each redemption to a visible history.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Voyado <span>×</span> KTH Medieteknik</div>
+    <div class="footer-note">AI-Augmented Development Workshop</div>
+  </div>
+</div>
+
+<!-- ████████████████████████████████████████████████████████████████████
+     TEAM 6 — ANALYTICS OVERVIEW
+     ████████████████████████████████████████████████████████████████████ -->
+<div class="page">
+  <div class="corner-mark"></div>
+  <div class="geo-accent"></div>
+
+  <div class="top-band">
+    <div class="team-number-block">
+      <div class="team-label">Team</div>
+      <div class="team-number">06</div>
+    </div>
+    <div class="team-name-area">
+      <div class="team-name-label">Team Name</div>
+      <div class="team-name-line"></div>
+    </div>
+  </div>
+
+  <div class="divider divider--accent"></div>
+
+  <div class="tech-block">
+    <div class="tech-item">
+      <span class="tech-label">Team ID</span>
+      <span class="tech-value">team-6</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Branch</span>
+      <span class="tech-value">feature/team-6</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Route</span>
+      <span class="tech-value">/analytics</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="mission-section">
+    <div class="mission-header">
+      <span class="mission-tag">Your Mission</span>
+      <span class="mission-rule"></span>
+    </div>
+
+    <div class="mission-title">Analytics Overview</div>
+
+    <p class="mission-paragraph">
+      Build an executive-facing analytics dashboard that gives leadership a clear, visual
+      snapshot of business health. The dashboard surfaces revenue trends, campaign performance,
+      and channel breakdowns — all switchable across time ranges for different perspectives.
+    </p>
+
+    <ul class="objectives">
+      <li class="objective">
+        <div class="objective-marker">1</div>
+        <div class="objective-content">
+          <div class="objective-title">Lead with KPIs</div>
+          <div class="objective-desc">Display four hero metrics (revenue, active customers, average order value, retention rate) with trend indicators and color-coded changes for instant assessment.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">2</div>
+        <div class="objective-content">
+          <div class="objective-title">Visualize trends and performance</div>
+          <div class="objective-desc">Render a 12-month revenue bar chart and a campaign performance table with inline visual bars, making patterns and top performers immediately scannable.</div>
+        </div>
+      </li>
+      <li class="objective">
+        <div class="objective-marker">3</div>
+        <div class="objective-content">
+          <div class="objective-title">Slice by time range</div>
+          <div class="objective-desc">Offer a date range selector (7 days, 30 days, 90 days, 12 months) that updates all dashboard data instantly, enabling quick comparisons across time horizons.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Voyado <span>×</span> KTH Medieteknik</div>
+    <div class="footer-note">AI-Augmented Development Workshop</div>
+  </div>
+</div>
+
+</body>
+</html>
