@@ -6,7 +6,7 @@ import type {
   GitHubPullRequest,
 } from './types';
 
-const OWNER = 'MeghdadHadidi';
+const OWNER = 'MeghdadHadidi'; // TODO: Make this configurable if we want to reuse this client for other repos
 const REPO = 'voyado-x-kth';
 const API_BASE = 'https://api.github.com';
 
