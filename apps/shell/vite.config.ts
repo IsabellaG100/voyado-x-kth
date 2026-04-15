@@ -7,7 +7,7 @@ const repoRoot = path.resolve(__dirname, '../..');
 
 function copyDocsPlugin(): Plugin {
   const srcDir = path.join(repoRoot, 'docs');
-  const files = ['slides.html'];
+  const files = ['slides.html', 'level5.png', 'level6a.png', 'level6b.png', 'level7.png'];
 
   return {
     name: 'copy-docs',
@@ -17,7 +17,15 @@ function copyDocsPlugin(): Plugin {
         if (match) {
           const filePath = path.join(srcDir, match);
           if (fs.existsSync(filePath)) {
-            res.setHeader('Content-Type', 'text/html');
+            const ext = path.extname(match).toLowerCase();
+            const mimeTypes: Record<string, string> = {
+              '.html': 'text/html',
+              '.png': 'image/png',
+              '.jpg': 'image/jpeg',
+              '.jpeg': 'image/jpeg',
+              '.svg': 'image/svg+xml',
+            };
+            res.setHeader('Content-Type', mimeTypes[ext] || 'application/octet-stream');
             fs.createReadStream(filePath).pipe(res);
             return;
           }
